@@ -3,52 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Đọc Truyện Đơn Giản</title>
+    <title>Kho Truyện Online</title>
     <style>
-        /* GIỮ NGUYÊN GIAO DIỆN ĐẸP (DARK MODE) */
+        /* GIỮ NGUYÊN GIAO DIỆN DARK MODE */
         :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --red: #ff4757; }
         * { box-sizing: border-box; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: sans-serif; padding-top: 60px; }
         
         /* HEADER */
         header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: #2d3436; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 100; border-bottom: 1px solid #333; }
-        .logo { font-weight: bold; color: var(--red); font-size: 1.1rem; }
+        .logo { font-weight: bold; color: var(--red); font-size: 1.3rem; /* To hơn chút */ display: flex; align-items: center; gap: 5px; }
         .btn-home { background: #444; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
+
+        /* THANH TÌM KIẾM (MỚI) */
+        .search-container { margin-bottom: 20px; }
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 25px; /* Bo tròn đẹp hơn */
+            border: 1px solid #444;
+            background: #252525;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-input:focus { border-color: var(--red); box-shadow: 0 0 8px rgba(255, 71, 87, 0.3); }
 
         /* VIEW */
         .view { display: none; padding: 20px; min-height: 100vh; }
         .view.active { display: block; }
 
-        /* HOME */
+        /* HOME GRID */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .card { background: var(--card); border-radius: 8px; overflow: hidden; cursor: pointer; }
+        .card { background: var(--card); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
         .card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
         .card-info { padding: 10px; }
-        .card h3 { margin: 0; font-size: 1rem; }
+        .card h3 { margin: 0; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         /* DETAIL */
         .detail-top { display: flex; gap: 20px; margin-bottom: 20px; }
-        .cover-big { width: 120px; border-radius: 8px; }
-        .btn-read { background: var(--red); color: white; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; margin-top: 10px; font-weight: bold; }
-        .desc { background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #bbb; border-left: 3px solid var(--red); }
+        .cover-big { width: 120px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .btn-read { background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 20px; cursor: pointer; margin-top: 15px; font-weight: bold; font-size: 1rem; }
+        .btn-read:hover { background: #ff6b81; }
+        .desc { background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #bbb; border-left: 4px solid var(--red); line-height: 1.5; }
         
         /* READER */
         #reader { display: flex; flex-direction: column; align-items: center; padding-bottom: 80px; }
         .img-page { width: 100%; max-width: 800px; display: block; margin-bottom: 2px; }
         
         /* CONTROLS */
-        .bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.9); padding: 10px; display: flex; justify-content: center; gap: 20px; }
-        .btn-ctrl { background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
+        .bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.95); padding: 10px; display: flex; justify-content: center; gap: 20px; border-top: 1px solid #333; }
+        .btn-ctrl { background: #333; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo" onclick="goHome()">📚 Comic 1-2-3</div>
+        <div class="logo" onclick="goHome()">📚 Kho Truyện</div>
         <button class="btn-home" onclick="goHome()">Trang chủ</button>
     </header>
 
     <div id="view-home" class="view active">
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Tìm kiếm truyện..." oninput="renderHome()">
+        </div>
+
         <div id="grid" class="grid"></div>
     </div>
 
@@ -66,10 +87,9 @@
 
     <script>
         // ============================================
-        // CẤU HÌNH TRUYỆN CỰC DỄ
+        // CẤU HÌNH DỮ LIỆU
         // ============================================
 
-        // Hàm này tự tạo danh sách ảnh: images/1.jpg ... images/13.jpg
         function layAnhTuSoDenSo(tuSo, denSo) {
             let list = [];
             for(let i = tuSo; i <= denSo; i++) {
@@ -79,47 +99,47 @@
         }
 
         const database = [
-            // --- TRUYỆN CÔ THẮM (Dùng ảnh 1 đến 13) ---
+            // --- TRUYỆN 1 ---
             {
                 id: "cotham",
                 title: "Sự Tích Đền Cô Thắm",
                 category: "Truyền thuyết",
-                cover: "images/1.jpg", // Lấy ảnh số 1 làm bìa
+                cover: "images/1.jpg", 
                 desc: "Câu chuyện về người con gái tài sắc vẹn toàn, có công giúp đỡ nghĩa quân...",
                 chapters: [
-                    { 
-                        name: "Toàn bộ câu chuyện", 
-                        // TỰ ĐỘNG LẤY ẢNH TỪ 1 ĐẾN 13
-                        pages: layAnhTuSoDenSo(1, 13) 
-                    }
+                    { name: "Toàn bộ câu chuyện", pages: layAnhTuSoDenSo(1, 13) }
                 ]
             },
-
-            // --- VÍ DỤ NẾU MUỐN THÊM TRUYỆN KHÁC (Sau này) ---
-            /*
-            {
-                id: "truyen2",
-                title: "Truyện Tiếp Theo",
-                cover: "images/14.jpg",
-                // Nếu bạn có ảnh từ 14 đến 20 cho truyện này
-                chapters: [{ name: "Chap 1", pages: layAnhTuSoDenSo(14, 20) }]
-            }
-            */
+            // --- BẠN CÓ THỂ COPY ĐỂ THÊM TRUYỆN MỚI Ở DƯỚI ĐÂY ---
         ];
 
         // ============================================
-        // LOGIC CHẠY APP (KHÔNG CẦN CHỈNH SỬA)
+        // LOGIC CHẠY APP
         // ============================================
         let currentComic = null;
 
+        // Hàm hiển thị trang chủ (Kèm chức năng tìm kiếm)
         function renderHome() {
             const grid = document.getElementById('grid');
+            const keyword = document.getElementById('searchInput').value.toLowerCase(); // Lấy từ khóa tìm kiếm
             grid.innerHTML = '';
-            database.forEach(c => {
+
+            // Lọc truyện theo tên
+            const ketQuaLoc = database.filter(truyen => truyen.title.toLowerCase().includes(keyword));
+
+            if (ketQuaLoc.length === 0) {
+                grid.innerHTML = '<p style="color:#666; text-align:center; grid-column: 1/-1;">Không tìm thấy truyện nào...</p>';
+                return;
+            }
+
+            ketQuaLoc.forEach(c => {
                 grid.innerHTML += `
                     <div class="card" onclick="openComic('${c.id}')">
                         <img src="${c.cover}" onerror="this.src='https://via.placeholder.com/200?text=Lỗi+Ảnh'">
-                        <div class="card-info"><h3>${c.title}</h3><small style="color:#888">${c.category}</small></div>
+                        <div class="card-info">
+                            <h3>${c.title}</h3>
+                            <small style="color:#888">${c.category}</small>
+                        </div>
                     </div>`;
             });
         }
@@ -127,21 +147,21 @@
         function openComic(id) {
             currentComic = database.find(c => c.id === id);
             const content = document.getElementById('detail-content');
-            
-            // Tự động chọn chương đầu tiên để hiển thị nút đọc
             let pagesCount = currentComic.chapters[0].pages.length;
 
             content.innerHTML = `
                 <div class="detail-top">
                     <img src="${currentComic.cover}" class="cover-big">
                     <div>
-                        <h2>${currentComic.title}</h2>
+                        <h2 style="margin-top:0">${currentComic.title}</h2>
+                        <span style="background:#333; padding:2px 8px; border-radius:4px; font-size:0.8rem; color:#ccc">${currentComic.category}</span>
+                        <br>
                         <button class="btn-read" onclick="readChapter(0)">Đọc Ngay</button>
                     </div>
                 </div>
                 <div class="desc">📝 ${currentComic.desc || 'Chưa có mô tả'}</div>
-                <div style="background:#2d2d2d; padding:10px; border-radius:5px;">
-                    <b>Chương 1</b> <span style="float:right; color:#888">${pagesCount} trang</span>
+                <div style="background:#2d2d2d; padding:15px; border-radius:5px; display:flex; justify-content:space-between; align-items:center;">
+                    <b>Chương 1</b> <span style="color:#888">${pagesCount} trang</span>
                 </div>
             `;
             switchView('view-detail');
@@ -156,11 +176,9 @@
                 let img = document.createElement('img');
                 img.src = url;
                 img.className = 'img-page';
-                img.loading = "lazy"; // Tải nhanh hơn
-                
-                // Báo lỗi nếu thiếu ảnh
+                img.loading = "lazy";
                 img.onerror = function() {
-                    this.outerHTML = `<div style="color:red; border:1px dashed red; padding:20px; text-align:center; margin:10px;">❌ Thiếu ảnh: ${url}</div>`;
+                    this.outerHTML = `<div style="color:#ff4757; border:1px dashed #ff4757; padding:20px; text-align:center; margin:10px; border-radius:8px;">❌ Thiếu ảnh: ${url}</div>`;
                 };
                 container.appendChild(img);
             });
@@ -174,9 +192,14 @@
             document.getElementById(id).classList.add('active');
             window.scrollTo(0,0);
         }
-        function goHome() { switchView('view-home'); renderHome(); }
+        function goHome() { 
+            document.getElementById('searchInput').value = ''; // Xóa ô tìm kiếm khi về trang chủ
+            renderHome(); 
+            switchView('view-home'); 
+        }
         function backToDetail() { openComic(currentComic.id); }
 
+        // Khởi chạy lần đầu
         renderHome();
     </script>
 </body>

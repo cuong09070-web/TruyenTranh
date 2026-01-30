@@ -3,118 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kho Truyện Pro Max</title>
+    <title>Kho Truyện Pro</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* --- GIAO DIỆN DARK MODE CAO CẤP --- */
+        /* --- GIAO DIỆN DARK MODE --- */
         :root { --bg: #0f0f0f; --card: #1f1f1f; --text: #e0e0e0; --red: #E50914; --blue: #46d369; --gray: #aaa; }
         * { box-sizing: border-box; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding-top: 60px; padding-bottom: 70px; }
-        a { text-decoration: none; color: inherit; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; padding-top: 60px; padding-bottom: 70px; }
         
         /* HEADER */
-        header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 1000; border-bottom: 1px solid #333; }
-        .logo { font-weight: bold; color: var(--red); font-size: 1.3rem; display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        
-        /* MENU DƯỚI (NAVIGATION BAR) - GIỐNG APP ĐIỆN THOẠI */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #1a1a1a; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; z-index: 1000; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; color: #777; cursor: pointer; transition: 0.3s; }
-        .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
-        .nav-item.active { color: var(--red); }
-
-        /* THANH TÌM KIẾM */
-        .search-container { margin: 20px 15px; }
-        .search-input { width: 100%; padding: 12px 20px; border-radius: 30px; border: 1px solid #333; background: #222; color: white; font-size: 1rem; outline: none; transition: 0.3s; }
-        .search-input:focus { border-color: var(--red); background: #333; }
+        header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: rgba(20, 20, 20, 0.95); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 1000; border-bottom: 1px solid #333; }
+        .logo { font-weight: bold; color: var(--red); font-size: 1.3rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .user-greeting { font-size: 0.8rem; color: #bbb; border: 1px solid #444; padding: 5px 10px; border-radius: 15px; cursor: pointer; }
 
         /* GRID VIEW */
-        .view { display: none; padding: 0 15px 20px 15px; min-height: 100vh; animation: fadeEffect 0.4s; }
+        .view { display: none; padding: 10px 15px 20px 15px; min-height: 100vh; }
         .view.active { display: block; }
-        @keyframes fadeEffect { from {opacity: 0;} to {opacity: 1;} }
-
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-        .card { background: var(--card); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .card { background: var(--card); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .card:hover { transform: translateY(-5px); border: 1px solid #444; }
         .card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
         .card-info { padding: 10px; }
         .card h3 { margin: 0; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
         .card-cat { font-size: 0.75rem; color: var(--gray); margin-top: 3px; display: block; }
-        .badge { position: absolute; top: 5px; right: 5px; background: rgba(229, 9, 20, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; }
 
         /* CHI TIẾT TRUYỆN */
-        .detail-header { position: relative; height: 250px; overflow: hidden; margin: -20px -15px 20px -15px; }
-        .backdrop { width: 100%; height: 100%; object-fit: cover; filter: blur(20px) brightness(0.4); }
-        .detail-info-container { position: absolute; bottom: 20px; left: 15px; right: 15px; display: flex; gap: 15px; align-items: flex-end; }
-        .cover-small { width: 110px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); }
-        .info-text h1 { margin: 0 0 5px 0; font-size: 1.4rem; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-        .info-meta { font-size: 0.85rem; color: #ddd; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .detail-header { position: relative; height: 220px; overflow: hidden; margin: -10px -15px 15px -15px; }
+        .backdrop { width: 100%; height: 100%; object-fit: cover; filter: blur(15px) brightness(0.4); }
+        .detail-info-container { position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; gap: 15px; align-items: flex-end; }
+        .cover-small { width: 100px; border-radius: 6px; box-shadow: 0 5px 15px rgba(0,0,0,0.6); border: 2px solid rgba(255,255,255,0.2); }
+        .info-text h1 { margin: 0 0 5px 0; font-size: 1.3rem; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         
-        .action-bar { display: flex; gap: 10px; margin-bottom: 20px; }
-        .btn-action { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
-        .btn-read { background: white; color: black; }
-        .btn-speak { background: rgba(255,255,255,0.2); color: white; backdrop-filter: blur(5px); }
+        /* THANH NÚT BẤM (QUAN TRỌNG) */
+        .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+        .btn-action { padding: 10px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; font-size: 0.8rem; color: white; transition: 0.2s; }
         
-        /* PHẦN TƯƠNG TÁC (Đánh giá, Emotion) */
-        .section-title { font-size: 1.1rem; font-weight: bold; margin: 25px 0 15px 0; border-left: 4px solid var(--red); padding-left: 10px; }
-        .emotion-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
-        .tag-btn { background: #333; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; border: 1px solid #444; cursor: pointer; transition: 0.2s; }
-        .tag-btn:hover, .tag-btn.selected { background: var(--red); border-color: var(--red); }
+        .btn-read { background: var(--red); }
+        .btn-video { background: #222; border: 1px solid #444; }
+        .btn-listen { background: #1e88e5; }
         
-        .rating-stars { font-size: 1.5rem; color: #444; cursor: pointer; margin-bottom: 10px; }
-        .rating-stars span:hover, .rating-stars span.active { color: #f5c518; }
+        .btn-action:hover { opacity: 0.9; transform: scale(0.98); }
+        .btn-action i { font-size: 1.1rem; }
 
-        /* COMMENT BOX */
-        .comment-box textarea { width: 100%; background: #222; border: 1px solid #444; color: white; padding: 10px; border-radius: 8px; min-height: 80px; resize: vertical; margin-bottom: 10px; }
-        .btn-submit { background: var(--blue); color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; float: right; }
+        /* TƯƠNG TÁC */
+        .section-title { font-size: 1rem; font-weight: bold; margin: 25px 0 10px 0; border-left: 3px solid var(--red); padding-left: 10px; color: #fff; }
+        .emotion-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .tag-btn { background: #333; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid #444; cursor: pointer; }
+        .tag-btn.selected { background: var(--red); border-color: var(--red); }
+        .tag-user-list { font-size: 0.7rem; color: #888; margin-left: 5px; font-style: italic; }
+
+        /* BÌNH LUẬN */
+        .comment-box textarea { width: 100%; background: #222; border: 1px solid #444; color: white; padding: 10px; border-radius: 8px; min-height: 60px; margin-bottom: 10px; }
+        .btn-submit { background: var(--blue); color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; float: right; font-weight: bold; }
         .comment-list { margin-top: 40px; }
-        .comment-item { background: #222; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 3px solid #555; }
-        .comment-user { font-weight: bold; color: var(--gray); font-size: 0.8rem; margin-bottom: 4px; }
+        .comment-item { background: #222; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
+        .comment-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem; }
+        .cmt-user { font-weight: bold; color: var(--blue); }
+        .cmt-time { color: #666; font-size: 0.7rem; }
 
-        /* RELATED COMICS */
-        .related-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; }
-        .related-card { min-width: 120px; cursor: pointer; }
-        .related-card img { width: 120px; border-radius: 6px; aspect-ratio: 2/3; object-fit: cover; }
-        .related-card p { font-size: 0.85rem; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        /* READER */
+        /* TRÌNH ĐỌC FULL MÀN HÌNH */
         #reader-view { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; display: none; flex-direction: column; }
-        #reader-content { flex: 1; overflow-y: auto; text-align: center; }
+        #reader-content { flex: 1; overflow-y: auto; text-align: center; display: flex; justify-content: center; align-items: center; }
         .reader-bar { background: rgba(0,0,0,0.9); padding: 10px; display: flex; justify-content: space-between; align-items: center; color: white; }
-        .img-page { width: 100%; max-width: 800px; display: block; margin: 0 auto 2px auto; }
-        .mode-manga { display: flex; justify-content: center; align-items: center; height: 100%; }
-        .mode-manga img { max-height: 100vh; object-fit: contain; display: none; }
-        .mode-manga img.active { display: block; }
-        .video-wrapper iframe, .video-wrapper video { width: 100%; height: 100%; }
-
-        /* TIỆN ÍCH KHÁC */
-        .empty-state { text-align: center; color: #666; padding: 50px; }
-        .history-item { display: flex; gap: 10px; background: #222; padding: 10px; margin-bottom: 10px; border-radius: 8px; cursor: pointer; }
-        .history-item img { width: 60px; height: 90px; object-fit: cover; border-radius: 4px; }
+        .img-page { width: 100%; max-width: 800px; display: block; margin: 0 auto; }
+        
+        /* THANH ĐIỀU HƯỚNG DƯỚI */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #1a1a1a; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; z-index: 1000; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; color: #777; cursor: pointer; }
+        .nav-item.active { color: var(--red); }
+        .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">
-            <i class="fas fa-book-open"></i> Kho Truyện
-        </div>
-        <div style="display:flex; gap:15px;">
-             <a href="https://www.facebook.com/profile.php?id=61582811984720" target="_blank" style="color: #1877F2;">
-                <i class="fab fa-facebook fa-lg"></i>
-            </a>
-        </div>
+        <div class="logo"><i class="fas fa-book-open"></i> Kho Truyện</div>
+        <div class="user-greeting" onclick="changeName()" id="user-display">Khách</div>
     </header>
 
     <div id="tab-home" class="view active">
-        <div class="search-container">
-            <input type="text" id="search" class="search-input" placeholder="🔍 Tìm kiếm truyện, video..." oninput="renderHome()">
-        </div>
+        <input type="text" id="search" placeholder="🔍 Tìm kiếm..." style="width:100%; padding:10px; border-radius:20px; border:none; background:#222; color:white; margin-bottom:15px;" oninput="renderHome()">
         <div id="grid-home" class="grid"></div>
-    </div>
-
-    <div id="tab-history" class="view">
-        <h2 style="border-left: 4px solid var(--red); padding-left: 10px;">Lịch sử xem</h2>
-        <div id="history-list"></div>
     </div>
 
     <div id="view-detail" class="view" style="display: none; padding-top: 0;">
@@ -124,29 +93,19 @@
     <div id="reader-view">
         <div class="reader-bar">
             <i class="fas fa-arrow-left" onclick="closeReader()" style="cursor:pointer; padding: 10px;"></i>
-            <span id="reader-title" style="font-weight: bold; overflow: hidden; white-space: nowrap; max-width: 200px;"></span>
-            <div>
-                <i class="fas fa-scroll" id="btn-mode" onclick="toggleMode()" style="cursor:pointer; padding: 10px;"></i>
-            </div>
+            <span id="reader-title" style="font-weight: bold;"></span>
+            <span id="speak-status" style="font-size:0.8rem; color:#46d369; display:none;">🔊 Đang đọc...</span>
         </div>
         <div id="reader-content"></div>
-        <div id="manga-nav" style="position:fixed; bottom:20px; width:100%; display:none; justify-content:space-between; padding:0 20px; pointer-events:none;">
-            <button onclick="changePage(-1)" style="pointer-events:auto; background:rgba(255,255,255,0.2); border:none; color:white; padding:15px; border-radius:50%;"><i class="fas fa-chevron-left"></i></button>
-            <button onclick="changePage(1)" style="pointer-events:auto; background:rgba(255,255,255,0.2); border:none; color:white; padding:15px; border-radius:50%;"><i class="fas fa-chevron-right"></i></button>
-        </div>
     </div>
 
     <nav class="bottom-nav">
-        <div class="nav-item active" onclick="switchTab('home')">
-            <i class="fas fa-home"></i> Trang chủ
-        </div>
-        <div class="nav-item" onclick="switchTab('history')">
-            <i class="fas fa-history"></i> Lịch sử
-        </div>
+        <div class="nav-item active" onclick="switchTab('home')"><i class="fas fa-home"></i> Trang chủ</div>
+        <a href="https://www.facebook.com/profile.php?id=61582811984720" target="_blank" class="nav-item"><i class="fab fa-facebook"></i> Fanpage</a>
     </nav>
 
     <script>
-        // ================= DATA CẤU HÌNH =================
+        // ================= CẤU HÌNH DỮ LIỆU =================
         function layAnh(tienTo, tuSo, denSo) {
             let arr = []; 
             for(let i=tuSo; i<=denSo; i++) arr.push(`images/${tienTo}${i}.jpg`); 
@@ -158,9 +117,37 @@
                 id: "cotham",
                 title: "Sự Tích Đền Cô Thắm",
                 cat: "Truyền thuyết",
-                cover: "images/1.jpg", // Ảnh bìa
-                video: "videos/cotham.mp4", // File video
-                desc: "Câu chuyện cảm động về người con gái tài sắc vẹn toàn...",
+                cover: "images/1.jpg", 
+                video: "videos/cotham.mp4", 
+                // NỘI DUNG VĂN BẢN ĐỂ MÁY ĐỌC (Bạn hãy copy nội dung truyện dán vào đây)
+                fullText: "SỰ TÍCH ĐỀN CÔ THẮM
+
+Ngày xưa, ở Tràng Cổ (Chợ Mới) có hai bố con một ông lão đánh cá nghèo khổ. Cô con gái tên là Thắm. Một năm nọ, nước lũ ngập khắp vùng núi non. Ông lão mất hết chài lưới, chỉ giữ lại được một cái chài con và một chiếc thuyền cũ kỹ.
+
+Sau khi nước rút, ông lão lại đi đánh cá. Nhưng lạ thay, ông quăng chài đến rã rời cả tay mà không được con cá nào. Mãi đến chiều, ông mới kéo được một mẻ chài rất nặng, mừng thầm vì tưởng được cá to. Nhưng khi nhấc chài lên thì đó chỉ là một hòn đá lớn.
+
+Ông lão vứt hòn đá đi và tiếp tục quăng chài, nhưng lần nào cũng chỉ vớt lên hòn đá cũ ấy. Ông vứt ra xa, rồi chạy đi cách mấy vạt sông mới quăng chài lại, nhưng vẫn kéo lên hòn đá đó. Ông đã kiệt sức vì đói, bởi từ khi có trận lũ, ông lão chẳng được bữa nào no.
+
+Trong cơn căm tức, ông lão chửi đổng hòn đá, định vứt đi lần nữa thì hòn đá đột nhiên cất tiếng nói như người:
+– Ông lão hãy mang tôi về nhà, tôi sẽ giúp ông sống sung sướng!
+
+Ngạc nhiên, ông lão bèn mang hòn đá về nhà. Khi đặt hòn đá xuống trước cửa, nó bỗng vỡ làm đôi, bên trong lộ ra cả một hũ vàng. Từ đó, hai bố con ông lão sống sung túc.
+
+Nhưng thương những người nghèo khổ trong vùng, ông lão cùng cô con gái đem vàng bán lấy tiền chia cho dân nghèo. Từ đấy, mọi người đều gọi ông là ông lão đánh cá tốt bụng.
+
+Ông lão cảm tạ thần thánh đã ban cho mình vàng bạc, liền dựng một cái lều nhỏ, lợp lá cọ để thờ hai mảnh đá.
+
+Rồi ông lão cũng qua đời. Cô Thắm ngày càng lớn, ngày càng xinh đẹp. Cô vẫn theo nghề chài lưới của cha, lại thường xuyên giúp đỡ dân làng như ông ngày trước, nên được mọi người hết mực kính trọng.
+
+Tiếng đồn về sắc đẹp của Thắm đến tai một tên nhà giàu trong vùng. Hắn ép Thắm làm vợ, khiến cô phải sống những ngày tháng cay đắng.
+
+Một năm nọ, giặc ngoại bang tràn sang cướp phá nước ta, nhân dân lầm than khổ cực. Tên nhà giàu làm tay sai cho giặc. Cô Thắm trốn khỏi nhà hắn, tập hợp nhân dân trong vùng đứng lên chống giặc.
+
+Cô trở thành một nữ tướng chỉ huy quân dân đánh giặc ngoại xâm. Biết vợ cũ cầm quân, tên nhà giàu dẫn giặc đến tấn công cô. Một trận kịch chiến ác liệt đã diễn ra tại ngã ba sông Tràng Cổ. Cô Thắm vung gươm chỉ huy quân sĩ, đánh giặc chết như rạ, bản thân cô cũng chém chết không biết bao nhiêu tên giặc.
+
+Nhưng trong trận chiến ấy, cô bị trúng tên tẩm thuốc độc và hy sinh. Để trả thù cho nữ tướng, quân của cô đã đánh tan quân giặc, đồng thời giết chết tên nhà giàu phản quốc.
+
+Để tưởng nhớ nữ tướng dũng cảm, nhân dân ở Thanh Bình (Chợ Mới) đã lập đền thờ cô ngay trên nền nhà cũ. Ngày nay, đứng từ Chợ Mới nhìn xuống dòng sông, vẫn thấy ngôi đền thờ Cô Thắm. Mỗi dịp lễ hội, nhân dân khắp vùng lại đến dâng hương, tưởng nhớ Cô Thắm – vị nữ tướng anh hùng.", 
                 chapters: [{ name: "Full Story", pages: layAnh("", 1, 13) }]
             },
             {
@@ -169,8 +156,8 @@
                 cat: "Cổ tích",
                 cover: "images/14.jpg",
                 video: "videos/yembo.mp4",
-                desc: "Giải thích nguồn gốc chiếc yếm ở ngực loài bò.",
-                chapters: [{ name: "Full Story", pages: layAnh("", 14, 24) }]
+                fullText: "Ngày xưa trâu và bò là đôi bạn thân. Một hôm có hội làng, trâu và bò cùng nhau đi dự...",
+                chapters: [{ name: "Full Story", pages: layAnh("", 14, 23) }]
             },
             {
                 id: "hatlua",
@@ -178,7 +165,7 @@
                 cat: "Cổ tích",
                 cover: "images/25.jpg",
                 video: "videos/hatlua.mp4",
-                desc: "Ngày xưa hạt lúa rất to, tại sao giờ lại nhỏ?",
+                fullText: "Ngày xưa hạt lúa rất to, to như cái gáo dừa và tự lăn về nhà...",
                 chapters: [{ name: "Full Story", pages: layAnh("", 25, 35) }]
             },
             {
@@ -187,7 +174,7 @@
                 cat: "Truyện ngắn",
                 cover: "images/36.jpg",
                 video: "videos/vocam.mp4",
-                desc: "Câu chuyện tình nghĩa vợ chồng sâu sắc.",
+                fullText: "Có anh chàng nọ lấy phải người vợ câm, nhưng cô rất đảm đang tháo vát...",
                 chapters: [{ name: "Full Story", pages: layAnh("", 36, 41) }]
             },
             {
@@ -196,7 +183,14 @@
                 cat: "Ngụ ngôn",
                 cover: "images/42.jpg",
                 video: "videos/echchuot.mp4",
-                desc: "Bài học về sự lừa lọc và cái kết.",
+                fullText: "ẾCH VÀ CHUỘT
+Ngày xửa, ngày xưa, ếch và chuột vốn là một thân. Nhà chuột ở trên cây cao còn nhà ếch ở ngoài bờ ruộng. Chuột rất hay đến nhà ếch chơi nhưng ếch chả làm thế nào để đến nhà bạn chơi được vì chân tay yếu và không biết leo trèo như chuột.
+Ngày nọ, chuột tỉ tê tâm sự với ếch:
+-Bạn ếch này, chúng mình chơi với nhau đã lâu. Tôi thì đến thăm bạn suốt, còn bạn thì chưa đến nhà tôi chơi lần nào cả.
+Nghe bạn nói, ếch buồn bã trả lời:
+- Tôi cũng muốn đến lắm, nhưng nhà bạn ở cao thể, làm sao tôi đến được.
+- Bạn cứ ngậm chặt vào đuôi tôi, tôi sẽ kéo bạn lên nhà chơi. Nhưng bạn nhớ khi sắp lên đến nhà, vợ tôi có ra chào thì cũng đừng vội đáp nhé. Dặn dò nhau xong, hai đứa liền kéo nhau đến nhà chuột. Đến cây cao nơi chuột ở, ếch ta liền ngậm chặt vào đuôi để chuột kéo lên. Đến sát nhà, thấy có khách đến chơi, vợ chuột vội ra chào. Vốn tính nhanh nhảu, ếch vội vàng đáp lại mà quên khuấy lời dặn của chuột khi trước. Bị rơi từ trên cao xuống nên mồm ếch bị bẹp kể từ ngày ấy. Và cũng từ đó mỗi khi thời tiết thay đổi, người ếch lại đau nhừ, khi ấy ếch lại kêu “ộp, ộp...” vì đau hối, vì hận bởi nhanh nhảu mà quên lời bạn dặn.
+",
                 chapters: [{ name: "Full Story", pages: layAnh("", 42, 51) }]
             },
             {
@@ -205,15 +199,49 @@
                 cat: "Ngụ ngôn",
                 cover: "images/52.jpg",
                 video: "videos/bococ.mp4",
-                desc: "Sự ganh đua vô lý của chú Cóc.",
+                fullText: "BÒ VÀ CÓC
+Ngày xửa, ngày xưa, cóc vốn là con vật có cái bụng tròn, thon nhỏ nên hay đi chơi được xa. Một hôm lên đồi chơi, cóc ta thấy một con bò to đang gặm cỏ bèn dừng lại, hỏi: 
+-Bò ơi, mày làm thế nào mà to béo thế?
+ Bò trả lời:
+-Muốn to béo như tôi thì dễ thôi, cứ hít hơi nhiều vào rồi nín thở phồng bụng lên là được.
+ Nghe bò nói cóc ta lập tức làm theo. Vừa nín thở, phồng bụng, cóc vừa cố hỏi: -Thế này được chưa ?
+Bò lắc đầu:
+- Chưa được!
+Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ bụng chết. Loài cóc ngày nay có cái bụng phồng to và chỉ biết loanh quanh ở những xó tối chứ không đi chơi xa được nữa là vì vậy.
+",
                 chapters: [{ name: "Full Story", pages: layAnh("", 52, 62) }]
             }
         ];
 
+        // ================= LOGIC NGƯỜI DÙNG =================
+        let currentUser = localStorage.getItem('username') || "Khách";
+        document.getElementById('user-display').innerText = currentUser;
+
+        function checkUser() {
+            if (currentUser === "Khách") {
+                let name = prompt("Chào bạn mới! Hãy nhập tên của bạn để bình luận nhé:");
+                if (name && name.trim() !== "") {
+                    currentUser = name;
+                    localStorage.setItem('username', name);
+                    document.getElementById('user-display').innerText = name;
+                    return true;
+                }
+                return false;
+            }
+            return true;
+        }
+
+        function changeName() {
+            let name = prompt("Đổi tên hiển thị:", currentUser);
+            if (name && name.trim() !== "") {
+                currentUser = name;
+                localStorage.setItem('username', name);
+                document.getElementById('user-display').innerText = name;
+            }
+        }
+
         // ================= LOGIC CHÍNH =================
         let currentItem = null;
-        let readerMode = 'webtoon'; // webtoon hoặc manga
-        let pageIndex = 0;
 
         // 1. Render Trang Chủ
         function renderHome() {
@@ -223,13 +251,11 @@
             
             const results = database.filter(i => i.title.toLowerCase().includes(key));
             
-            if(results.length == 0) container.innerHTML = "<p class='empty-state'>Không tìm thấy truyện nào.</p>";
+            if(results.length == 0) container.innerHTML = "<p style='color:#777; text-align:center;'>Không tìm thấy truyện.</p>";
 
             results.forEach(item => {
-                let badge = item.video ? '<div class="badge">VIDEO</div>' : '';
                 container.innerHTML += `
                 <div class="card" onclick="openDetail('${item.id}')">
-                    ${badge}
                     <img src="${item.cover}" onerror="this.src='https://via.placeholder.com/200'">
                     <div class="card-info">
                         <h3>${item.title}</h3>
@@ -239,27 +265,22 @@
             });
         }
 
-        // 2. Mở Chi Tiết Truyện (Kèm tính năng mới)
+        // 2. Mở Chi Tiết Truyện
         function openDetail(id) {
             currentItem = database.find(i => i.id === id);
-            
-            // Ẩn các tab, hiện view detail
-            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.getElementById('tab-home').style.display = 'none';
             document.getElementById('view-detail').style.display = 'block';
             window.scrollTo(0,0);
 
-            // Lưu lịch sử
-            addToHistory(currentItem);
+            // Lấy dữ liệu local (comment, reaction)
+            const localData = JSON.parse(localStorage.getItem('data_' + id)) || { comments: [], emotions: {} };
 
-            // Lấy comment và rating từ LocalStorage
-            const localData = JSON.parse(localStorage.getItem('comic_data_' + id)) || { comments: [], rating: 0, emotions: [] };
+            // Nút Video (Chỉ hiện nếu có video)
+            let btnVideo = currentItem.video ? 
+                `<button class="btn-action btn-video" onclick="startVideo()"><i class="fas fa-play"></i> Xem Video</button>` : 
+                `<button class="btn-action btn-video" style="opacity:0.5; cursor:not-allowed;"><i class="fas fa-video-slash"></i> Không Video</button>`;
 
-            // Render giao diện chi tiết
             const content = document.getElementById('detail-content');
-            let btnAction = currentItem.video ? 
-                `<button class="btn-action btn-read" onclick="startReader('video')"><i class="fas fa-play"></i> Xem Video</button>` :
-                `<button class="btn-action btn-read" onclick="startReader('comic')"><i class="fas fa-book-reader"></i> Đọc Ngay</button>`;
-
             content.innerHTML = `
                 <div class="detail-header">
                     <img src="${currentItem.cover}" class="backdrop">
@@ -267,116 +288,120 @@
                         <img src="${currentItem.cover}" class="cover-small">
                         <div class="info-text">
                             <h1>${currentItem.title}</h1>
-                            <div class="info-meta">${currentItem.cat} • ${currentItem.chapters[0].pages.length} trang</div>
+                            <div style="font-size:0.8rem; color:#ccc;">${currentItem.cat} • ${currentItem.chapters[0].pages.length} trang</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="action-bar">
-                    ${btnAction}
-                    <button class="btn-action btn-speak" onclick="speakDesc()"><i class="fas fa-volume-up"></i> Nghe mô tả</button>
+                    <button class="btn-action btn-read" onclick="startComic()"><i class="fas fa-book-open"></i> Đọc Truyện</button>
+                    ${btnVideo}
+                    <button class="btn-action btn-listen" onclick="startSpeaking()"><i class="fas fa-headphones"></i> Nghe Kể</button>
                 </div>
 
                 <div style="padding: 0 15px;">
-                    <p style="color:#ccc; line-height:1.6;">${currentItem.desc}</p>
-                    
                     <div class="section-title">Cảm xúc của bạn</div>
                     <div class="emotion-tags">
-                        <div class="tag-btn" onclick="toggleEmotion(this, '❤️ Yêu thích')">❤️ Yêu thích</div>
-                        <div class="tag-btn" onclick="toggleEmotion(this, '😂 Hài hước')">😂 Hài hước</div>
-                        <div class="tag-btn" onclick="toggleEmotion(this, '😭 Cảm động')">😭 Cảm động</div>
-                        <div class="tag-btn" onclick="toggleEmotion(this, '👻 Sợ hãi')">👻 Sợ hãi</div>
-                    </div>
-
-                    <div class="section-title">Đánh giá truyện</div>
-                    <div class="rating-stars" id="rating-area">
-                        ${[1,2,3,4,5].map(s => `<span onclick="rate(${s})"><i class="${s <= localData.rating ? 'fas' : 'far'} fa-star"></i></span>`).join('')}
+                        ${renderEmotions(localData.emotions)}
                     </div>
 
                     <div class="section-title">Bình luận</div>
                     <div class="comment-box">
-                        <textarea id="cmt-input" placeholder="Viết bình luận của bạn..."></textarea>
+                        <textarea id="cmt-input" placeholder="Bạn ${currentUser} nghĩ gì về truyện này?"></textarea>
                         <button class="btn-submit" onclick="postComment()">Gửi</button>
                     </div>
                     <div class="comment-list" id="cmt-list">
                         ${renderComments(localData.comments)}
                     </div>
-
-                    <div class="section-title">Truyện tương tự</div>
-                    <div class="related-scroll" id="related-list"></div>
                 </div>
             `;
-            
-            renderRelated(currentItem.cat, currentItem.id);
         }
 
-        // --- CÁC TÍNH NĂNG MỚI ---
+        // --- CÁC CHỨC NĂNG ĐỌC/XEM/NGHE ---
 
-        // A. Đọc mô tả bằng giọng nói (TTS)
-        function speakDesc() {
+        // A. Đọc Truyện (Ảnh)
+        function startComic() {
+            openReaderMode();
+            const container = document.getElementById('reader-content');
+            container.innerHTML = '';
+            // Load toàn bộ ảnh (Cuộn dọc)
+            currentItem.chapters[0].pages.forEach(url => {
+                let img = document.createElement('img');
+                img.src = url;
+                img.className = 'img-page';
+                img.loading = 'lazy';
+                container.appendChild(img);
+            });
+        }
+
+        // B. Xem Video
+        function startVideo() {
+            if(!currentItem.video) return;
+            openReaderMode();
+            const container = document.getElementById('reader-content');
+            container.innerHTML = `
+                <div style="width:100%; height:100%; background:black; display:flex; align-items:center; justify-content:center;">
+                    <video controls autoplay style="width:100%; max-height:100vh;">
+                        <source src="${currentItem.video}" type="video/mp4">
+                    </video>
+                </div>`;
+        }
+
+        // C. Nghe Kể Chuyện (TTS)
+        function startSpeaking() {
             if('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Dừng câu cũ
-                const utterance = new SpeechSynthesisUtterance(currentItem.desc);
-                utterance.lang = 'vi-VN'; // Giọng Việt
-                utterance.rate = 0.9; // Tốc độ đọc
+                // Kiểm tra xem có nội dung text không
+                let textToRead = currentItem.fullText;
+                if(!textToRead || textToRead.length < 10) {
+                    alert("Truyện này chưa có nội dung văn bản để đọc.");
+                    return;
+                }
+
+                // Hiển thị trạng thái đang đọc
+                document.getElementById('speak-status').style.display = 'inline';
+                
+                // Cấu hình giọng đọc
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.lang = 'vi-VN'; 
+                utterance.rate = 1.0; 
+                
+                // Sự kiện khi đọc xong
+                utterance.onend = function() {
+                    document.getElementById('speak-status').style.display = 'none';
+                };
+
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert("Trình duyệt của bạn không hỗ trợ đọc giọng nói.");
+                alert("Máy của bạn không hỗ trợ đọc giọng nói.");
             }
         }
 
-        // B. Lưu lịch sử đọc
-        function addToHistory(item) {
-            let history = JSON.parse(localStorage.getItem('read_history')) || [];
-            // Xóa nếu đã tồn tại để đưa lên đầu
-            history = history.filter(i => i.id !== item.id);
-            history.unshift({ id: item.id, title: item.title, cover: item.cover, time: new Date().toLocaleDateString() });
-            localStorage.setItem('read_history', JSON.stringify(history));
+        function openReaderMode() {
+            document.getElementById('reader-view').style.display = 'flex';
+            document.getElementById('reader-title').innerText = currentItem.title;
         }
 
-        function renderHistory() {
-            let history = JSON.parse(localStorage.getItem('read_history')) || [];
-            const container = document.getElementById('history-list');
-            if(history.length === 0) {
-                container.innerHTML = "<p class='empty-state'>Bạn chưa đọc truyện nào.</p>";
-                return;
-            }
-            container.innerHTML = history.map(h => `
-                <div class="history-item" onclick="openDetail('${h.id}')">
-                    <img src="${h.cover}">
-                    <div>
-                        <div style="font-weight:bold; margin-bottom:5px;">${h.title}</div>
-                        <div style="font-size:0.8rem; color:#888;">Đã xem: ${h.time}</div>
-                    </div>
-                </div>
-            `).join('');
+        function closeReader() {
+            document.getElementById('reader-view').style.display = 'none';
+            document.getElementById('reader-content').innerHTML = '';
+            window.speechSynthesis.cancel(); // Tắt giọng đọc
+            document.getElementById('speak-status').style.display = 'none';
         }
 
-        // C. Gợi ý truyện tương tự
-        function renderRelated(cat, currentId) {
-            const related = database.filter(i => i.cat === cat && i.id !== currentId);
-            const container = document.getElementById('related-list');
-            if(related.length === 0) {
-                container.innerHTML = "<p style='color:#666; font-size:0.9rem;'>Không có truyện tương tự.</p>";
-                return;
-            }
-            container.innerHTML = related.map(r => `
-                <div class="related-card" onclick="openDetail('${r.id}')">
-                    <img src="${r.cover}">
-                    <p>${r.title}</p>
-                </div>
-            `).join('');
-        }
-
-        // D. Bình luận & Đánh giá (Lưu LocalStorage)
+        // --- BÌNH LUẬN & CẢM XÚC ---
+        
         function postComment() {
+            if(!checkUser()) return; // Bắt buộc nhập tên
+
             const txt = document.getElementById('cmt-input').value;
             if(!txt.trim()) return;
             
-            const key = 'comic_data_' + currentItem.id;
-            let data = JSON.parse(localStorage.getItem(key)) || { comments: [], rating: 0 };
+            const key = 'data_' + currentItem.id;
+            let data = JSON.parse(localStorage.getItem(key)) || { comments: [], emotions: {} };
             
-            data.comments.unshift({ user: "Bạn", content: txt, time: "Vừa xong" });
+            // Lưu tên người dùng hiện tại vào bình luận
+            data.comments.unshift({ user: currentUser, content: txt, time: new Date().toLocaleDateString() });
             localStorage.setItem(key, JSON.stringify(data));
             
             document.getElementById('cmt-input').value = '';
@@ -387,122 +412,57 @@
             if(!arr || arr.length === 0) return "<p style='color:#666; font-size:0.85rem;'>Chưa có bình luận nào.</p>";
             return arr.map(c => `
                 <div class="comment-item">
-                    <div class="comment-user">${c.user} <span style="font-weight:normal; color:#666; font-size:0.7rem;">• ${c.time}</span></div>
+                    <div class="comment-header">
+                        <span class="cmt-user">${c.user}</span>
+                        <span class="cmt-time">${c.time}</span>
+                    </div>
                     <div>${c.content}</div>
                 </div>
             `).join('');
         }
 
-        function rate(star) {
-            const key = 'comic_data_' + currentItem.id;
-            let data = JSON.parse(localStorage.getItem(key)) || { comments: [], rating: 0 };
-            data.rating = star;
+        function toggleEmotion(emo) {
+            if(!checkUser()) return;
+
+            const key = 'data_' + currentItem.id;
+            let data = JSON.parse(localStorage.getItem(key)) || { comments: [], emotions: {} };
+            
+            // Logic đơn giản: Lưu danh sách người đã thả cảm xúc đó
+            if(!data.emotions[emo]) data.emotions[emo] = [];
+            
+            // Nếu người này đã thả rồi thì không thả nữa (hoặc toggle tùy ý)
+            if(!data.emotions[emo].includes(currentUser)) {
+                data.emotions[emo].push(currentUser);
+            }
+            
             localStorage.setItem(key, JSON.stringify(data));
             
-            // Re-render stars
-            document.getElementById('rating-area').innerHTML = [1,2,3,4,5].map(s => 
-                `<span onclick="rate(${s})"><i class="${s <= star ? 'fas' : 'far'} fa-star"></i></span>`
-            ).join('');
+            // Render lại
+            document.querySelector('.emotion-tags').innerHTML = renderEmotions(data.emotions);
         }
 
-        function toggleEmotion(btn, emo) {
-            btn.classList.toggle('selected');
+        function renderEmotions(emotionsObj) {
+            const list = ['❤️ Yêu thích', '😂 Hài hước', '😭 Cảm động', '👻 Sợ hãi'];
+            return list.map(emo => {
+                let users = emotionsObj[emo] || [];
+                let count = users.length;
+                let activeClass = users.includes(currentUser) ? 'selected' : '';
+                return `<div class="tag-btn ${activeClass}" onclick="toggleEmotion('${emo}')">
+                            ${emo} ${count > 0 ? `(${count})` : ''}
+                        </div>`;
+            }).join('');
         }
 
-        // --- TRÌNH ĐỌC (READER) ---
-        function startReader(type) {
-            document.getElementById('reader-view').style.display = 'flex';
-            document.getElementById('reader-title').innerText = currentItem.title;
-            const container = document.getElementById('reader-content');
-            container.innerHTML = '';
-            
-            if(type === 'video') {
-                document.getElementById('btn-mode').style.display = 'none'; // Ẩn nút chế độ
-                document.getElementById('manga-nav').style.display = 'none';
-                container.innerHTML = `
-                    <div style="width:100%; height:100%; background:black; display:flex; align-items:center;">
-                        <video controls autoplay style="width:100%; max-height:100vh;">
-                            <source src="${currentItem.video}" type="video/mp4">
-                        </video>
-                    </div>`;
-            } else {
-                document.getElementById('btn-mode').style.display = 'block';
-                pageIndex = 0;
-                setMode('webtoon');
-                
-                currentItem.chapters[0].pages.forEach((url, i) => {
-                    let img = document.createElement('img');
-                    img.src = url;
-                    img.className = 'img-page';
-                    img.loading = 'lazy';
-                    if(i === 0) img.classList.add('active');
-                    container.appendChild(img);
-                });
-            }
-        }
-
-        function closeReader() {
-            document.getElementById('reader-view').style.display = 'none';
-            // Dừng video nếu đang phát
-            document.getElementById('reader-content').innerHTML = '';
-            window.speechSynthesis.cancel(); // Dừng đọc giọng nói
-        }
-
-        function toggleMode() {
-            setMode(readerMode === 'webtoon' ? 'manga' : 'webtoon');
-        }
-
-        function setMode(mode) {
-            readerMode = mode;
-            const container = document.getElementById('reader-content');
-            const nav = document.getElementById('manga-nav');
-            const btn = document.getElementById('btn-mode');
-            
-            if(mode === 'webtoon') {
-                container.className = '';
-                nav.style.display = 'none';
-                btn.className = 'fas fa-book-open'; // Icon đổi thành sách
-            } else {
-                container.className = 'mode-manga';
-                nav.style.display = 'flex';
-                btn.className = 'fas fa-scroll'; // Icon đổi thành cuộn
-                updateMangaView();
-            }
-        }
-
-        function changePage(step) {
-            const imgs = document.querySelectorAll('.img-page');
-            let next = pageIndex + step;
-            if(next >= 0 && next < imgs.length) {
-                pageIndex = next;
-                updateMangaView();
-            }
-        }
-
-        function updateMangaView() {
-            const imgs = document.querySelectorAll('.img-page');
-            imgs.forEach((img, i) => {
-                img.classList.toggle('active', i === pageIndex);
-            });
-        }
-
-        // --- ĐIỀU HƯỚNG TAB ---
-        function switchTab(tabName) {
-            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
-            if(tabName === 'home') {
+        // --- ĐIỀU HƯỚNG ---
+        function switchTab(tab) {
+            if(tab === 'home') {
+                document.getElementById('view-detail').style.display = 'none';
                 document.getElementById('tab-home').style.display = 'block';
-                document.querySelectorAll('.nav-item')[0].classList.add('active');
-            } else if(tabName === 'history') {
-                document.getElementById('tab-history').style.display = 'block';
-                renderHistory();
-                document.querySelectorAll('.nav-item')[1].classList.add('active');
+                // Dừng đọc/xem
+                closeReader();
             }
-            window.scrollTo(0,0);
         }
 
-        // Khởi chạy
         renderHome();
     </script>
 </body>

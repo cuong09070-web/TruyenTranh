@@ -3,324 +3,506 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kho Truyện & Video</title>
+    <title>Kho Truyện Pro Max</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* --- GIAO DIỆN DARK MODE --- */
-        :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --red: #ff4757; --fb-blue: #1877F2; }
+        /* --- GIAO DIỆN DARK MODE CAO CẤP --- */
+        :root { --bg: #0f0f0f; --card: #1f1f1f; --text: #e0e0e0; --red: #E50914; --blue: #46d369; --gray: #aaa; }
         * { box-sizing: border-box; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: sans-serif; padding-top: 60px; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding-top: 60px; padding-bottom: 70px; }
         a { text-decoration: none; color: inherit; }
         
         /* HEADER */
-        header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: #2d3436; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 100; border-bottom: 1px solid #333; }
-        .logo { font-weight: bold; color: var(--red); font-size: 1.2rem; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 1000; border-bottom: 1px solid #333; }
+        .logo { font-weight: bold; color: var(--red); font-size: 1.3rem; display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* Nút điều hướng Header */
-        .header-controls { display: flex; gap: 10px; }
-        .btn-header { padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
-        .btn-home { background: #444; color: white; }
-        .btn-fb { background: var(--fb-blue); color: white; }
-        .btn-fb:hover { background: #145dbf; }
+        /* MENU DƯỚI (NAVIGATION BAR) - GIỐNG APP ĐIỆN THOẠI */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #1a1a1a; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; z-index: 1000; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; color: #777; cursor: pointer; transition: 0.3s; }
+        .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
+        .nav-item.active { color: var(--red); }
 
         /* THANH TÌM KIẾM */
-        .search-container { margin-bottom: 20px; }
-        .search-input { width: 100%; padding: 12px 15px; border-radius: 25px; border: 1px solid #444; background: #252525; color: white; font-size: 1rem; outline: none; transition: 0.3s; }
-        .search-input:focus { border-color: var(--red); box-shadow: 0 0 8px rgba(255, 71, 87, 0.3); }
+        .search-container { margin: 20px 15px; }
+        .search-input { width: 100%; padding: 12px 20px; border-radius: 30px; border: 1px solid #333; background: #222; color: white; font-size: 1rem; outline: none; transition: 0.3s; }
+        .search-input:focus { border-color: var(--red); background: #333; }
 
         /* GRID VIEW */
-        .view { display: none; padding: 20px; min-height: 100vh; }
+        .view { display: none; padding: 0 15px 20px 15px; min-height: 100vh; animation: fadeEffect 0.4s; }
         .view.active { display: block; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .card { background: var(--card); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s; position: relative; }
-        .card:hover { transform: translateY(-5px); }
+        @keyframes fadeEffect { from {opacity: 0;} to {opacity: 1;} }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        .card { background: var(--card); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .card:hover { transform: translateY(-5px); border: 1px solid #444; }
         .card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
         .card-info { padding: 10px; }
-        .card h3 { margin: 0; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .icon-overlay { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; }
+        .card h3 { margin: 0; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
+        .card-cat { font-size: 0.75rem; color: var(--gray); margin-top: 3px; display: block; }
+        .badge { position: absolute; top: 5px; right: 5px; background: rgba(229, 9, 20, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; }
 
-        /* CHI TIẾT */
-        .detail-top { display: flex; gap: 20px; margin-bottom: 20px; }
-        .cover-big { width: 120px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .btn-read { background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 20px; cursor: pointer; margin-top: 15px; font-weight: bold; font-size: 1rem; }
-        .desc { background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #bbb; border-left: 4px solid var(--red); line-height: 1.5; }
+        /* CHI TIẾT TRUYỆN */
+        .detail-header { position: relative; height: 250px; overflow: hidden; margin: -20px -15px 20px -15px; }
+        .backdrop { width: 100%; height: 100%; object-fit: cover; filter: blur(20px) brightness(0.4); }
+        .detail-info-container { position: absolute; bottom: 20px; left: 15px; right: 15px; display: flex; gap: 15px; align-items: flex-end; }
+        .cover-small { width: 110px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); }
+        .info-text h1 { margin: 0 0 5px 0; font-size: 1.4rem; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .info-meta { font-size: 0.85rem; color: #ddd; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
         
-        /* KHUNG VIDEO RIÊNG */
-        .video-section { margin-bottom: 20px; background: #000; border-radius: 8px; overflow: hidden; }
-        .video-title { font-weight: bold; margin-bottom: 5px; color: #fff; padding: 10px 0 0 10px; }
-        video.local-video { width: 100%; max-height: 400px; background: #000; outline: none; }
+        .action-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+        .btn-action { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
+        .btn-read { background: white; color: black; }
+        .btn-speak { background: rgba(255,255,255,0.2); color: white; backdrop-filter: blur(5px); }
+        
+        /* PHẦN TƯƠNG TÁC (Đánh giá, Emotion) */
+        .section-title { font-size: 1.1rem; font-weight: bold; margin: 25px 0 15px 0; border-left: 4px solid var(--red); padding-left: 10px; }
+        .emotion-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .tag-btn { background: #333; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; border: 1px solid #444; cursor: pointer; transition: 0.2s; }
+        .tag-btn:hover, .tag-btn.selected { background: var(--red); border-color: var(--red); }
+        
+        .rating-stars { font-size: 1.5rem; color: #444; cursor: pointer; margin-bottom: 10px; }
+        .rating-stars span:hover, .rating-stars span.active { color: #f5c518; }
+
+        /* COMMENT BOX */
+        .comment-box textarea { width: 100%; background: #222; border: 1px solid #444; color: white; padding: 10px; border-radius: 8px; min-height: 80px; resize: vertical; margin-bottom: 10px; }
+        .btn-submit { background: var(--blue); color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; float: right; }
+        .comment-list { margin-top: 40px; }
+        .comment-item { background: #222; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 3px solid #555; }
+        .comment-user { font-weight: bold; color: var(--gray); font-size: 0.8rem; margin-bottom: 4px; }
+
+        /* RELATED COMICS */
+        .related-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; }
+        .related-card { min-width: 120px; cursor: pointer; }
+        .related-card img { width: 120px; border-radius: 6px; aspect-ratio: 2/3; object-fit: cover; }
+        .related-card p { font-size: 0.85rem; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* READER */
-        #reader { display: flex; flex-direction: column; align-items: center; padding-bottom: 80px; }
-        .mode-webtoon img { width: 100%; max-width: 800px; display: block; margin-bottom: 2px; }
-        .mode-manga { position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: black; display: flex; align-items: center; justify-content: center; z-index: 50; }
-        .mode-manga img { max-height: 100%; max-width: 100%; object-fit: contain; display: none; }
+        #reader-view { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; display: none; flex-direction: column; }
+        #reader-content { flex: 1; overflow-y: auto; text-align: center; }
+        .reader-bar { background: rgba(0,0,0,0.9); padding: 10px; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .img-page { width: 100%; max-width: 800px; display: block; margin: 0 auto 2px auto; }
+        .mode-manga { display: flex; justify-content: center; align-items: center; height: 100%; }
+        .mode-manga img { max-height: 100vh; object-fit: contain; display: none; }
         .mode-manga img.active { display: block; }
+        .video-wrapper iframe, .video-wrapper video { width: 100%; height: 100%; }
 
-        /* CONTROLS */
-        .bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.95); padding: 10px; display: flex; justify-content: center; gap: 10px; border-top: 1px solid #333; z-index: 100; }
-        .btn-ctrl { background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
-        .btn-ctrl.active { background: var(--red); font-weight: bold; }
-        .nav-arrow { position: fixed; top: 50%; transform: translateY(-50%); background: rgba(255, 71, 87, 0.3); color: white; border: none; padding: 40px 15px; font-size: 2rem; cursor: pointer; z-index: 200; display: none; }
-        .nav-arrow:hover { background: rgba(255, 71, 87, 0.8); }
-        .mode-manga .nav-arrow { display: block; } .prev { left: 0; border-radius: 0 10px 10px 0; } .next { right: 0; border-radius: 10px 0 0 10px; }
+        /* TIỆN ÍCH KHÁC */
+        .empty-state { text-align: center; color: #666; padding: 50px; }
+        .history-item { display: flex; gap: 10px; background: #222; padding: 10px; margin-bottom: 10px; border-radius: 8px; cursor: pointer; }
+        .history-item img { width: 60px; height: 90px; object-fit: cover; border-radius: 4px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo" onclick="goHome()">📚 Kho Truyện</div>
-        <div class="header-controls">
-            <a href="https://www.facebook.com/profile.php?id=61582811984720" target="_blank" class="btn-header btn-fb">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
-                Fanpage
+        <div class="logo">
+            <i class="fas fa-book-open"></i> Kho Truyện
+        </div>
+        <div style="display:flex; gap:15px;">
+             <a href="https://www.facebook.com/profile.php?id=61582811984720" target="_blank" style="color: #1877F2;">
+                <i class="fab fa-facebook fa-lg"></i>
             </a>
-            <button class="btn-header btn-home" onclick="goHome()">Trang chủ</button>
         </div>
     </header>
 
-    <div id="view-home" class="view active">
+    <div id="tab-home" class="view active">
         <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Tìm kiếm truyện..." oninput="renderHome()">
+            <input type="text" id="search" class="search-input" placeholder="🔍 Tìm kiếm truyện, video..." oninput="renderHome()">
         </div>
-        <div id="grid" class="grid"></div>
+        <div id="grid-home" class="grid"></div>
     </div>
 
-    <div id="view-detail" class="view">
-        <button onclick="goHome()" style="background:none; border:none; color:#888; cursor:pointer; margin-bottom:10px;">❮ Quay lại</button>
+    <div id="tab-history" class="view">
+        <h2 style="border-left: 4px solid var(--red); padding-left: 10px;">Lịch sử xem</h2>
+        <div id="history-list"></div>
+    </div>
+
+    <div id="view-detail" class="view" style="display: none; padding-top: 0;">
         <div id="detail-content"></div>
     </div>
 
-    <div id="view-reader" class="view">
-        <div id="reader" class="mode-webtoon"></div>
-        <div class="bar">
-            <button class="btn-ctrl" onclick="backToDetail()">Thoát</button>
-            <div style="width:1px; background:#555; height:20px; margin:5px 0;"></div>
-            <button class="btn-ctrl active" id="btnWebtoon" onclick="setMode('webtoon')">📜 Cuộn dọc</button>
-            <button class="btn-ctrl" id="btnManga" onclick="setMode('manga')">📖 Từng trang</button>
+    <div id="reader-view">
+        <div class="reader-bar">
+            <i class="fas fa-arrow-left" onclick="closeReader()" style="cursor:pointer; padding: 10px;"></i>
+            <span id="reader-title" style="font-weight: bold; overflow: hidden; white-space: nowrap; max-width: 200px;"></span>
+            <div>
+                <i class="fas fa-scroll" id="btn-mode" onclick="toggleMode()" style="cursor:pointer; padding: 10px;"></i>
+            </div>
         </div>
-        <button class="nav-arrow prev" onclick="changePage(-1)">❮</button>
-        <button class="nav-arrow next" onclick="changePage(1)">❯</button>
+        <div id="reader-content"></div>
+        <div id="manga-nav" style="position:fixed; bottom:20px; width:100%; display:none; justify-content:space-between; padding:0 20px; pointer-events:none;">
+            <button onclick="changePage(-1)" style="pointer-events:auto; background:rgba(255,255,255,0.2); border:none; color:white; padding:15px; border-radius:50%;"><i class="fas fa-chevron-left"></i></button>
+            <button onclick="changePage(1)" style="pointer-events:auto; background:rgba(255,255,255,0.2); border:none; color:white; padding:15px; border-radius:50%;"><i class="fas fa-chevron-right"></i></button>
+        </div>
     </div>
 
-    <script>
-        // ============================================
-        // CẤU HÌNH DỮ LIỆU & HÀM TẠO ẢNH
-        // ============================================
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('home')">
+            <i class="fas fa-home"></i> Trang chủ
+        </div>
+        <div class="nav-item" onclick="switchTab('history')">
+            <i class="fas fa-history"></i> Lịch sử
+        </div>
+    </nav>
 
-        // Hàm tạo danh sách ảnh (Hỗ trợ tiền tố tên file)
-        // Ví dụ: layAnhTuSoDenSo('cotham_', 1, 13) -> images/cotham_1.jpg
-        function layAnhTuSoDenSo(tienTo, tuSo, denSo) {
-            let list = [];
-            let prefix = tienTo ? tienTo : ""; // Nếu không có tiền tố thì để trống
-            for(let i = tuSo; i <= denSo; i++) {
-                list.push(`images/${prefix}${i}.jpg`);
-            }
-            return list;
+    <script>
+        // ================= DATA CẤU HÌNH =================
+        function layAnh(tienTo, tuSo, denSo) {
+            let arr = []; 
+            for(let i=tuSo; i<=denSo; i++) arr.push(`images/${tienTo}${i}.jpg`); 
+            return arr; 
         }
 
         const database = [
             {
                 id: "cotham",
                 title: "Sự Tích Đền Cô Thắm",
-                category: "Truyền thuyết",
-                // Đặt tên file ảnh là: cotham_1.jpg ... cotham_13.jpg
-                cover: "images/1.jpg", 
-                desc: "Câu chuyện về người con gái tài sắc vẹn toàn, có công giúp đỡ nghĩa quân...",
-                videoFile: "videos/cotham.mp4", 
-                // Sử dụng hàm mới: Không có tiền tố (để trống) cho truyện đầu tiên
-                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo("", 1, 13) }]
+                cat: "Truyền thuyết",
+                cover: "images/1.jpg", // Ảnh bìa
+                video: "videos/cotham.mp4", // File video
+                desc: "Câu chuyện cảm động về người con gái tài sắc vẹn toàn...",
+                chapters: [{ name: "Full Story", pages: layAnh("", 1, 13) }]
             },
             {
                 id: "yembo",
-                title: "Sự Tích Chiếc Yếm Ở Ngực Bò",
-                category: "Cổ tích",
-                cover: "images/14.jpg", 
-                desc: "Giải thích vì sao loài bò lại có một miếng da như chiếc yếm ở trước ngực.",
-                videoFile: "videos/yembo.mp4", 
-                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo("", 14, 24) }]
+                title: "Sự Tích Chiếc Yếm Bò",
+                cat: "Cổ tích",
+                cover: "images/14.jpg",
+                video: "videos/yembo.mp4",
+                desc: "Giải thích nguồn gốc chiếc yếm ở ngực loài bò.",
+                chapters: [{ name: "Full Story", pages: layAnh("", 14, 24) }]
             },
             {
                 id: "hatlua",
-                title: "Tại Sao Ngày Nay Hạt Lúa Lại Nhỏ",
-                category: "Cổ tích",
-                cover: "images/25.jpg", 
-                desc: "Ngày xưa hạt lúa to như cái gáo dừa, tự lăn về nhà. Vì sao bây giờ nó lại bé đi?",
-                videoFile: "videos/hatlua.mp4",
-                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo("", 25, 35) }]
+                title: "Sự Tích Hạt Lúa",
+                cat: "Cổ tích",
+                cover: "images/25.jpg",
+                video: "videos/hatlua.mp4",
+                desc: "Ngày xưa hạt lúa rất to, tại sao giờ lại nhỏ?",
+                chapters: [{ name: "Full Story", pages: layAnh("", 25, 35) }]
             },
             {
                 id: "vocam",
                 title: "Người Vợ Câm",
-                category: "Truyện ngắn",
-                cover: "images/36.jpg", 
-                desc: "Một câu chuyện cảm động và mang ý nghĩa sâu sắc về tình vợ chồng.",
-                videoFile: "videos/vocam.mp4",
-                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo("", 36, 41) }]
+                cat: "Truyện ngắn",
+                cover: "images/36.jpg",
+                video: "videos/vocam.mp4",
+                desc: "Câu chuyện tình nghĩa vợ chồng sâu sắc.",
+                chapters: [{ name: "Full Story", pages: layAnh("", 36, 41) }]
             },
             {
                 id: "echchuot",
                 title: "Ếch và Chuột",
-                category: "Ngụ ngôn",
-                cover: "images/42.jpg", 
-                desc: "Câu chuyện ngụ ngôn về tình bạn xấu và hậu quả của việc hại người.",
-                videoFile: "videos/echchuot.mp4",
-                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo("", 42, 51) }]
+                cat: "Ngụ ngôn",
+                cover: "images/42.jpg",
+                video: "videos/echchuot.mp4",
+                desc: "Bài học về sự lừa lọc và cái kết.",
+                chapters: [{ name: "Full Story", pages: layAnh("", 42, 51) }]
             },
             {
                 id: "bococ",
                 title: "Bò và Cóc",
-                category: "Ngụ ngôn",
-                cover: "images/52.jpg", 
-                desc: "Bài học về sự ganh đua vô lý và cái kết của thói huênh hoang.",
-                videoFile: "videos/bococ.mp4",
-                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo("", 52, 62) }]
+                cat: "Ngụ ngôn",
+                cover: "images/52.jpg",
+                video: "videos/bococ.mp4",
+                desc: "Sự ganh đua vô lý của chú Cóc.",
+                chapters: [{ name: "Full Story", pages: layAnh("", 52, 62) }]
             }
         ];
 
-        // ============================================
-        // LOGIC ỨNG DỤNG (KHÔNG CẦN SỬA)
-        // ============================================
-        let currentComic = null;
-        let readerMode = 'webtoon';
-        let currentPageIndex = 0;
+        // ================= LOGIC CHÍNH =================
+        let currentItem = null;
+        let readerMode = 'webtoon'; // webtoon hoặc manga
+        let pageIndex = 0;
 
+        // 1. Render Trang Chủ
         function renderHome() {
-            const grid = document.getElementById('grid');
-            const keyword = document.getElementById('searchInput').value.toLowerCase();
-            grid.innerHTML = '';
-            const ketQuaLoc = database.filter(truyen => truyen.title.toLowerCase().includes(keyword));
+            const key = document.getElementById('search').value.toLowerCase();
+            const container = document.getElementById('grid-home');
+            container.innerHTML = '';
+            
+            const results = database.filter(i => i.title.toLowerCase().includes(key));
+            
+            if(results.length == 0) container.innerHTML = "<p class='empty-state'>Không tìm thấy truyện nào.</p>";
 
-            if (ketQuaLoc.length === 0) {
-                grid.innerHTML = '<p style="color:#666; text-align:center; grid-column: 1/-1;">Không tìm thấy truyện nào...</p>';
-                return;
-            }
-
-            ketQuaLoc.forEach(c => {
-                let videoBadge = c.videoFile ? '<div class="icon-overlay">▶ Có Video</div>' : '';
-                grid.innerHTML += `
-                    <div class="card" onclick="openComic('${c.id}')">
-                        ${videoBadge}
-                        <img src="${c.cover}" onerror="this.src='https://via.placeholder.com/200?text=Lỗi+Ảnh'">
-                        <div class="card-info">
-                            <h3>${c.title}</h3>
-                            <small style="color:#888">${c.category}</small>
-                        </div>
-                    </div>`;
+            results.forEach(item => {
+                let badge = item.video ? '<div class="badge">VIDEO</div>' : '';
+                container.innerHTML += `
+                <div class="card" onclick="openDetail('${item.id}')">
+                    ${badge}
+                    <img src="${item.cover}" onerror="this.src='https://via.placeholder.com/200'">
+                    <div class="card-info">
+                        <h3>${item.title}</h3>
+                        <span class="card-cat">${item.cat}</span>
+                    </div>
+                </div>`;
             });
         }
 
-        function openComic(id) {
-            currentComic = database.find(c => c.id === id);
-            const content = document.getElementById('detail-content');
-            let pagesCount = currentComic.chapters[0].pages.length;
+        // 2. Mở Chi Tiết Truyện (Kèm tính năng mới)
+        function openDetail(id) {
+            currentItem = database.find(i => i.id === id);
+            
+            // Ẩn các tab, hiện view detail
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.getElementById('view-detail').style.display = 'block';
+            window.scrollTo(0,0);
 
-            let videoHTML = '';
-            if (currentComic.videoFile) {
-                videoHTML = `
-                    <div class="video-section">
-                        <div class="video-title">🎥 Video Minh Họa</div>
-                        <video class="local-video" controls>
-                            <source src="${currentComic.videoFile}" type="video/mp4">
-                            Trình duyệt của bạn không hỗ trợ thẻ video.
-                        </video>
-                    </div>
-                `;
-            }
+            // Lưu lịch sử
+            addToHistory(currentItem);
+
+            // Lấy comment và rating từ LocalStorage
+            const localData = JSON.parse(localStorage.getItem('comic_data_' + id)) || { comments: [], rating: 0, emotions: [] };
+
+            // Render giao diện chi tiết
+            const content = document.getElementById('detail-content');
+            let btnAction = currentItem.video ? 
+                `<button class="btn-action btn-read" onclick="startReader('video')"><i class="fas fa-play"></i> Xem Video</button>` :
+                `<button class="btn-action btn-read" onclick="startReader('comic')"><i class="fas fa-book-reader"></i> Đọc Ngay</button>`;
 
             content.innerHTML = `
-                <div class="detail-top">
-                    <img src="${currentComic.cover}" class="cover-big">
-                    <div>
-                        <h2 style="margin-top:0">${currentComic.title}</h2>
-                        <span style="background:#333; padding:2px 8px; border-radius:4px; font-size:0.8rem; color:#ccc">${currentComic.category}</span>
-                        <br>
-                        <button class="btn-read" onclick="readChapter(0)">Đọc Truyện Tranh</button>
+                <div class="detail-header">
+                    <img src="${currentItem.cover}" class="backdrop">
+                    <div class="detail-info-container">
+                        <img src="${currentItem.cover}" class="cover-small">
+                        <div class="info-text">
+                            <h1>${currentItem.title}</h1>
+                            <div class="info-meta">${currentItem.cat} • ${currentItem.chapters[0].pages.length} trang</div>
+                        </div>
                     </div>
                 </div>
-                <div class="desc">📝 ${currentComic.desc || 'Chưa có mô tả'}</div>
-                ${videoHTML}
-                <div style="background:#2d2d2d; padding:15px; border-radius:5px; display:flex; justify-content:space-between; align-items:center;">
-                    <b>Nội dung truyện tranh</b> <span style="color:#888">${pagesCount} trang</span>
+
+                <div class="action-bar">
+                    ${btnAction}
+                    <button class="btn-action btn-speak" onclick="speakDesc()"><i class="fas fa-volume-up"></i> Nghe mô tả</button>
+                </div>
+
+                <div style="padding: 0 15px;">
+                    <p style="color:#ccc; line-height:1.6;">${currentItem.desc}</p>
+                    
+                    <div class="section-title">Cảm xúc của bạn</div>
+                    <div class="emotion-tags">
+                        <div class="tag-btn" onclick="toggleEmotion(this, '❤️ Yêu thích')">❤️ Yêu thích</div>
+                        <div class="tag-btn" onclick="toggleEmotion(this, '😂 Hài hước')">😂 Hài hước</div>
+                        <div class="tag-btn" onclick="toggleEmotion(this, '😭 Cảm động')">😭 Cảm động</div>
+                        <div class="tag-btn" onclick="toggleEmotion(this, '👻 Sợ hãi')">👻 Sợ hãi</div>
+                    </div>
+
+                    <div class="section-title">Đánh giá truyện</div>
+                    <div class="rating-stars" id="rating-area">
+                        ${[1,2,3,4,5].map(s => `<span onclick="rate(${s})"><i class="${s <= localData.rating ? 'fas' : 'far'} fa-star"></i></span>`).join('')}
+                    </div>
+
+                    <div class="section-title">Bình luận</div>
+                    <div class="comment-box">
+                        <textarea id="cmt-input" placeholder="Viết bình luận của bạn..."></textarea>
+                        <button class="btn-submit" onclick="postComment()">Gửi</button>
+                    </div>
+                    <div class="comment-list" id="cmt-list">
+                        ${renderComments(localData.comments)}
+                    </div>
+
+                    <div class="section-title">Truyện tương tự</div>
+                    <div class="related-scroll" id="related-list"></div>
                 </div>
             `;
-            switchView('view-detail');
+            
+            renderRelated(currentItem.cat, currentItem.id);
         }
 
-        function readChapter(idx) {
-            const videoElement = document.querySelector('video');
-            if(videoElement) videoElement.pause();
+        // --- CÁC TÍNH NĂNG MỚI ---
 
-            const pages = currentComic.chapters[idx].pages;
-            const container = document.getElementById('reader');
+        // A. Đọc mô tả bằng giọng nói (TTS)
+        function speakDesc() {
+            if('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Dừng câu cũ
+                const utterance = new SpeechSynthesisUtterance(currentItem.desc);
+                utterance.lang = 'vi-VN'; // Giọng Việt
+                utterance.rate = 0.9; // Tốc độ đọc
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ đọc giọng nói.");
+            }
+        }
+
+        // B. Lưu lịch sử đọc
+        function addToHistory(item) {
+            let history = JSON.parse(localStorage.getItem('read_history')) || [];
+            // Xóa nếu đã tồn tại để đưa lên đầu
+            history = history.filter(i => i.id !== item.id);
+            history.unshift({ id: item.id, title: item.title, cover: item.cover, time: new Date().toLocaleDateString() });
+            localStorage.setItem('read_history', JSON.stringify(history));
+        }
+
+        function renderHistory() {
+            let history = JSON.parse(localStorage.getItem('read_history')) || [];
+            const container = document.getElementById('history-list');
+            if(history.length === 0) {
+                container.innerHTML = "<p class='empty-state'>Bạn chưa đọc truyện nào.</p>";
+                return;
+            }
+            container.innerHTML = history.map(h => `
+                <div class="history-item" onclick="openDetail('${h.id}')">
+                    <img src="${h.cover}">
+                    <div>
+                        <div style="font-weight:bold; margin-bottom:5px;">${h.title}</div>
+                        <div style="font-size:0.8rem; color:#888;">Đã xem: ${h.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // C. Gợi ý truyện tương tự
+        function renderRelated(cat, currentId) {
+            const related = database.filter(i => i.cat === cat && i.id !== currentId);
+            const container = document.getElementById('related-list');
+            if(related.length === 0) {
+                container.innerHTML = "<p style='color:#666; font-size:0.9rem;'>Không có truyện tương tự.</p>";
+                return;
+            }
+            container.innerHTML = related.map(r => `
+                <div class="related-card" onclick="openDetail('${r.id}')">
+                    <img src="${r.cover}">
+                    <p>${r.title}</p>
+                </div>
+            `).join('');
+        }
+
+        // D. Bình luận & Đánh giá (Lưu LocalStorage)
+        function postComment() {
+            const txt = document.getElementById('cmt-input').value;
+            if(!txt.trim()) return;
+            
+            const key = 'comic_data_' + currentItem.id;
+            let data = JSON.parse(localStorage.getItem(key)) || { comments: [], rating: 0 };
+            
+            data.comments.unshift({ user: "Bạn", content: txt, time: "Vừa xong" });
+            localStorage.setItem(key, JSON.stringify(data));
+            
+            document.getElementById('cmt-input').value = '';
+            document.getElementById('cmt-list').innerHTML = renderComments(data.comments);
+        }
+
+        function renderComments(arr) {
+            if(!arr || arr.length === 0) return "<p style='color:#666; font-size:0.85rem;'>Chưa có bình luận nào.</p>";
+            return arr.map(c => `
+                <div class="comment-item">
+                    <div class="comment-user">${c.user} <span style="font-weight:normal; color:#666; font-size:0.7rem;">• ${c.time}</span></div>
+                    <div>${c.content}</div>
+                </div>
+            `).join('');
+        }
+
+        function rate(star) {
+            const key = 'comic_data_' + currentItem.id;
+            let data = JSON.parse(localStorage.getItem(key)) || { comments: [], rating: 0 };
+            data.rating = star;
+            localStorage.setItem(key, JSON.stringify(data));
+            
+            // Re-render stars
+            document.getElementById('rating-area').innerHTML = [1,2,3,4,5].map(s => 
+                `<span onclick="rate(${s})"><i class="${s <= star ? 'fas' : 'far'} fa-star"></i></span>`
+            ).join('');
+        }
+
+        function toggleEmotion(btn, emo) {
+            btn.classList.toggle('selected');
+        }
+
+        // --- TRÌNH ĐỌC (READER) ---
+        function startReader(type) {
+            document.getElementById('reader-view').style.display = 'flex';
+            document.getElementById('reader-title').innerText = currentItem.title;
+            const container = document.getElementById('reader-content');
             container.innerHTML = '';
-            currentPageIndex = 0;
+            
+            if(type === 'video') {
+                document.getElementById('btn-mode').style.display = 'none'; // Ẩn nút chế độ
+                document.getElementById('manga-nav').style.display = 'none';
+                container.innerHTML = `
+                    <div style="width:100%; height:100%; background:black; display:flex; align-items:center;">
+                        <video controls autoplay style="width:100%; max-height:100vh;">
+                            <source src="${currentItem.video}" type="video/mp4">
+                        </video>
+                    </div>`;
+            } else {
+                document.getElementById('btn-mode').style.display = 'block';
+                pageIndex = 0;
+                setMode('webtoon');
+                
+                currentItem.chapters[0].pages.forEach((url, i) => {
+                    let img = document.createElement('img');
+                    img.src = url;
+                    img.className = 'img-page';
+                    img.loading = 'lazy';
+                    if(i === 0) img.classList.add('active');
+                    container.appendChild(img);
+                });
+            }
+        }
 
-            pages.forEach((url, i) => {
-                let img = document.createElement('img');
-                img.src = url;
-                img.className = 'img-page';
-                if (i === 0) img.classList.add('active');
-                img.loading = "lazy";
-                img.onerror = function() { this.outerHTML = `<div style="color:#ff4757; padding:20px; text-align:center;">❌ Thiếu ảnh: ${url}</div>`; };
-                container.appendChild(img);
-            });
+        function closeReader() {
+            document.getElementById('reader-view').style.display = 'none';
+            // Dừng video nếu đang phát
+            document.getElementById('reader-content').innerHTML = '';
+            window.speechSynthesis.cancel(); // Dừng đọc giọng nói
+        }
 
-            switchView('view-reader');
-            setMode('webtoon');
+        function toggleMode() {
+            setMode(readerMode === 'webtoon' ? 'manga' : 'webtoon');
         }
 
         function setMode(mode) {
             readerMode = mode;
-            document.getElementById('reader').className = `mode-${mode}`;
-            document.getElementById('btnWebtoon').className = mode === 'webtoon' ? 'btn-ctrl active' : 'btn-ctrl';
-            document.getElementById('btnManga').className = mode === 'manga' ? 'btn-ctrl active' : 'btn-ctrl';
-            const arrows = document.querySelectorAll('.nav-arrow');
-            arrows.forEach(a => a.style.display = mode === 'manga' ? 'block' : 'none');
-            if (mode === 'webtoon') {
-                document.querySelectorAll('#reader img').forEach(img => img.style.display = 'block');
-                window.scrollTo(0,0);
-            } else updateMangaPage();
+            const container = document.getElementById('reader-content');
+            const nav = document.getElementById('manga-nav');
+            const btn = document.getElementById('btn-mode');
+            
+            if(mode === 'webtoon') {
+                container.className = '';
+                nav.style.display = 'none';
+                btn.className = 'fas fa-book-open'; // Icon đổi thành sách
+            } else {
+                container.className = 'mode-manga';
+                nav.style.display = 'flex';
+                btn.className = 'fas fa-scroll'; // Icon đổi thành cuộn
+                updateMangaView();
+            }
         }
 
         function changePage(step) {
-            if (readerMode !== 'manga') return;
-            const images = document.querySelectorAll('#reader img');
-            let newIndex = currentPageIndex + step;
-            if (newIndex >= 0 && newIndex < images.length) {
-                currentPageIndex = newIndex;
-                updateMangaPage();
+            const imgs = document.querySelectorAll('.img-page');
+            let next = pageIndex + step;
+            if(next >= 0 && next < imgs.length) {
+                pageIndex = next;
+                updateMangaView();
             }
         }
 
-        function updateMangaPage() {
-            const images = document.querySelectorAll('#reader img');
-            images.forEach((img, index) => {
-                if (index === currentPageIndex) { img.style.display = 'block'; img.classList.add('active'); }
-                else { img.style.display = 'none'; img.classList.remove('active'); }
+        function updateMangaView() {
+            const imgs = document.querySelectorAll('.img-page');
+            imgs.forEach((img, i) => {
+                img.classList.toggle('active', i === pageIndex);
             });
         }
-        
-        document.addEventListener('keydown', (e) => {
-            if(readerMode === 'manga' && document.getElementById('view-reader').classList.contains('active')) {
-                if(e.key === 'ArrowLeft') changePage(-1);
-                if(e.key === 'ArrowRight') changePage(1);
-            }
-        });
 
-        function switchView(id) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+        // --- ĐIỀU HƯỚNG TAB ---
+        function switchTab(tabName) {
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            if(tabName === 'home') {
+                document.getElementById('tab-home').style.display = 'block';
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+            } else if(tabName === 'history') {
+                document.getElementById('tab-history').style.display = 'block';
+                renderHistory();
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+            }
             window.scrollTo(0,0);
         }
-        function goHome() { 
-            const videoElement = document.querySelector('video');
-            if(videoElement) videoElement.pause();
-            document.getElementById('searchInput').value = ''; 
-            renderHome(); 
-            switchView('view-home'); 
-        }
-        function backToDetail() { openComic(currentComic.id); }
 
+        // Khởi chạy
         renderHome();
     </script>
 </body>

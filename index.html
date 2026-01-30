@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kho Truyện Online</title>
+    <title>Kho Truyện Của Tôi</title>
     <style>
         /* --- GIAO DIỆN DARK MODE --- */
         :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --red: #ff4757; }
@@ -39,7 +39,7 @@
         .btn-read { background: var(--red); color: white; border: none; padding: 10px 30px; border-radius: 20px; cursor: pointer; margin-top: 15px; font-weight: bold; font-size: 1rem; }
         .desc { background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #bbb; border-left: 4px solid var(--red); line-height: 1.5; }
         
-        /* --- TRÌNH ĐỌC (READER) QUAN TRỌNG --- */
+        /* --- TRÌNH ĐỌC (READER) --- */
         #reader { display: flex; flex-direction: column; align-items: center; padding-bottom: 80px; }
         
         /* Chế độ Cuộn Dọc */
@@ -68,7 +68,7 @@
             padding: 40px 15px; font-size: 2rem; cursor: pointer; z-index: 200; display: none;
         }
         .nav-arrow:hover { background: rgba(255, 71, 87, 0.8); }
-        .mode-manga .nav-arrow { display: block; } /* Chỉ hiện khi ở chế độ Manga */
+        .mode-manga .nav-arrow { display: block; } 
         .prev { left: 0; border-radius: 0 10px 10px 0; }
         .next { right: 0; border-radius: 10px 0 0 10px; }
 
@@ -109,7 +109,7 @@
 
     <script>
         // ============================================
-        // CẤU HÌNH DỮ LIỆU
+        // CẤU HÌNH DỮ LIỆU (ĐÃ CẬP NHẬT 6 TRUYỆN)
         // ============================================
 
         function layAnhTuSoDenSo(tuSo, denSo) {
@@ -127,9 +127,47 @@
                 category: "Truyền thuyết",
                 cover: "images/1.jpg", 
                 desc: "Câu chuyện về người con gái tài sắc vẹn toàn, có công giúp đỡ nghĩa quân...",
-                chapters: [
-                    { name: "Toàn bộ câu chuyện", pages: layAnhTuSoDenSo(1, 13) }
-                ]
+                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo(1, 13) }]
+            },
+            {
+                id: "yembo",
+                title: "Sự Tích Chiếc Yếm Ở Ngực Bò",
+                category: "Cổ tích",
+                cover: "images/14.jpg", 
+                desc: "Giải thích vì sao loài bò lại có một miếng da như chiếc yếm ở trước ngực.",
+                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo(14, 24) }]
+            },
+            {
+                id: "hatlua",
+                title: "Tại Sao Ngày Nay Hạt Lúa Lại Nhỏ",
+                category: "Cổ tích",
+                cover: "images/25.jpg", 
+                desc: "Ngày xưa hạt lúa to như cái gáo dừa, tự lăn về nhà. Vì sao bây giờ nó lại bé đi?",
+                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo(25, 35) }]
+            },
+            {
+                id: "vocam",
+                title: "Người Vợ Câm",
+                category: "Truyện ngắn",
+                cover: "images/36.jpg", 
+                desc: "Một câu chuyện cảm động và mang ý nghĩa sâu sắc về tình vợ chồng.",
+                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo(36, 41) }]
+            },
+            {
+                id: "echchuot",
+                title: "Ếch và Chuột",
+                category: "Ngụ ngôn",
+                cover: "images/42.jpg", 
+                desc: "Câu chuyện ngụ ngôn về tình bạn xấu và hậu quả của việc hại người.",
+                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo(42, 51) }]
+            },
+            {
+                id: "bococ",
+                title: "Bò và Cóc",
+                category: "Ngụ ngôn",
+                cover: "images/52.jpg", 
+                desc: "Bài học về sự ganh đua vô lý và cái kết của thói huênh hoang.",
+                chapters: [{ name: "Toàn bộ", pages: layAnhTuSoDenSo(52, 62) }]
             }
         ];
 
@@ -181,7 +219,7 @@
                 </div>
                 <div class="desc">📝 ${currentComic.desc || 'Chưa có mô tả'}</div>
                 <div style="background:#2d2d2d; padding:15px; border-radius:5px; display:flex; justify-content:space-between; align-items:center;">
-                    <b>Chương 1</b> <span style="color:#888">${pagesCount} trang</span>
+                    <b>Nội dung truyện</b> <span style="color:#888">${pagesCount} trang</span>
                 </div>
             `;
             switchView('view-detail');
@@ -191,13 +229,13 @@
             const pages = currentComic.chapters[idx].pages;
             const container = document.getElementById('reader');
             container.innerHTML = '';
-            currentPageIndex = 0; // Reset về trang 1
+            currentPageIndex = 0;
 
             pages.forEach((url, i) => {
                 let img = document.createElement('img');
                 img.src = url;
-                img.className = 'img-page'; // Class chung
-                if (i === 0) img.classList.add('active'); // Trang đầu tiên active
+                img.className = 'img-page';
+                if (i === 0) img.classList.add('active');
                 img.loading = "lazy";
                 
                 img.onerror = function() {
@@ -207,40 +245,32 @@
             });
 
             switchView('view-reader');
-            setMode('webtoon'); // Mặc định vào là cuộn dọc
+            setMode('webtoon');
         }
 
-        // --- XỬ LÝ CHUYỂN CHẾ ĐỘ ĐỌC ---
         function setMode(mode) {
             readerMode = mode;
             const container = document.getElementById('reader');
-            container.className = `mode-${mode}`; // Gán class mode-webtoon hoặc mode-manga
+            container.className = `mode-${mode}`;
 
-            // Đổi màu nút bấm
             document.getElementById('btnWebtoon').className = mode === 'webtoon' ? 'btn-ctrl active' : 'btn-ctrl';
             document.getElementById('btnManga').className = mode === 'manga' ? 'btn-ctrl active' : 'btn-ctrl';
 
-            // Ẩn hiện nút mũi tên
             const arrows = document.querySelectorAll('.nav-arrow');
             arrows.forEach(a => a.style.display = mode === 'manga' ? 'block' : 'none');
 
             if (mode === 'webtoon') {
-                // Nếu là cuộn: Hiện tất cả ảnh
                 document.querySelectorAll('#reader img').forEach(img => img.style.display = 'block');
                 window.scrollTo(0,0);
             } else {
-                // Nếu là từng trang: Chỉ hiện trang đang chọn
                 updateMangaPage();
             }
         }
 
-        // Chuyển trang (Next/Prev)
         function changePage(step) {
             if (readerMode !== 'manga') return;
-            
             const images = document.querySelectorAll('#reader img');
             let newIndex = currentPageIndex + step;
-
             if (newIndex >= 0 && newIndex < images.length) {
                 currentPageIndex = newIndex;
                 updateMangaPage();
@@ -260,7 +290,6 @@
             });
         }
         
-        // Phím tắt bàn phím
         document.addEventListener('keydown', (e) => {
             if(readerMode === 'manga' && document.getElementById('view-reader').classList.contains('active')) {
                 if(e.key === 'ArrowLeft') changePage(-1);
@@ -268,7 +297,6 @@
             }
         });
 
-        // --- HỆ THỐNG VIEW ---
         function switchView(id) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(id).classList.add('active');
@@ -281,7 +309,6 @@
         }
         function backToDetail() { openComic(currentComic.id); }
 
-        // Khởi chạy
         renderHome();
     </script>
 </body>

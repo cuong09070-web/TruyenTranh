@@ -7,14 +7,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         /* --- GIAO DIỆN DARK MODE --- */
-        :root { --bg: #0f0f0f; --card: #1f1f1f; --text: #e0e0e0; --red: #E50914; --blue: #46d369; --gray: #aaa; }
+        :root { --bg: #0f0f0f; --card: #1f1f1f; --text: #e0e0e0; --red: #E50914; --blue: #46d369; --gray: #aaa; --fb: #1877F2; }
         * { box-sizing: border-box; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; padding-top: 60px; padding-bottom: 70px; }
-        
+        a { text-decoration: none; color: inherit; }
+
         /* HEADER */
-        header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: rgba(20, 20, 20, 0.95); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 1000; border-bottom: 1px solid #333; }
-        .logo { font-weight: bold; color: var(--red); font-size: 1.3rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .user-greeting { font-size: 0.8rem; color: #bbb; border: 1px solid #444; padding: 5px 10px; border-radius: 15px; cursor: pointer; }
+        header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: rgba(20, 20, 20, 0.98); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 1000; border-bottom: 1px solid #333; }
+        .logo { font-weight: bold; color: var(--red); font-size: 1.2rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        
+        /* Cụm nút bên phải Header */
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .btn-fb { background: var(--fb); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .user-greeting { font-size: 0.8rem; color: #bbb; border: 1px solid #444; padding: 4px 10px; border-radius: 15px; cursor: pointer; }
 
         /* GRID VIEW */
         .view { display: none; padding: 10px 15px 20px 15px; min-height: 100vh; }
@@ -26,6 +31,12 @@
         .card-info { padding: 10px; }
         .card h3 { margin: 0; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
         .card-cat { font-size: 0.75rem; color: var(--gray); margin-top: 3px; display: block; }
+        .badge-video { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: #46d369; font-size: 0.7rem; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+
+        /* LỊCH SỬ */
+        .history-item { display: flex; gap: 10px; background: #222; padding: 10px; border-radius: 8px; margin-bottom: 10px; cursor: pointer; }
+        .history-item img { width: 60px; height: 90px; object-fit: cover; border-radius: 4px; }
+        .empty-msg { text-align: center; color: #666; margin-top: 50px; }
 
         /* CHI TIẾT TRUYỆN */
         .detail-header { position: relative; height: 220px; overflow: hidden; margin: -10px -15px 15px -15px; }
@@ -34,23 +45,18 @@
         .cover-small { width: 100px; border-radius: 6px; box-shadow: 0 5px 15px rgba(0,0,0,0.6); border: 2px solid rgba(255,255,255,0.2); }
         .info-text h1 { margin: 0 0 5px 0; font-size: 1.3rem; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         
-        /* THANH NÚT BẤM (QUAN TRỌNG) */
         .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
         .btn-action { padding: 10px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; font-size: 0.8rem; color: white; transition: 0.2s; }
-        
         .btn-read { background: var(--red); }
         .btn-video { background: #222; border: 1px solid #444; }
         .btn-listen { background: #1e88e5; }
-        
         .btn-action:hover { opacity: 0.9; transform: scale(0.98); }
-        .btn-action i { font-size: 1.1rem; }
 
         /* TƯƠNG TÁC */
         .section-title { font-size: 1rem; font-weight: bold; margin: 25px 0 10px 0; border-left: 3px solid var(--red); padding-left: 10px; color: #fff; }
         .emotion-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
         .tag-btn { background: #333; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid #444; cursor: pointer; }
         .tag-btn.selected { background: var(--red); border-color: var(--red); }
-        .tag-user-list { font-size: 0.7rem; color: #888; margin-left: 5px; font-style: italic; }
 
         /* BÌNH LUẬN */
         .comment-box textarea { width: 100%; background: #222; border: 1px solid #444; color: white; padding: 10px; border-radius: 8px; min-height: 60px; margin-bottom: 10px; }
@@ -67,7 +73,7 @@
         .reader-bar { background: rgba(0,0,0,0.9); padding: 10px; display: flex; justify-content: space-between; align-items: center; color: white; }
         .img-page { width: 100%; max-width: 800px; display: block; margin: 0 auto; }
         
-        /* THANH ĐIỀU HƯỚNG DƯỚI */
+        /* MENU DƯỚI */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #1a1a1a; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; z-index: 1000; }
         .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; color: #777; cursor: pointer; }
         .nav-item.active { color: var(--red); }
@@ -77,13 +83,23 @@
 <body>
 
     <header>
-        <div class="logo"><i class="fas fa-book-open"></i> Kho Truyện</div>
-        <div class="user-greeting" onclick="changeName()" id="user-display">Khách</div>
+        <div class="logo" onclick="switchTab('home')"><i class="fas fa-book-open"></i> Kho Truyện</div>
+        <div class="header-right">
+            <a href="https://www.facebook.com/profile.php?id=61582811984720" target="_blank" class="btn-fb">
+                <i class="fab fa-facebook"></i> Fanpage
+            </a>
+            <div class="user-greeting" onclick="changeName()" id="user-display">Khách</div>
+        </div>
     </header>
 
     <div id="tab-home" class="view active">
-        <input type="text" id="search" placeholder="🔍 Tìm kiếm..." style="width:100%; padding:10px; border-radius:20px; border:none; background:#222; color:white; margin-bottom:15px;" oninput="renderHome()">
+        <input type="text" id="search" placeholder="🔍 Tìm kiếm truyện..." style="width:100%; padding:10px; border-radius:20px; border:none; background:#222; color:white; margin-bottom:15px;" oninput="renderHome()">
         <div id="grid-home" class="grid"></div>
+    </div>
+
+    <div id="tab-history" class="view">
+        <h2 class="section-title">Truyện đã xem</h2>
+        <div id="history-list"></div>
     </div>
 
     <div id="view-detail" class="view" style="display: none; padding-top: 0;">
@@ -100,15 +116,16 @@
     </div>
 
     <nav class="bottom-nav">
-        <div class="nav-item active" onclick="switchTab('home')"><i class="fas fa-home"></i> Trang chủ</div>
-        <a href="https://www.facebook.com/profile.php?id=61582811984720" target="_blank" class="nav-item"><i class="fab fa-facebook"></i> Fanpage</a>
+        <div class="nav-item active" onclick="switchTab('home')" id="nav-home"><i class="fas fa-home"></i> Trang chủ</div>
+        <div class="nav-item" onclick="switchTab('history')" id="nav-history"><i class="fas fa-history"></i> Lịch sử</div>
     </nav>
 
     <script>
-        // ================= CẤU HÌNH DỮ LIỆU =================
-        function layAnh(tienTo, tuSo, denSo) {
+        // ================= CẤU HÌNH DỮ LIỆU (ĐÃ SỬA LẠI ĐƯỜNG DẪN ẢNH) =================
+        // Hàm này tạo đường dẫn đơn giản: images/1.jpg, images/2.jpg ...
+        function layAnh(tuSo, denSo) {
             let arr = []; 
-            for(let i=tuSo; i<=denSo; i++) arr.push(`images/${tienTo}${i}.jpg`); 
+            for(let i=tuSo; i<=denSo; i++) arr.push(`images/${i}.jpg`); 
             return arr; 
         }
 
@@ -119,36 +136,26 @@
                 cat: "Truyền thuyết",
                 cover: "images/1.jpg", 
                 video: "videos/cotham.mp4", 
-                // NỘI DUNG VĂN BẢN ĐỂ MÁY ĐỌC (Bạn hãy copy nội dung truyện dán vào đây)
                 fullText: "SỰ TÍCH ĐỀN CÔ THẮM
+Ngày xưa ở Tràng Cổ (Chợ Mới) có hai bố con một ông lão đánh cá nghèo khổ. Cô con gái tên là Thắm.Một năm nọ nước lũ ngập cả vùng núi non. Ông lão mất hết chài lưới, chỉ giữ lại được có một cái chài con và một chiếc thuyền cũ kỹ.
+Sau khi nước rút, ông lão lại đi đánh cá, nhưng lạ thay ông lão quăng chài đến rời rã cả tay mà không được con cá nào. Mãi chiều ông mới kéo được một mẻ chài rất nặng, ông lão đã mừng vì được cá to. Nhưng khi nhấc chài lên thì đó chỉ là một hòn đá lớn. 
+Ông lão vứt hòn đá đi và tiếp tục quăng chài nhưng quăng lần nào cũng chỉ được hòn đá cũ. Ông lão vứt ra xa, rồi chạy đi cách mấy vực mới lại quăng chài nhưng vẫn được hòn đá đó. Ông đã kiệt sức vì đói, bởi từ khi nước lũ ông lão chẳng được bữa nào nó cả. 
+Ông lão căm tức hòn đá mới chửi đổng, định vứt hòn đá đi lần nữa thì hòn đá đột nhiên biết nói tiếng người:
+-	Ông lão hãy mang tôi về nhà, tôi sẽ giúp ông sống sung sướng! 
+Ngạc nhiên ông lão bèn mang hòn đá về nhà. 
+Khi đặt hòn đá xuống đất trước cửa nhà thì hòn đá bỗng vỡ làm đôi. Bên trong là cả một hũ vàng. Từ đấy hai bố con ông lão sống sung sướng. 
+Nhưng ông lão rất thương những người nghèo khổ trong vùng nên ông cùng cô con gái đem vàng bán lấy tiền phát cho người nghèo khó. Từ đấy mọi người trong vùng đều gọi ông là ông lão đánh cá tốt bụng.
+Ông lão cảm ơn thần thánh đã cho mình vàng. Ông lập cái lều che bằng một tấm lá cọ để thờ hai mảnh đá .
+Mãi rồi ông lão cũng qua đời. Cô Thắm càng lớn càng xinh đẹp, cô vẫn làm cái nghề chài lưới của bố, vẫn giúp đỡ mọi người như bố cô ngày xưa, nên cô cũng được mọi người kính trọng.
+Tin đồn về sắc đẹp của Thắm đến tại tên nhà giàu trong vùng. Tên này bắt Thắm làm vợ. Thắm phải sống những ngày càng cay đắng. 
+Một năm nọ, có bọn giặc ngoại bang sang cướp phá nước ta. Nhân dân khổ trăm bề. Tên nhà giàu làm tay sai cho giặc. Cô Thắm chạy ra khỏi nhà lão nhà giàu và tập hợp nhân dân trong vùng nổi lên chống giặc. 
+Cô thành nữ tướng chống giặc ngoại xâm. Tên chồng cũ của cô biết cô cầm quân nên đã dẫn giặc đến đánh cô. Một trận kịch chiến đã xảy ra ở ngã ba sông Tràng Cổ. Cô Thắm vung gươm chỉ huy quân đánh giặc chết như rạ. Riêng cô thì chém chết không biết bao nhiêu quân giặc. 
+Nhưng cô cũng bị trúng tên thuốc độc và mất. Để trả thù cho nữ tướng, quân của cô đã đánh tan quân giặc và giết được tên nhà giàu phản quốc. 
+Ngày đến Để tưởng nhớ đến nữ tướng dũng cảm, nhân dân Người ở Thanh Bình goi ngôi đền Chợ Mới đã lập đền thờ cô ngay tại nền nhà cũ của cô. Ngày nay, đứng trên Chợ Mới nhìn xuống dòng sông vẫn thấy đền thờ cô Thắm. Những ngày lễ nhân dân khắp vùng vẫn đến viếng cô Thắm nữ tướng.
 
-Ngày xưa, ở Tràng Cổ (Chợ Mới) có hai bố con một ông lão đánh cá nghèo khổ. Cô con gái tên là Thắm. Một năm nọ, nước lũ ngập khắp vùng núi non. Ông lão mất hết chài lưới, chỉ giữ lại được một cái chài con và một chiếc thuyền cũ kỹ.
 
-Sau khi nước rút, ông lão lại đi đánh cá. Nhưng lạ thay, ông quăng chài đến rã rời cả tay mà không được con cá nào. Mãi đến chiều, ông mới kéo được một mẻ chài rất nặng, mừng thầm vì tưởng được cá to. Nhưng khi nhấc chài lên thì đó chỉ là một hòn đá lớn.
-
-Ông lão vứt hòn đá đi và tiếp tục quăng chài, nhưng lần nào cũng chỉ vớt lên hòn đá cũ ấy. Ông vứt ra xa, rồi chạy đi cách mấy vạt sông mới quăng chài lại, nhưng vẫn kéo lên hòn đá đó. Ông đã kiệt sức vì đói, bởi từ khi có trận lũ, ông lão chẳng được bữa nào no.
-
-Trong cơn căm tức, ông lão chửi đổng hòn đá, định vứt đi lần nữa thì hòn đá đột nhiên cất tiếng nói như người:
-– Ông lão hãy mang tôi về nhà, tôi sẽ giúp ông sống sung sướng!
-
-Ngạc nhiên, ông lão bèn mang hòn đá về nhà. Khi đặt hòn đá xuống trước cửa, nó bỗng vỡ làm đôi, bên trong lộ ra cả một hũ vàng. Từ đó, hai bố con ông lão sống sung túc.
-
-Nhưng thương những người nghèo khổ trong vùng, ông lão cùng cô con gái đem vàng bán lấy tiền chia cho dân nghèo. Từ đấy, mọi người đều gọi ông là ông lão đánh cá tốt bụng.
-
-Ông lão cảm tạ thần thánh đã ban cho mình vàng bạc, liền dựng một cái lều nhỏ, lợp lá cọ để thờ hai mảnh đá.
-
-Rồi ông lão cũng qua đời. Cô Thắm ngày càng lớn, ngày càng xinh đẹp. Cô vẫn theo nghề chài lưới của cha, lại thường xuyên giúp đỡ dân làng như ông ngày trước, nên được mọi người hết mực kính trọng.
-
-Tiếng đồn về sắc đẹp của Thắm đến tai một tên nhà giàu trong vùng. Hắn ép Thắm làm vợ, khiến cô phải sống những ngày tháng cay đắng.
-
-Một năm nọ, giặc ngoại bang tràn sang cướp phá nước ta, nhân dân lầm than khổ cực. Tên nhà giàu làm tay sai cho giặc. Cô Thắm trốn khỏi nhà hắn, tập hợp nhân dân trong vùng đứng lên chống giặc.
-
-Cô trở thành một nữ tướng chỉ huy quân dân đánh giặc ngoại xâm. Biết vợ cũ cầm quân, tên nhà giàu dẫn giặc đến tấn công cô. Một trận kịch chiến ác liệt đã diễn ra tại ngã ba sông Tràng Cổ. Cô Thắm vung gươm chỉ huy quân sĩ, đánh giặc chết như rạ, bản thân cô cũng chém chết không biết bao nhiêu tên giặc.
-
-Nhưng trong trận chiến ấy, cô bị trúng tên tẩm thuốc độc và hy sinh. Để trả thù cho nữ tướng, quân của cô đã đánh tan quân giặc, đồng thời giết chết tên nhà giàu phản quốc.
-
-Để tưởng nhớ nữ tướng dũng cảm, nhân dân ở Thanh Bình (Chợ Mới) đã lập đền thờ cô ngay trên nền nhà cũ. Ngày nay, đứng từ Chợ Mới nhìn xuống dòng sông, vẫn thấy ngôi đền thờ Cô Thắm. Mỗi dịp lễ hội, nhân dân khắp vùng lại đến dâng hương, tưởng nhớ Cô Thắm – vị nữ tướng anh hùng.", 
-                chapters: [{ name: "Full Story", pages: layAnh("", 1, 13) }]
+", 
+                chapters: [{ name: "Full Story", pages: layAnh(1, 13) }]
             },
             {
                 id: "yembo",
@@ -157,7 +164,7 @@ Nhưng trong trận chiến ấy, cô bị trúng tên tẩm thuốc độc và 
                 cover: "images/14.jpg",
                 video: "videos/yembo.mp4",
                 fullText: "Ngày xưa trâu và bò là đôi bạn thân. Một hôm có hội làng, trâu và bò cùng nhau đi dự...",
-                chapters: [{ name: "Full Story", pages: layAnh("", 14, 23) }]
+                chapters: [{ name: "Full Story", pages: layAnh(14, 23) }]
             },
             {
                 id: "hatlua",
@@ -166,7 +173,7 @@ Nhưng trong trận chiến ấy, cô bị trúng tên tẩm thuốc độc và 
                 cover: "images/25.jpg",
                 video: "videos/hatlua.mp4",
                 fullText: "Ngày xưa hạt lúa rất to, to như cái gáo dừa và tự lăn về nhà...",
-                chapters: [{ name: "Full Story", pages: layAnh("", 25, 35) }]
+                chapters: [{ name: "Full Story", pages: layAnh(25, 35) }]
             },
             {
                 id: "vocam",
@@ -175,7 +182,7 @@ Nhưng trong trận chiến ấy, cô bị trúng tên tẩm thuốc độc và 
                 cover: "images/36.jpg",
                 video: "videos/vocam.mp4",
                 fullText: "Có anh chàng nọ lấy phải người vợ câm, nhưng cô rất đảm đang tháo vát...",
-                chapters: [{ name: "Full Story", pages: layAnh("", 36, 41) }]
+                chapters: [{ name: "Full Story", pages: layAnh(36, 41) }]
             },
             {
                 id: "echchuot",
@@ -191,7 +198,7 @@ Nghe bạn nói, ếch buồn bã trả lời:
 - Tôi cũng muốn đến lắm, nhưng nhà bạn ở cao thể, làm sao tôi đến được.
 - Bạn cứ ngậm chặt vào đuôi tôi, tôi sẽ kéo bạn lên nhà chơi. Nhưng bạn nhớ khi sắp lên đến nhà, vợ tôi có ra chào thì cũng đừng vội đáp nhé. Dặn dò nhau xong, hai đứa liền kéo nhau đến nhà chuột. Đến cây cao nơi chuột ở, ếch ta liền ngậm chặt vào đuôi để chuột kéo lên. Đến sát nhà, thấy có khách đến chơi, vợ chuột vội ra chào. Vốn tính nhanh nhảu, ếch vội vàng đáp lại mà quên khuấy lời dặn của chuột khi trước. Bị rơi từ trên cao xuống nên mồm ếch bị bẹp kể từ ngày ấy. Và cũng từ đó mỗi khi thời tiết thay đổi, người ếch lại đau nhừ, khi ấy ếch lại kêu “ộp, ộp...” vì đau hối, vì hận bởi nhanh nhảu mà quên lời bạn dặn.
 ",
-                chapters: [{ name: "Full Story", pages: layAnh("", 42, 51) }]
+                chapters: [{ name: "Full Story", pages: layAnh(42, 51) }]
             },
             {
                 id: "bococ",
@@ -209,7 +216,7 @@ Bò lắc đầu:
 - Chưa được!
 Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ bụng chết. Loài cóc ngày nay có cái bụng phồng to và chỉ biết loanh quanh ở những xó tối chứ không đi chơi xa được nữa là vì vậy.
 ",
-                chapters: [{ name: "Full Story", pages: layAnh("", 52, 62) }]
+                chapters: [{ name: "Full Story", pages: layAnh(52, 62) }]
             }
         ];
 
@@ -254,8 +261,10 @@ Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ
             if(results.length == 0) container.innerHTML = "<p style='color:#777; text-align:center;'>Không tìm thấy truyện.</p>";
 
             results.forEach(item => {
+                let badge = item.video ? '<span class="badge-video">▶ VIDEO</span>' : '';
                 container.innerHTML += `
                 <div class="card" onclick="openDetail('${item.id}')">
+                    ${badge}
                     <img src="${item.cover}" onerror="this.src='https://via.placeholder.com/200'">
                     <div class="card-info">
                         <h3>${item.title}</h3>
@@ -268,9 +277,14 @@ Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ
         // 2. Mở Chi Tiết Truyện
         function openDetail(id) {
             currentItem = database.find(i => i.id === id);
-            document.getElementById('tab-home').style.display = 'none';
+            
+            // Chuyển view
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
             document.getElementById('view-detail').style.display = 'block';
             window.scrollTo(0,0);
+
+            // Lưu lịch sử
+            addToHistory(currentItem);
 
             // Lấy dữ liệu local (comment, reaction)
             const localData = JSON.parse(localStorage.getItem('data_' + id)) || { comments: [], emotions: {} };
@@ -285,7 +299,7 @@ Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ
                 <div class="detail-header">
                     <img src="${currentItem.cover}" class="backdrop">
                     <div class="detail-info-container">
-                        <img src="${currentItem.cover}" class="cover-small">
+                        <img src="${currentItem.cover}" class="cover-small" onerror="this.src='https://via.placeholder.com/150'">
                         <div class="info-text">
                             <h1>${currentItem.title}</h1>
                             <div style="font-size:0.8rem; color:#ccc;">${currentItem.cat} • ${currentItem.chapters[0].pages.length} trang</div>
@@ -319,22 +333,27 @@ Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ
 
         // --- CÁC CHỨC NĂNG ĐỌC/XEM/NGHE ---
 
-        // A. Đọc Truyện (Ảnh)
         function startComic() {
             openReaderMode();
             const container = document.getElementById('reader-content');
             container.innerHTML = '';
-            // Load toàn bộ ảnh (Cuộn dọc)
+            
+            // Nếu không có ảnh, báo lỗi
+            if(!currentItem.chapters[0].pages || currentItem.chapters[0].pages.length === 0) {
+                 container.innerHTML = '<p style="color:white;">Chưa có ảnh truyện này.</p>';
+                 return;
+            }
+
             currentItem.chapters[0].pages.forEach(url => {
                 let img = document.createElement('img');
                 img.src = url;
                 img.className = 'img-page';
                 img.loading = 'lazy';
+                img.onerror = function() { this.style.display='none'; } // Ẩn ảnh lỗi
                 container.appendChild(img);
             });
         }
 
-        // B. Xem Video
         function startVideo() {
             if(!currentItem.video) return;
             openReaderMode();
@@ -343,37 +362,25 @@ Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ
                 <div style="width:100%; height:100%; background:black; display:flex; align-items:center; justify-content:center;">
                     <video controls autoplay style="width:100%; max-height:100vh;">
                         <source src="${currentItem.video}" type="video/mp4">
+                        Trình duyệt không hỗ trợ video.
                     </video>
                 </div>`;
         }
 
-        // C. Nghe Kể Chuyện (TTS)
         function startSpeaking() {
             if('speechSynthesis' in window) {
-                // Kiểm tra xem có nội dung text không
                 let textToRead = currentItem.fullText;
-                if(!textToRead || textToRead.length < 10) {
-                    alert("Truyện này chưa có nội dung văn bản để đọc.");
-                    return;
-                }
+                if(!textToRead) { alert("Truyện này chưa có nội dung văn bản."); return; }
 
-                // Hiển thị trạng thái đang đọc
                 document.getElementById('speak-status').style.display = 'inline';
-                
-                // Cấu hình giọng đọc
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(textToRead);
                 utterance.lang = 'vi-VN'; 
                 utterance.rate = 1.0; 
-                
-                // Sự kiện khi đọc xong
-                utterance.onend = function() {
-                    document.getElementById('speak-status').style.display = 'none';
-                };
-
+                utterance.onend = function() { document.getElementById('speak-status').style.display = 'none'; };
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert("Máy của bạn không hỗ trợ đọc giọng nói.");
+                alert("Máy không hỗ trợ đọc.");
             }
         }
 
@@ -385,22 +392,50 @@ Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ
         function closeReader() {
             document.getElementById('reader-view').style.display = 'none';
             document.getElementById('reader-content').innerHTML = '';
-            window.speechSynthesis.cancel(); // Tắt giọng đọc
+            window.speechSynthesis.cancel();
             document.getElementById('speak-status').style.display = 'none';
         }
 
-        // --- BÌNH LUẬN & CẢM XÚC ---
-        
-        function postComment() {
-            if(!checkUser()) return; // Bắt buộc nhập tên
+        // --- LỊCH SỬ ---
+        function addToHistory(item) {
+            let history = JSON.parse(localStorage.getItem('read_history')) || [];
+            // Xóa truyện cũ nếu trùng để đưa lên đầu
+            history = history.filter(h => h.id !== item.id);
+            history.unshift({ id: item.id, title: item.title, cover: item.cover, time: new Date().toLocaleDateString() });
+            // Giới hạn 20 truyện gần nhất
+            if(history.length > 20) history.pop();
+            localStorage.setItem('read_history', JSON.stringify(history));
+        }
 
+        function renderHistory() {
+            let history = JSON.parse(localStorage.getItem('read_history')) || [];
+            const container = document.getElementById('history-list');
+            
+            if(history.length === 0) {
+                container.innerHTML = "<p class='empty-msg'>Bạn chưa xem truyện nào.</p>";
+                return;
+            }
+
+            container.innerHTML = history.map(h => `
+                <div class="history-item" onclick="openDetail('${h.id}')">
+                    <img src="${h.cover}" onerror="this.src='https://via.placeholder.com/60'">
+                    <div>
+                        <div style="font-weight:bold; color:white; margin-bottom:5px;">${h.title}</div>
+                        <div style="font-size:0.8rem; color:#888;">Đã xem: ${h.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- BÌNH LUẬN & CẢM XÚC ---
+        function postComment() {
+            if(!checkUser()) return;
             const txt = document.getElementById('cmt-input').value;
             if(!txt.trim()) return;
             
             const key = 'data_' + currentItem.id;
             let data = JSON.parse(localStorage.getItem(key)) || { comments: [], emotions: {} };
             
-            // Lưu tên người dùng hiện tại vào bình luận
             data.comments.unshift({ user: currentUser, content: txt, time: new Date().toLocaleDateString() });
             localStorage.setItem(key, JSON.stringify(data));
             
@@ -423,21 +458,14 @@ Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ
 
         function toggleEmotion(emo) {
             if(!checkUser()) return;
-
             const key = 'data_' + currentItem.id;
             let data = JSON.parse(localStorage.getItem(key)) || { comments: [], emotions: {} };
             
-            // Logic đơn giản: Lưu danh sách người đã thả cảm xúc đó
             if(!data.emotions[emo]) data.emotions[emo] = [];
-            
-            // Nếu người này đã thả rồi thì không thả nữa (hoặc toggle tùy ý)
             if(!data.emotions[emo].includes(currentUser)) {
                 data.emotions[emo].push(currentUser);
             }
-            
             localStorage.setItem(key, JSON.stringify(data));
-            
-            // Render lại
             document.querySelector('.emotion-tags').innerHTML = renderEmotions(data.emotions);
         }
 
@@ -453,14 +481,21 @@ Thế là cóc ta càng cố hít hơi, phồng bụng nữa, lát sau cóc vỡ
             }).join('');
         }
 
-        // --- ĐIỀU HƯỚNG ---
+        // --- ĐIỀU HƯỚNG TAB ---
         function switchTab(tab) {
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
             if(tab === 'home') {
-                document.getElementById('view-detail').style.display = 'none';
                 document.getElementById('tab-home').style.display = 'block';
-                // Dừng đọc/xem
-                closeReader();
+                document.getElementById('nav-home').classList.add('active');
+            } else if(tab === 'history') {
+                document.getElementById('tab-history').style.display = 'block';
+                document.getElementById('nav-history').classList.add('active');
+                renderHistory();
             }
+            // Tắt các trình đọc/video nếu đang bật
+            closeReader();
         }
 
         renderHome();

@@ -27,8 +27,7 @@
         .card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
         .card-info { padding: 10px; }
         .card h3 { margin: 0; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
-        .badge-video { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.8); color: #46d369; font-size: 0.7rem; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
-
+        
         /* CHI TIẾT TRUYỆN */
         .detail-header { position: relative; height: 220px; overflow: hidden; margin: -10px -15px 15px -15px; }
         .backdrop { width: 100%; height: 100%; object-fit: cover; filter: blur(15px) brightness(0.4); }
@@ -37,11 +36,10 @@
         .info-text h1 { margin: 0 0 5px 0; font-size: 1.3rem; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .view-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; color: #ddd; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px; margin-top: 5px; }
 
-        /* THANH NÚT BẤM */
-        .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-        .btn-action { padding: 10px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; font-size: 0.8rem; color: white; }
+        /* THANH NÚT BẤM (Đã sửa thành 2 cột cho đẹp) */
+        .action-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .btn-action { padding: 12px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; font-size: 0.9rem; color: white; }
         .btn-read { background: var(--red); }
-        .btn-video { background: #222; border: 1px solid #444; }
         .btn-listen { background: #1e88e5; }
         .btn-disable { opacity: 0.4; cursor: not-allowed; }
 
@@ -51,7 +49,7 @@
         
         #reader-content { flex: 1; overflow: hidden; position: relative; display: flex; justify-content: center; background: #111; }
         
-        /* CSS CHO TRÌNH PHÁT NHẠC (AUDIO PLAYER) */
+        /* CSS AUDIO */
         .audio-player-ui { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; background: radial-gradient(circle, #333 0%, #000 100%); }
         .audio-disk { width: 250px; height: 250px; border-radius: 50%; object-fit: cover; border: 5px solid #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); animation: spin 10s linear infinite; }
         .audio-title-display { margin-top: 20px; font-size: 1.2rem; font-weight: bold; color: white; text-align: center; }
@@ -132,7 +130,7 @@
     </nav>
 
     <script>
-        // ================= DỮ LIỆU (Cấu hình file Audio ở đây) =================
+        // ================= DỮ LIỆU =================
         function layAnh(tuSo, denSo) {
             let arr = []; 
             for(let i=tuSo; i<=denSo; i++) arr.push(`images/${i}.jpg`); 
@@ -145,8 +143,7 @@
                 title: "Sự Tích Đền Cô Thắm",
                 cat: "Truyền thuyết",
                 cover: "images/1.jpg", 
-                video: "videos/cotham.mp4", 
-                audio: "audio/cotham.wav", // FILE AUDIO CỦA BẠN
+                audio: "audio/cotham.wav",
                 chapters: [{ name: "Full", pages: layAnh(1, 13) }]
             },
             {
@@ -154,8 +151,7 @@
                 title: "Sự Tích Chiếc Yếm Bò",
                 cat: "Cổ tích",
                 cover: "images/14.jpg",
-                video: "videos/yembo.mp4",
-                audio: "audio/yembo.wav", // FILE AUDIO CỦA BẠN
+                audio: "audio/yembo.wav",
                 chapters: [{ name: "Full", pages: layAnh(63, 73) }]
             },
             {
@@ -163,7 +159,6 @@
                 title: "Sự Tích Hạt Lúa",
                 cat: "Cổ tích",
                 cover: "images/25.jpg",
-                video: "videos/hatlua.mp4",
                 audio: "audio/hatlua.wav",
                 chapters: [{ name: "Full", pages: layAnh(25, 35) }]
             },
@@ -172,7 +167,6 @@
                 title: "Người Vợ Câm",
                 cat: "Truyện ngắn",
                 cover: "images/36.jpg",
-                video: "videos/vocam.mp4",
                 audio: "audio/vocam.wav",
                 chapters: [{ name: "Full", pages: layAnh(36, 41) }]
             },
@@ -181,7 +175,6 @@
                 title: "Ếch và Chuột",
                 cat: "Ngụ ngôn",
                 cover: "images/42.jpg",
-                video: "videos/echchuot.mp4",
                 audio: "audio/echchuot.wav",
                 chapters: [{ name: "Full", pages: layAnh(42, 51) }]
             },
@@ -190,7 +183,6 @@
                 title: "Bò và Cóc",
                 cat: "Ngụ ngôn",
                 cover: "images/52.jpg",
-                video: "videos/bococ.mp4",
                 audio: "audio/bococ.wav",
                 chapters: [{ name: "Full", pages: layAnh(52, 62) }]
             }
@@ -232,10 +224,8 @@
             const key = document.getElementById('search').value.toLowerCase();
             
             database.filter(i => i.title.toLowerCase().includes(key)).forEach(item => {
-                let badge = item.video ? '<span class="badge-video">▶ VIDEO</span>' : '';
                 container.innerHTML += `
                 <div class="card" onclick="openDetail('${item.id}')">
-                    ${badge}
                     <img src="${item.cover}" onerror="this.src='https://via.placeholder.com/200'">
                     <div class="card-info">
                         <h3>${item.title}</h3>
@@ -260,11 +250,7 @@
 
             const localData = JSON.parse(localStorage.getItem('data_' + id)) || { comments: [] };
             
-            // Xử lý trạng thái nút bấm
-            let btnVideo = currentItem.video ? 
-                `<button class="btn-action btn-video" onclick="startVideo()"><i class="fas fa-play"></i> Xem Video</button>` : 
-                `<button class="btn-action btn-video btn-disable"><i class="fas fa-video-slash"></i> Không Video</button>`;
-            
+            // Nút nghe Audio (Chỉ hiện nếu có file)
             let btnAudio = currentItem.audio ? 
                 `<button class="btn-action btn-listen" onclick="startAudio()"><i class="fas fa-music"></i> Nghe Audio</button>` : 
                 `<button class="btn-action btn-listen btn-disable"><i class="fas fa-microphone-slash"></i> Không Audio</button>`;
@@ -283,7 +269,6 @@
 
                 <div class="action-bar">
                     <button class="btn-action btn-read" onclick="startComic()"><i class="fas fa-book-open"></i> Đọc Truyện</button>
-                    ${btnVideo}
                     ${btnAudio}
                 </div>
 
@@ -301,12 +286,12 @@
             `;
         }
 
-        // ================= TRÌNH ĐỌC (READER) =================
+        // ================= TRÌNH ĐỌC & NGHE =================
 
         function openReader(title) {
             document.getElementById('reader-view').style.display = 'flex';
             document.getElementById('reader-title').innerText = title;
-            // Reset tất cả về mặc định
+            // Reset
             document.getElementById('comic-controls').style.display = 'none';
             document.querySelectorAll('.nav-arrow').forEach(a => a.style.display = 'none');
             document.getElementById('reader-content').className = ''; 
@@ -315,7 +300,7 @@
         // 1. ĐỌC TRUYỆN TRANH
         function startComic() {
             openReader(currentItem.title);
-            document.getElementById('comic-controls').style.display = 'flex'; // Hiện thanh điều khiển
+            document.getElementById('comic-controls').style.display = 'flex'; 
             const container = document.getElementById('reader-content');
             container.innerHTML = '';
             
@@ -326,7 +311,7 @@
                 if (index === 0) img.classList.add('active');
                 container.appendChild(img);
             });
-            setMode('scroll'); // Mặc định cuộn
+            setMode('scroll'); // Mặc định cuộn dọc
         }
 
         function setMode(mode) {
@@ -369,24 +354,11 @@
             document.getElementById('page-indicator').innerText = `Trang ${currentPage + 1}/${images.length}`;
         }
 
-        // 2. XEM VIDEO
-        function startVideo() {
-            if (!currentItem.video) return;
-            openReader("Đang xem video");
-            document.getElementById('reader-content').innerHTML = `
-                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:black;">
-                    <video controls autoplay style="width:100%; max-height:100vh;">
-                        <source src="${currentItem.video}" type="video/mp4">
-                    </video>
-                </div>`;
-        }
-
-        // 3. NGHE AUDIO (FILE UPLOAD)
+        // 2. NGHE AUDIO
         function startAudio() {
             if (!currentItem.audio) return;
             openReader("Đang nghe kể chuyện");
             
-            // Giao diện trình phát nhạc
             document.getElementById('reader-content').innerHTML = `
                 <div class="audio-player-ui">
                     <img src="${currentItem.cover}" class="audio-disk">
@@ -400,7 +372,7 @@
 
         function closeReader() {
             document.getElementById('reader-view').style.display = 'none';
-            document.getElementById('reader-content').innerHTML = ''; // Dừng mọi thứ
+            document.getElementById('reader-content').innerHTML = ''; 
         }
 
         // ================= LỊCH SỬ & KHÁC =================
@@ -447,4 +419,3 @@
     </script>
 </body>
 </html>
-

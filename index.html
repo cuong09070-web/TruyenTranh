@@ -36,7 +36,7 @@
         .info-text h1 { margin: 0 0 5px 0; font-size: 1.3rem; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .view-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; color: #ddd; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px; margin-top: 5px; }
 
-        /* THANH NÚT BẤM (3 Nút: Đọc, Video, Nghe) */
+        /* THANH NÚT BẤM */
         .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
         .btn-action { padding: 10px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; font-size: 0.8rem; color: white; }
         .btn-read { background: var(--red); }
@@ -50,7 +50,7 @@
         
         #reader-content { flex: 1; overflow: hidden; position: relative; display: flex; justify-content: center; background: #111; }
         
-        /* Video Container (YouTube) */
+        /* Video Container */
         .video-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: black; }
         .video-container iframe { width: 100%; height: 100%; max-width: 1000px; aspect-ratio: 16/9; border: none; }
 
@@ -143,7 +143,7 @@
         }
 
         const database = [
-            // --- CÁC TRUYỆN CŨ ---
+            // --- 8 TRUYỆN CŨ ---
             {
                 id: "cotham",
                 title: "Sự Tích Đền Cô Thắm",
@@ -198,42 +198,42 @@
                 youtube: "https://www.youtube.com/embed/swIc9EHdbNI",
                 chapters: [{ name: "Full", pages: layAnh(52, 62) }]
             },
-
-            // --- 4 TRUYỆN MỚI THÊM VÀO ĐÂY ---
             {
                 id: "ongbamuoi",
                 title: "Vì Sao Gọi Hổ Là Ông Ba Mươi",
                 cat: "Truyền thuyết",
-                cover: "images/74.jpg", // Ảnh bìa lấy ảnh đầu tiên của truyện
-                audio: "audio/ongbamuoi.wav", // Nhớ tạo file này
-                youtube: "https://www.youtube.com/embed/veQB2SNj-GY", // Thay link youtube thật vào
+                cover: "images/74.jpg", 
+                audio: "audio/ongbamuoi.wav",
+                youtube: "https://www.youtube.com/embed/veQB2SNj-GY",
                 chapters: [{ name: "Full", pages: layAnh(74, 84) }]
             },
             {
                 id: "suachua",
                 title: "Những Con Vật Phải Sửa Chữa",
                 cat: "Truyện ngụ ngôn",
-                cover: "images/85.jpg", // Ảnh bìa
-                audio: "audio/suachua.wav", // Nhớ tạo file này
-                youtube: "https://www.youtube.com/embed/mmwnXpCzlZc", // Thay link youtube thật vào
+                cover: "images/85.jpg", 
+                audio: "audio/suachua.wav", 
+                youtube: "https://www.youtube.com/embed/mmwnXpCzlZc", 
                 chapters: [{ name: "Full", pages: layAnh(85, 95) }]
-            },
+            }, // <-- ĐÃ THÊM DẤU PHẨY Ở ĐÂY
+
+            // --- 2 TRUYỆN MỚI ---
             {
                 id: "hoangphi",
                 title: "Người Chồng Hoang Phí",
                 cat: "Truyện cổ tích",
-                cover: "images/200.jpg", // Ảnh bìa
-                audio: "audio/hoangphi.wav", // Nhớ tạo file này
-                youtube: "https://www.youtube.com/embed/VIDEO_ID_HERE", // Thay ID video youtube
+                cover: "images/200.jpg", 
+                audio: "audio/hoangphi.wav", 
+                youtube: "https://www.youtube.com/embed/VIDEO_ID_HERE", 
                 chapters: [{ name: "Full", pages: layAnh(200, 210) }]
             },
             {
                 id: "nghienruou",
                 title: "Hai Anh Chàng Nghiện Rượu",
                 cat: "Truyện cười",
-                cover: "images/211.jpg", // Ảnh bìa
-                audio: "audio/nghienruou.wav", // Nhớ tạo file này
-                youtube: "https://www.youtube.com/embed/VIDEO_ID_HERE", // Thay ID video youtube
+                cover: "images/211.jpg", 
+                audio: "audio/nghienruou.wav", 
+                youtube: "https://www.youtube.com/embed/VIDEO_ID_HERE", 
                 chapters: [{ name: "Full", pages: layAnh(211, 221) }]
             }
         ];
@@ -314,4 +314,172 @@
                 <div class="detail-header">
                     <img src="${currentItem.cover}" class="backdrop">
                     <div class="detail-info-container">
-                        <img src="${currentItem.cover}" class="cover
+                        <img src="${currentItem.cover}" class="cover-small">
+                        <div class="info-text">
+                            <h1>${currentItem.title}</h1>
+                            <div class="view-badge"><i class="fas fa-eye"></i> ${views.toLocaleString()} lượt xem</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn-action btn-read" onclick="startComic()"><i class="fas fa-book-open"></i> Đọc Truyện</button>
+                    ${btnVideo}
+                    ${btnAudio}
+                </div>
+
+                <div style="padding: 0 15px;">
+                    <h4 style="border-left:3px solid var(--red); padding-left:10px; margin: 20px 0 10px 0;">Bình luận</h4>
+                    <div style="margin-bottom:15px;">
+                        <input id="cmt-input" placeholder="Viết bình luận..." style="width:100%; padding:10px; border-radius:5px; border:none; background:#222; color:white; margin-bottom:5px;">
+                        <button onclick="postComment()" style="background:var(--blue); color:white; border:none; padding:5px 15px; border-radius:4px; float:right;">Gửi</button>
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div id="cmt-list">
+                        ${localData.comments.map(c => `<div class="comment-item"><span class="cmt-user">${c.user}</span>: ${c.content}</div>`).join('') || '<p style="color:#666">Chưa có bình luận.</p>'}
+                    </div>
+                </div>
+            `;
+        }
+
+        // ================= TRÌNH ĐỌC & NGHE =================
+
+        function openReader(title) {
+            document.getElementById('reader-view').style.display = 'flex';
+            document.getElementById('reader-title').innerText = title;
+            document.getElementById('comic-controls').style.display = 'none';
+            document.querySelectorAll('.nav-arrow').forEach(a => a.style.display = 'none');
+            document.getElementById('reader-content').className = ''; 
+        }
+
+        // 1. ĐỌC TRUYỆN TRANH
+        function startComic() {
+            openReader(currentItem.title);
+            document.getElementById('comic-controls').style.display = 'flex'; 
+            const container = document.getElementById('reader-content');
+            container.innerHTML = '';
+            
+            currentItem.chapters[0].pages.forEach((url, index) => {
+                let img = document.createElement('img');
+                img.src = url;
+                img.dataset.index = index; 
+                if (index === 0) img.classList.add('active');
+                container.appendChild(img);
+            });
+            setMode('scroll'); 
+        }
+
+        function setMode(mode) {
+            const container = document.getElementById('reader-content');
+            const btnScroll = document.getElementById('btn-scroll');
+            const btnSlide = document.getElementById('btn-slide');
+            const arrows = document.querySelectorAll('.nav-arrow');
+
+            if (mode === 'scroll') {
+                container.className = 'mode-scroll';
+                btnScroll.classList.add('active');
+                btnSlide.classList.remove('active');
+                arrows.forEach(a => a.style.display = 'none'); 
+                document.getElementById('page-indicator').innerText = "";
+            } else {
+                container.className = 'mode-slide';
+                btnSlide.classList.add('active');
+                btnScroll.classList.remove('active');
+                arrows.forEach(a => a.style.display = 'block');
+                currentPage = 0;
+                updateSlide();
+            }
+        }
+
+        function changePage(step) {
+            const images = document.querySelectorAll('#reader-content img');
+            let next = currentPage + step;
+            if (next >= 0 && next < images.length) {
+                currentPage = next;
+                updateSlide();
+            }
+        }
+
+        function updateSlide() {
+            const images = document.querySelectorAll('#reader-content img');
+            images.forEach((img, idx) => {
+                if (idx === currentPage) img.classList.add('active');
+                else img.classList.remove('active');
+            });
+            document.getElementById('page-indicator').innerText = `Trang ${currentPage + 1}/${images.length}`;
+        }
+
+        // 2. NGHE AUDIO
+        function startAudio() {
+            if (!currentItem.audio) return;
+            openReader("Đang nghe kể chuyện");
+            document.getElementById('reader-content').innerHTML = `
+                <div class="audio-player-ui">
+                    <img src="${currentItem.cover}" class="audio-disk">
+                    <div class="audio-title-display">${currentItem.title}</div>
+                    <audio controls autoplay class="audio-controls-native">
+                        <source src="${currentItem.audio}" type="audio/mpeg">
+                        Trình duyệt không hỗ trợ audio.
+                    </audio>
+                </div>`;
+        }
+
+        // 3. XEM VIDEO (YOUTUBE)
+        function startVideo() {
+            if (!currentItem.youtube) return;
+            openReader("Đang xem video");
+            document.getElementById('reader-content').innerHTML = `
+                <div class="video-container">
+                    <iframe src="${currentItem.youtube}" allowfullscreen></iframe>
+                </div>`;
+        }
+
+        function closeReader() {
+            document.getElementById('reader-view').style.display = 'none';
+            document.getElementById('reader-content').innerHTML = ''; 
+        }
+
+        // ================= LỊCH SỬ & KHÁC =================
+        function addToHistory(item) {
+            let history = JSON.parse(localStorage.getItem('read_history')) || [];
+            history = history.filter(h => h.id !== item.id);
+            history.unshift({ id: item.id, title: item.title, cover: item.cover });
+            localStorage.setItem('read_history', JSON.stringify(history));
+        }
+
+        function postComment() {
+            if(!checkUser()) return;
+            let txt = document.getElementById('cmt-input').value;
+            if(!txt.trim()) return;
+            let key = 'data_' + currentItem.id;
+            let data = JSON.parse(localStorage.getItem(key)) || { comments: [] };
+            data.comments.unshift({ user: currentUser, content: txt });
+            localStorage.setItem(key, JSON.stringify(data));
+            openDetail(currentItem.id);
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if(tab === 'home') {
+                document.getElementById('tab-home').style.display = 'block';
+                document.getElementById('nav-home').classList.add('active');
+            } else if(tab === 'history') {
+                document.getElementById('tab-history').style.display = 'block';
+                document.getElementById('nav-history').classList.add('active');
+                
+                let history = JSON.parse(localStorage.getItem('read_history')) || [];
+                document.getElementById('history-list').innerHTML = history.length ? history.map(h => `
+                    <div class="history-item" onclick="openDetail('${h.id}')">
+                        <img src="${h.cover}" onerror="this.src='https://via.placeholder.com/60'">
+                        <div><div style="font-weight:bold; color:white;">${h.title}</div><small style="color:#888;">Đã xem</small></div>
+                    </div>
+                `).join('') : '<p style="text-align:center; color:#666;">Chưa xem truyện nào.</p>';
+            }
+            closeReader();
+        }
+
+        renderHome();
+    </script>
+</body>
+</html>

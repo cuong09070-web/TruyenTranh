@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Đọc truyện tranh dân gian, cổ tích Việt Nam online miễn phí. Kho tàng truyện cổ tích, truyền thuyết, ngụ ngôn hay nhất.">
-    <meta name="keywords" content="truyện cổ tích, truyện dân gian, truyện tranh, đọc truyện online">
-    <meta property="og:title" content="Kho Truyện Thái Nguyên - Đọc Truyện Online">
-    <meta property="og:image" content="images/100.jpg">
+    <meta name="description" content="Đọc truyện tranh dân gian, cổ tích Việt Nam online miễn phí.">
     <title>Kho Truyện Thái Nguyên</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
@@ -19,16 +16,13 @@
             --text-sec: #aaa;
             --red: #E50914; 
             --blue: #46d369;
-            --overlay: rgba(0,0,0,0.8);
         }
 
-        /* Light Mode Variables */
         [data-theme="light"] {
             --bg: #f0f2f5;
             --card: #ffffff;
             --text: #1c1e21;
             --text-sec: #65676b;
-            --overlay: rgba(255,255,255,0.9);
         }
 
         * { box-sizing: border-box; }
@@ -40,11 +34,10 @@
         header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: var(--card); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; z-index: 1000; border-bottom: 1px solid #333; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .logo { font-weight: bold; color: var(--red); font-size: 1.2rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .header-right { display: flex; align-items: center; gap: 10px; }
-        
-        /* Nút chuyển chế độ Sáng/Tối */
         .theme-toggle { background: none; border: none; color: var(--text); font-size: 1.2rem; cursor: pointer; }
+        .user-greeting { font-size: 0.8rem; color: var(--text-sec); border: 1px solid #444; padding: 4px 10px; border-radius: 15px; cursor: pointer; }
 
-        /* GRID VIEW & FILTER (2. TÌM KIẾM NÂNG CAO) */
+        /* GRID VIEW & FILTER */
         .view { display: none; padding: 10px 15px 80px 15px; min-height: 100vh; }
         .view.active { display: block; }
         
@@ -66,7 +59,7 @@
         .card.is-read img { opacity: 0.6; filter: grayscale(80%); }
         .icon-read { position: absolute; top: 8px; left: 8px; background: var(--blue); color: white; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%; z-index: 2; }
 
-        /* CHI TIẾT TRUYỆN (4. THÔNG TIN RÕ RÀNG) */
+        /* CHI TIẾT TRUYỆN */
         .detail-header { position: relative; height: 250px; overflow: hidden; margin: -10px -15px 15px -15px; }
         .backdrop { width: 100%; height: 100%; object-fit: cover; filter: blur(20px) brightness(0.5); }
         .detail-info-container { position: absolute; bottom: 0; left: 0; right: 0; padding: 15px; display: flex; gap: 15px; align-items: flex-end; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); }
@@ -75,47 +68,41 @@
         .info-text h1 { margin: 0 0 5px 0; font-size: 1.3rem; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .meta-tag { display: inline-block; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-top: 5px; }
 
-        /* MÔ TẢ TRUYỆN */
+        /* MÔ TẢ TRUYỆN - Sửa CSS để hỗ trợ xuống dòng */
         .story-desc { padding: 15px; background: var(--card); border-radius: 8px; margin: 0 15px 20px 15px; color: var(--text); font-size: 0.95rem; line-height: 1.6; border-left: 3px solid var(--blue); white-space: pre-line; text-align: justify; }
 
-        /* CÀI ĐẶT FONT (1. TÙY CHỈNH) */
+        /* CÀI ĐẶT FONT */
         #font-settings { display: none; padding: 15px; background: var(--card); margin: 0 15px 15px 15px; border-radius: 8px; border: 1px solid #333; }
         .setting-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .setting-row label { min-width: 80px; font-size: 0.9rem; }
         input[type=range] { flex: 1; }
 
         /* THANH NÚT BẤM */
         .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
         .btn-action { padding: 12px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 0.8rem; color: white; transition: 0.2s; }
-        .btn-action:active { transform: scale(0.95); }
         .btn-read { background: var(--red); }
         .btn-video { background: #333; border: 1px solid #555; }
         .btn-listen { background: var(--blue); }
 
-        /* 3. BÌNH LUẬN & TƯƠNG TÁC */
-        .comment-box { padding: 0 15px; }
+        /* BÌNH LUẬN & TƯƠNG TÁC */
         .comment-item { background: var(--card); padding: 12px; border-radius: 8px; margin-bottom: 10px; font-size: 0.9rem; position: relative; }
         .cmt-user { color: var(--blue); font-weight: bold; margin-bottom: 3px; display: block; }
         .cmt-actions { margin-top: 5px; display: flex; gap: 15px; font-size: 0.8rem; color: var(--text-sec); }
         .cmt-btn { cursor: pointer; }
-        .cmt-btn:hover { color: var(--red); }
 
-        /* GỢI Ý TRUYỆN (2. KHÁM PHÁ) */
+        /* GỢI Ý TRUYỆN */
         .related-section { padding: 0 15px; margin-bottom: 30px; }
         .related-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; }
         .related-card { min-width: 120px; width: 120px; }
         .related-card img { width: 100%; border-radius: 6px; aspect-ratio: 2/3; object-fit: cover; }
         .related-card h4 { font-size: 0.8rem; margin: 5px 0 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
 
-        /* TRÌNH ĐỌC (READER) - 7. RESPONSIVE & SWIPE */
+        /* TRÌNH ĐỌC (FULLSCREEN) */
         #reader-view { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; display: none; flex-direction: column; }
-        
         .reader-header { height: 50px; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; color: white; flex-shrink: 0; transition: transform 0.3s; }
         .reader-header.hidden { transform: translateY(-100%); }
 
         #reader-content { flex: 1; overflow: hidden; position: relative; display: flex; justify-content: center; background: #111; }
         
-        /* 6. LAZY LOAD & PRELOAD */
         #reader-content.mode-scroll { overflow-y: auto; display: block; scroll-behavior: smooth; }
         #reader-content.mode-scroll img { width: 100%; max-width: 800px; display: block; margin: 0 auto; min-height: 200px; }
         
@@ -123,14 +110,12 @@
         #reader-content.mode-slide img { max-height: 100%; max-width: 100%; object-fit: contain; display: none; }
         #reader-content.mode-slide img.active { display: block; }
 
-        /* Thanh điều khiển dưới */
         .reader-controls { height: 60px; background: rgba(0,0,0,0.95); display: flex; justify-content: center; gap: 15px; align-items: center; flex-shrink: 0; border-top: 1px solid #333; transition: transform 0.3s; }
         .reader-controls.hidden { transform: translateY(100%); }
-        
         .ctrl-btn { background: #333; color: white; border: none; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; }
         .ctrl-btn.active { background: var(--red); font-weight: bold; }
 
-        /* VIDEO & AUDIO UI */
+        /* VIDEO & AUDIO */
         .video-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: black; }
         .video-container iframe { width: 100%; height: 100%; max-width: 1000px; aspect-ratio: 16/9; border: none; }
         .audio-player-ui { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; background: radial-gradient(circle, #333 0%, #000 100%); }
@@ -158,7 +143,7 @@
 
     <div id="tab-home" class="view active">
         <div class="filter-bar">
-            <input type="text" id="search" class="search-input" placeholder="🔍 Tìm kiếm truyện..." oninput="renderHome()">
+            <input type="text" id="search" class="search-input" placeholder="🔍 Tìm truyện..." oninput="renderHome()">
             <select id="filter-cat" class="filter-select" onchange="renderHome()">
                 <option value="all">Tất cả thể loại</option>
                 <option value="Truyền thuyết">Truyền thuyết</option>
@@ -170,7 +155,6 @@
             <select id="filter-sort" class="filter-select" onchange="renderHome()">
                 <option value="newest">Mới nhất</option>
                 <option value="az">A-Z</option>
-                <option value="views">Lượt xem nhiều</option>
             </select>
         </div>
         <div id="grid-home" class="grid"></div>
@@ -192,7 +176,7 @@
             <span id="page-indicator" style="font-size: 0.8rem; color: #888;"></span>
         </div>
 
-        <div id="reader-content" class="mode-scroll" onclick="toggleReaderUI()"></div>
+        <div id="reader-content" class="mode-scroll" onclick="toggleReaderUI()" onscroll="saveScrollProgress()"></div>
 
         <button class="nav-arrow prev-arrow" id="btn-prev" onclick="changePage(-1)" style="display:none;">❮</button>
         <button class="nav-arrow next-arrow" id="btn-next" onclick="changePage(1)" style="display:none;">❯</button>
@@ -209,7 +193,7 @@
     </nav>
 
     <script>
-        // ================= DỮ LIỆU GỐC (13 TRUYỆN) =================
+        // ================= DỮ LIỆU =================
         function layAnh(tuSo, denSo) {
             let arr = []; 
             for(let i=tuSo; i<=denSo; i++) arr.push(`images/${i}.jpg`); 
@@ -217,28 +201,178 @@
         }
 
         const database = [
-            { id: "cotham", title: "Sự Tích Đền Cô Thắm", cat: "Truyền thuyết", author: "Dân gian", date: "01/02/2026", desc: "Sự tích đền Cô Thắm là một truyện dân gian cảm động kể về cuộc đời của cô Thắm – người con gái nghèo nhưng giàu lòng nhân ái ở vùng Tràng Cổ.", cover: "images/100.jpg", audio: "audio/cotham.wav", youtube: "https://www.youtube.com/embed/H_DKORNPAnY", chapters: [{ name: "Full", pages: layAnh(100, 113) }] },
-            { id: "yembo", title: "Sự Tích Chiếc Yếm Bò", cat: "Cổ tích", author: "Người Tày", date: "02/02/2026", desc: "Giải thích nguồn gốc vì sao loài bò lại có một miếng da thòng xuống ở cổ, gọi là chiếc yếm.", cover: "images/63.jpg", audio: "audio/yembo.wav", youtube: "https://www.youtube.com/embed/DYQi8GYS5E4", chapters: [{ name: "Full", pages: layAnh(63, 73) }] },
-            { id: "hatlua", title: "Sự Tích Hạt Lúa", cat: "Cổ tích", author: "Dân gian", date: "03/02/2026", desc: "Ngày xưa hạt lúa to như cái gáo dừa và biết tự lăn về nhà. Vì sao bây giờ nó lại bé đi?", cover: "images/25.jpg", audio: "audio/hatlua.wav", youtube: "https://www.youtube.com/embed/SrRZDv5966o", chapters: [{ name: "Full", pages: layAnh(25, 35) }] },
-            { id: "vocam", title: "Người Vợ Câm", cat: "Truyện ngắn", author: "Sưu tầm", date: "04/02/2026", desc: "Câu chuyện hài hước nhưng cũng đầy ý nghĩa về anh chồng tìm thầy lang chữa bệnh câm cho vợ.", cover: "images/36.jpg", audio: "audio/vocam.wav", youtube: "https://www.youtube.com/embed/uYz8OPu_T9A", chapters: [{ name: "Full", pages: layAnh(36, 41) }] },
-            { id: "echchuot", title: "Ếch và Chuột", cat: "Ngụ ngôn", author: "Aesop (Việt hóa)", date: "05/02/2026", desc: "Bài học về tình bạn xấu và quy luật 'gậy ông đập lưng ông' qua câu chuyện của Ếch và Chuột.", cover: "images/42.jpg", audio: "audio/echchuot.wav", youtube: "https://www.youtube.com/embed/sgpNHKZu8-U", chapters: [{ name: "Full", pages: layAnh(42, 51) }] },
-            { id: "bococ", title: "Bò và Cóc", cat: "Ngụ ngôn", author: "Dân gian", date: "06/02/2026", desc: "Cóc nhìn thấy Bò to lớn thì sinh lòng ganh tị, cố phình bụng cho to bằng Bò và cái kết.", cover: "images/52.jpg", audio: "audio/bococ.wav", youtube: "https://www.youtube.com/embed/swIc9EHdbNI", chapters: [{ name: "Full", pages: layAnh(52, 62) }] },
-            { id: "ongbamuoi", isNew: true, title: "Vì Sao Gọi Hổ Là Ông Ba Mươi", cat: "Truyền thuyết", author: "Dân gian", date: "08/02/2026", desc: "Giải thích nguồn gốc dân gian về cái tên đầy kính sợ và bí ẩn của loài Hổ: Ông Ba Mươi.", cover: "images/74.jpg", audio: "audio/ongbamuoi.wav", youtube: "https://www.youtube.com/embed/veQB2SNj-GY", chapters: [{ name: "Full", pages: layAnh(74, 84) }] },
-            { id: "suachua", isNew: true, title: "Những Con Vật Phải Sửa Chữa", cat: "Truyện ngụ ngôn", author: "Dân gian", date: "08/02/2026", desc: "Các loài vật không hài lòng với ngoại hình của mình và muốn sửa chữa, tạo nên những tình huống thú vị.", cover: "images/85.jpg", audio: "audio/suachua.wav", youtube: "https://www.youtube.com/embed/mmwnXpCzlZc", chapters: [{ name: "Full", pages: layAnh(85, 95) }] },
-            { id: "hoangphi", isNew: true, title: "Người Chồng Hoang Phí", cat: "Truyện cổ tích", author: "Dân gian", date: "08/02/2026", desc: "Bài học cảnh tỉnh về thói tiêu xài hoang phí và sự quan trọng của việc biết trân trọng tài sản.", cover: "images/200.jpg", audio: "audio/hoangphi.wav", youtube: "https://www.youtube.com/embed/pRfF6c1uqqY", chapters: [{ name: "Full", pages: layAnh(200, 210) }] },
-            { id: "nghienruou", isNew: true, title: "Hai Anh Chàng Nghiện Rượu", cat: "Truyện cười", author: "Dân gian", date: "08/02/2026", desc: "Câu chuyện châm biếm sâu cay về tác hại của rượu chè qua hình ảnh hai đệ tử lưu linh.", cover: "images/211.jpg", audio: "audio/nghienruou.wav", youtube: "https://www.youtube.com/embed/_iuc7tL7B24", chapters: [{ name: "Full", pages: layAnh(211, 221) }] },
-            { id: "noiphet", isNew: true, title: "Chuyện Anh Chàng Nói Phét", cat: "Truyện cười", author: "Dân gian", date: "08/02/2026", desc: "Những màn 'chém gió' xuyên lục địa của các thánh nói phét sẽ khiến bạn cười ra nước mắt.", cover: "images/222.jpg", audio: "audio/noiphet.wav", youtube: "https://www.youtube.com/embed/Qi85doiMofw", chapters: [{ name: "Full", pages: layAnh(222, 232) }] },
-            { id: "changre", isNew: true, title: "Chàng Rể Ngô Nghê", cat: "Truyện cười", author: "Người Tày", date: "08/02/2026", desc: "Chàng rể ngốc đi chúc tết bố vợ và những tình huống ứng xử dở khóc dở cười.", cover: "images/233.jpg", audio: "audio/changre.wav", youtube: "https://www.youtube.com/embed/DlceP85Jyno", chapters: [{ name: "Full", pages: layAnh(233, 243) }] },
-            { id: "meotamthe", isNew: true, title: "Sự Tích Con Mèo Tam Thể", cat: "Truyện cổ tích", author: "Dân gian", date: "09/02/2026", desc: "Sự tích con mèo tam thể là một truyện dân gian cảm động, mang màu sắc huyền ảo, kể về tình nghĩa vợ chồng sâu nặng vượt qua cả ranh giới sinh tử.", cover: "images/244.jpg", audio: "audio/meotamthe.wav", youtube: "https://www.youtube.com/embed/VIDEO_ID_HERE", chapters: [{ name: "Full", pages: layAnh(244, 254) }] }
+            { 
+                id: "cotham", 
+                title: "Sự Tích Đền Cô Thắm", 
+                cat: "Truyền thuyết", 
+                author: "Dân gian", 
+                date: "01/02/2026", 
+                desc: `Sự tích đền Cô Thắm là một truyện dân gian cảm động kể về cuộc đời của cô Thắm – người con gái nghèo nhưng giàu lòng nhân ái ở vùng Tràng Cổ (Chợ Mới). Sinh ra trong gia đình đánh cá nghèo khó, Thắm cùng cha sống qua những ngày cơ cực. Nhờ một hòn đá kỳ lạ hóa thành hũ vàng, hai cha con thoát khỏi cảnh đói nghèo nhưng vẫn giữ tấm lòng thiện lương, đem của cải giúp đỡ người nghèo trong vùng.\n\nSau khi cha mất, Thắm tiếp nối nghề chài lưới và nếp sống nghĩa tình của cha, được dân làng kính trọng. Cuộc đời cô rẽ sang bi kịch khi bị ép làm vợ một tên nhà giàu phản bội, làm tay sai cho giặc ngoại bang. Không cam chịu số phận, Thắm rời bỏ nhà chồng, đứng lên tập hợp nhân dân, trở thành nữ tướng anh dũng lãnh đạo cuộc kháng chiến chống giặc xâm lược.\n\nTrong trận chiến ác liệt tại ngã ba sông Tràng Cổ, cô Thắm chiến đấu kiên cường nhưng anh dũng hy sinh. Để tưởng nhớ công lao và đức hy sinh cao cả của cô, nhân dân đã lập đền thờ ngay trên nền nhà cũ. Đến nay, đền Cô Thắm vẫn là biểu tượng thiêng liêng của lòng nhân ái, tinh thần yêu nước và sự quả cảm của người phụ nữ Việt Nam.`, 
+                cover: "images/100.jpg", 
+                audio: "audio/cotham.wav", 
+                youtube: "https://www.youtube.com/embed/H_DKORNPAnY", 
+                chapters: [{ name: "Full", pages: layAnh(100, 113) }] 
+            },
+            { 
+                id: "yembo", 
+                title: "Sự Tích Chiếc Yếm Bò", 
+                cat: "Cổ tích", 
+                author: "Người Tày", 
+                date: "02/02/2026", 
+                desc: `Sự tích chiếc yếm ở ngực bò là một truyện dân gian hóm hỉnh của người Tày, giải thích nguồn gốc hình dáng và tập tính của trâu và bò. Thuở xưa, trâu và bò vốn cùng một loài, sống chan hòa bên nhau. Trâu có chiếc yếm đẹp trước ngực, còn bò thì không, vì ganh tị nên bò đã lén lấy trộm chiếc yếm của trâu khi trâu xuống đầm.\n\nTừ đó, trâu ngày ngày lặn xuống nước tìm lại chiếc yếm đã mất, còn bò thì mang yếm trên ngực, luôn sợ trâu phát hiện nên quay sừng về phía trước để phòng thân và tránh xa nơi có nước. Câu chuyện vừa dí dỏm, vừa mang màu sắc huyền thoại dân gian, thể hiện cách người xưa lý giải thế giới tự nhiên bằng trí tưởng tượng phong phú, đồng thời kín đáo nhắc nhở con người về thói ganh ghét và lòng tham.`, 
+                cover: "images/63.jpg", 
+                audio: "audio/yembo.wav", 
+                youtube: "https://www.youtube.com/embed/DYQi8GYS5E4", 
+                chapters: [{ name: "Full", pages: layAnh(63, 73) }] 
+            },
+            { 
+                id: "hatlua", 
+                title: "Sự Tích Hạt Lúa", 
+                cat: "Cổ tích", 
+                author: "Dân gian", 
+                date: "03/02/2026", 
+                desc: `Tại sao ngày nay hạt lúa lại nhỏ là một truyện dân gian giàu ý nghĩa giáo dục, kể về nguồn gốc của hạt thóc và bài học về lao động. Thuở xưa, hạt thóc to lớn, con người sống nhàn nhã vì lúa tự về nhà khi đến mùa. Nhưng do sự lười biếng và thô bạo của một người con dâu, lúa thóc giận dữ bỏ con người mà đi ra bên kia biển, khiến trần gian rơi vào cảnh đói khổ.\n\nNhờ loài chuột nhỏ bé nhưng chịu khó, con người mới mang được vài hạt thóc nhỏ nhất trở về làm giống, từ đó hạt lúa trở nên bé như ngày nay. Câu chuyện lý giải một cách dân gian về kích thước của hạt lúa, đồng thời ca ngợi sự cần cù, biết giữ gìn giống nòi và nhắc nhở con người phải trân trọng lao động, thiên nhiên và thành quả do chính mình làm ra.`, 
+                cover: "images/25.jpg", 
+                audio: "audio/hatlua.wav", 
+                youtube: "https://www.youtube.com/embed/SrRZDv5966o", 
+                chapters: [{ name: "Full", pages: layAnh(25, 35) }] 
+            },
+            { 
+                id: "vocam", 
+                title: "Người Vợ Câm", 
+                cat: "Truyện ngắn", 
+                author: "Sưu tầm", 
+                date: "04/02/2026", 
+                desc: `Người vợ câm là một truyện dân gian mang màu sắc bi kịch, kể về số phận của một cô gái được nuông chiều quá mức nên trở nên đanh đá, ác tính. Khi đi lấy chồng, vì sợ con bị ghét bỏ, người mẹ đã bày mưu dặn con phải giữ im lặng cho đến khi những con chấy khâu trong vạt áo chết hết mới được nói, với hy vọng con sẽ có cuộc sống yên ổn nơi nhà chồng.\n\nSuốt ba năm làm dâu, cô gái không dám mở miệng, bị nhà chồng lầm tưởng là người câm. Cuối cùng, vì không chịu nổi, gia đình chồng đã đưa cô trở về nhà cha mẹ. Câu chuyện phản ánh quan niệm dân gian về cách ứng xử trong gia đình, đồng thời gửi gắm lời nhắc nhở sâu sắc: sự dạy dỗ sai lầm và thói nuông chiều mù quáng có thể đẩy con người vào những bi kịch không đáng có.`, 
+                cover: "images/36.jpg", 
+                audio: "audio/vocam.wav", 
+                youtube: "https://www.youtube.com/embed/uYz8OPu_T9A", 
+                chapters: [{ name: "Full", pages: layAnh(36, 41) }] 
+            },
+            { 
+                id: "echchuot", 
+                title: "Ếch và Chuột", 
+                cat: "Ngụ ngôn", 
+                author: "Aesop (Việt hóa)", 
+                date: "05/02/2026", 
+                desc: `Ếch và Chuột là một truyện dân gian giàu màu sắc hóm hỉnh, kể về tình bạn giữa hai con vật vốn thân thiết với nhau. Chuột sống trên cây cao, còn ếch ở bờ ruộng nên tuy chơi thân nhưng ếch chưa bao giờ đến được nhà bạn. Thương bạn, chuột bày cách cho ếch ngậm vào đuôi mình để kéo lên, đồng thời dặn dò ếch phải thật bình tĩnh, đừng vội lên tiếng khi sắp tới nơi.\n\nThế nhưng vì tính nhanh nhảu, ếch quên mất lời dặn, mở miệng đáp lại lời chào của vợ chuột và bị rơi từ trên cao xuống, khiến mồm bị bẹp mãi mãi. Từ đó, mỗi khi thời tiết thay đổi, ếch lại kêu “ộp, ộp” như lời than đau đớn và ân hận. Câu chuyện vừa lý giải đặc điểm hình dáng của loài ếch, vừa gửi gắm bài học về sự cẩn trọng, biết lắng nghe và ghi nhớ lời khuyên của người khác.`, 
+                cover: "images/42.jpg", 
+                audio: "audio/echchuot.wav", 
+                youtube: "https://www.youtube.com/embed/sgpNHKZu8-U", 
+                chapters: [{ name: "Full", pages: layAnh(42, 51) }] 
+            },
+            { 
+                id: "bococ", 
+                title: "Bò và Cóc", 
+                cat: "Ngụ ngôn", 
+                author: "Dân gian", 
+                date: "06/02/2026", 
+                desc: `Bò và Cóc là một truyện dân gian ngắn gọn, giàu tính ngụ ngôn, lý giải đặc điểm hình dáng và tập tính của loài cóc. Vốn có thân hình nhỏ nhắn, thích đi chơi xa, cóc vì tò mò và ham muốn được to lớn như bò đã cả tin làm theo lời chỉ dẫn sai lầm của bò, cố sức hít hơi phồng bụng cho đến khi vỡ bụng mà chết.\n\nTừ đó, loài cóc mang cái bụng phồng to và chỉ sống quanh quẩn ở những nơi tối tăm, không còn đi xa như trước. Câu chuyện mượn hình ảnh loài vật để nhắc nhở con người: không nên mù quáng bắt chước người khác, phải biết rõ khả năng của mình, nếu không sẽ phải gánh chịu hậu quả đáng tiếc.`, 
+                cover: "images/52.jpg", 
+                audio: "audio/bococ.wav", 
+                youtube: "https://www.youtube.com/embed/swIc9EHdbNI", 
+                chapters: [{ name: "Full", pages: layAnh(52, 62) }] 
+            },
+            { 
+                id: "ongbamuoi", 
+                isNew: true, 
+                title: "Vì Sao Gọi Hổ Là Ông Ba Mươi", 
+                cat: "Truyền thuyết", 
+                author: "Dân gian", 
+                date: "08/02/2026", 
+                desc: `Vì sao gọi loài hổ là Ông Ba Mươi là một truyện dân gian mang màu sắc huyền thoại, kể về số phận éo le của một ông lão nghèo khổ, cả đời gắn liền với con số ba mươi. Dù làm gì, vất vả đến đâu, ông cũng chỉ nhận lại đúng ba mươi, vì thế dân làng quen gọi ông là ông Ba Mươi. Cuộc sống cơ cực càng thêm cùng quẫn khi vùng ông ở bị một con hổ dữ hoành hành, gieo rắc nỗi kinh hoàng cho dân chúng.\n\nTrong lúc tuyệt vọng, ông Ba Mươi quyết liều mình làm mồi nhử hổ, mong tìm đến cái chết. Thế nhưng trớ trêu thay, chính sự liều lĩnh ấy lại khiến con hổ dữ sa vào bẫy và bị giết chết. Nhờ đó, ông vô tình trở thành người có công lớn cứu dân làng khỏi tai họa. Từ một kẻ nghèo khổ cùng cực, ông Ba Mươi được dân chúng tôn trọng, thưởng công và sống no ấm đến cuối đời. Câu chuyện lý giải nguồn gốc cách gọi loài hổ là “Ông Ba Mươi”, thể hiện niềm tin dân gian về số phận, lòng quả cảm và khát vọng chế ngự thiên nhiên của con người.`, 
+                cover: "images/74.jpg", 
+                audio: "audio/ongbamuoi.wav", 
+                youtube: "https://www.youtube.com/embed/veQB2SNj-GY", 
+                chapters: [{ name: "Full", pages: layAnh(74, 84) }] 
+            },
+            { 
+                id: "suachua", 
+                isNew: true, 
+                title: "Những Con Vật Phải Sửa Chữa", 
+                cat: "Truyện ngụ ngôn", 
+                author: "Dân gian", 
+                date: "08/02/2026", 
+                desc: `Những con vật phải sửa chữa là một truyện dân gian giàu trí tưởng tượng, kể về thuở Pựt Luông tạo ra muôn loài. Vì phải tạo dựng thế giới trong thời gian gấp gáp, nhiều con vật được sinh ra chưa hoàn chỉnh: loài thì thiếu miệng, loài không có chân, loài thừa chân, loài lại không có vú để nuôi con. Khi trần gian đã ổn định, Pựt Luông buộc phải mở một cuộc tu bổ, sửa chữa để các loài lên mường trời kêu ca và được chỉnh sửa cho phù hợp với cách sống của mình.\n\nQua những lần “sửa chữa” ấy, hình dáng và tập tính quen thuộc của các loài vật ngày nay được hình thành: cá bò có cái miệng rộng xấu xí, rắn và lươn phải trườn mình để di chuyển, vịt có chân mà khi ngủ phải co một chân lên, chim và gà đẻ trứng thay vì sinh con. Câu chuyện phản ánh cách nhìn hồn nhiên, sáng tạo của người xưa khi lý giải thế giới tự nhiên, đồng thời thể hiện quan niệm dân gian rằng mọi sự vật dù chưa hoàn hảo vẫn có cách thích nghi để tồn tại.`, 
+                cover: "images/85.jpg", 
+                audio: "audio/suachua.wav", 
+                youtube: "https://www.youtube.com/embed/mmwnXpCzlZc", 
+                chapters: [{ name: "Full", pages: layAnh(85, 95) }] 
+            },
+            { 
+                id: "hoangphi", 
+                isNew: true, 
+                title: "Người Chồng Hoang Phí", 
+                cat: "Truyện cổ tích", 
+                author: "Dân gian", 
+                date: "08/02/2026", 
+                desc: `Người chồng hoang phí là một truyện dân gian mang màu sắc bi kịch, phê phán thói ăn chơi, rượu chè và sự vô trách nhiệm của người chồng trong gia đình. Vì quen sống hoang phí với bạn bè, người chồng khiến gia cảnh ngày càng sa sút, từ chỗ đủ ăn đủ mặc rơi vào cảnh túng quẫn, thiếu thốn trăm bề, nhưng vẫn không chịu thay đổi.\n\nTrong cơn túng quẫn cùng cực, khi chồng mời bạn về ăn uống mà trong nhà không còn gì, người vợ đã hy sinh thân mình để giữ thể diện cho chồng. Chỉ đến khi cuộc rượu tàn, sự thật đau lòng mới được phát hiện, để lại nỗi ân hận muộn màng cho cả người chồng lẫn người bạn. Câu chuyện là lời cảnh tỉnh sâu sắc về hậu quả của lối sống vô độ, đồng thời ca ngợi đức hy sinh thầm lặng nhưng đầy xót xa của người phụ nữ trong xã hội xưa.`, 
+                cover: "images/200.jpg", 
+                audio: "audio/hoangphi.wav", 
+                youtube: "https://www.youtube.com/embed/pRfF6c1uqqY", 
+                chapters: [{ name: "Full", pages: layAnh(200, 210) }] 
+            },
+            { 
+                id: "nghienruou", 
+                isNew: true, 
+                title: "Hai Anh Chàng Nghiện Rượu", 
+                cat: "Truyện cười", 
+                author: "Dân gian", 
+                date: "08/02/2026", 
+                desc: `Hai anh chàng nghiện rượu là một truyện dân gian ngắn mang tính châm biếm, phê phán thói lười biếng và nghiện ngập. Hai người đàn ông suốt ngày rượu chè bê tha, đến mức không còn ai cho uống nhờ hay xin rượu nữa. Vì cơn thèm rượu, họ liều lĩnh bàn nhau đi trộm chum rượu của nhà hàng xóm.\n\nThế nhưng, vì mải mê uống đến say mèm, hai kẻ nghiện rượu đã gây ồn ào, để lộ hành vi trộm cắp và bị chủ nhà phát hiện, trừng phạt thích đáng. Câu chuyện vừa hài hước, vừa mang tính răn dạy, nhắc nhở con người phải tránh xa tật nghiện rượu, lối sống buông thả và coi thường lao động chân chính.`, 
+                cover: "images/211.jpg", 
+                audio: "audio/nghienruou.wav", 
+                youtube: "https://www.youtube.com/embed/_iuc7tL7B24", 
+                chapters: [{ name: "Full", pages: layAnh(211, 221) }] 
+            },
+            { 
+                id: "noiphet", 
+                isNew: true, 
+                title: "Chuyện Anh Chàng Nói Phét", 
+                cat: "Truyện cười", 
+                author: "Dân gian", 
+                date: "08/02/2026", 
+                desc: `Chuyện anh chàng nói phét là một truyện dân gian hài hước, châm biếm thói ba hoa, khoác lác của những kẻ lười biếng nhưng lại thích khoe khoang. Anh chàng trong truyện đi săn cả ngày chẳng được gì, vì xấu hổ đã bịa ra chuyện mình bắn một phát súng chết liền ba con nai để che giấu sự thất bại.\n\nCâu chuyện càng trở nên buồn cười khi anh ta cố nghĩ ra một lời giải thích vô lý, khiến mọi người không những không tin mà còn đem ra chế giễu bằng những câu vè mỉa mai. Qua tiếng cười dân gian, truyện gửi gắm bài học nhẹ nhàng mà sâu sắc: thói nói phét, khoe khoang rỗng tuếch chỉ khiến con người trở nên lố bịch và mất uy tín trước mọi người.`, 
+                cover: "images/222.jpg", 
+                audio: "audio/noiphet.wav", 
+                youtube: "https://www.youtube.com/embed/Qi85doiMofw", 
+                chapters: [{ name: "Full", pages: layAnh(222, 232) }] 
+            },
+            { 
+                id: "changre", 
+                isNew: true, 
+                title: "Chàng Rể Ngô Nghê", 
+                cat: "Truyện cười", 
+                author: "Người Tày", 
+                date: "08/02/2026", 
+                desc: `Chàng rể ngô nghê là một truyện dân gian hài hước của người Tày, kể về một anh chàng vừa ngốc nghếch lại lười tắm rửa nên mãi mới lấy được vợ. Sau khi cưới, anh phải đi ở rể nơi bản xa. Vì tính tình vụng về, bảo sao làm vậy mà lại thiếu hiểu biết, chàng rể khiến mẹ vợ luôn khó chịu.\n\nCâu chuyện trở nên buồn cười khi bà mẹ vợ khéo léo đưa tiền cho con rể đi mua mía để ăn cho sạch răng, nhưng anh ta lại mua bánh khoai, khiến răng càng bẩn hơn. Qua tình huống dở khóc dở cười ấy, truyện vừa mang tính giải trí, vừa là lời nhắc nhở nhẹ nhàng về sự sạch sẽ, khéo léo và ý tứ trong cách cư xử của những chàng rể khi về nhà vợ.`, 
+                cover: "images/233.jpg", 
+                audio: "audio/changre.wav", 
+                youtube: "https://www.youtube.com/embed/DlceP85Jyno", 
+                chapters: [{ name: "Full", pages: layAnh(233, 243) }] 
+            },
+            // TRUYỆN MỚI THÊM: SỰ TÍCH CON MÈO TAM THỂ
+            { 
+                id: "meotamthe", 
+                isNew: true, 
+                title: "Sự Tích Con Mèo Tam Thể", 
+                cat: "Truyện cổ tích", 
+                author: "Dân gian", 
+                date: "09/02/2026",
+                desc: `Sự tích con mèo tam thể là một truyện dân gian cảm động, mang màu sắc huyền ảo, kể về tình nghĩa vợ chồng sâu nặng vượt qua cả ranh giới sinh tử. Sau khi người vợ qua đời vì bệnh nặng, người chồng sống trong nỗi đau khôn nguôi. Còn người vợ, vì quá luyến tiếc trần gian và chồng con, linh hồn vẫn thường hóa thân đi chợ, mua chịu thịt cá như khi còn sống.\n\nKhi sự thật được phát hiện, linh hồn người vợ không thể trở về dương thế, đành gửi lại cho chồng một con mèo tam thể xuất hiện từ ngôi mộ của mình. Con mèo trở thành người bạn trung thành, chăm chỉ bắt chuột, thay người vợ ở bên chăm lo cho cuộc sống của chồng. Câu chuyện vừa lý giải nguồn gốc loài mèo tam thể, vừa ca ngợi tình nghĩa vợ chồng thủy chung, bền chặt và niềm tin dân gian vào sự gắn bó giữa con người với thế giới linh hồn.`,
+                cover: "images/244.jpg", 
+                audio: "audio/meotamthe.wav", 
+                youtube: "https://www.youtube.com/embed/VIDEO_ID_HERE", 
+                chapters: [{ name: "Full", pages: layAnh(244, 254) }] 
+            }
         ];
 
-        // ================= LOGIC HỆ THỐNG =================
+        // ================= SYSTEM & UI LOGIC =================
         let currentUser = localStorage.getItem('username') || "Khách";
         let currentItem = null;
         let currentPage = 0;
         document.getElementById('user-display').innerText = currentUser;
 
-        // 1. THEME TOGGLE (DARK/LIGHT)
         function toggleTheme() {
             const body = document.body;
             const current = body.getAttribute('data-theme');
@@ -246,10 +380,9 @@
             body.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
         }
-        // Load theme cũ
         if(localStorage.getItem('theme')) document.body.setAttribute('data-theme', localStorage.getItem('theme'));
 
-        // ================= XỬ LÝ DỮ LIỆU & RENDER =================
+        // ================= RENDER =================
         function renderHome() {
             const container = document.getElementById('grid-home');
             container.innerHTML = '';
@@ -258,20 +391,15 @@
             const cat = document.getElementById('filter-cat').value;
             const sort = document.getElementById('filter-sort').value;
 
-            // Filter
             let list = database.filter(i => {
                 let matchName = i.title.toLowerCase().includes(key);
                 let matchCat = cat === 'all' || i.cat === cat;
                 return matchName && matchCat;
             });
 
-            // Sort
             if(sort === 'az') list.sort((a,b) => a.title.localeCompare(b.title));
-            if(sort === 'newest') list.sort((a,b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)); // Ưu tiên mới
-            // Giả lập sort view: Dùng ID length làm seed
-            if(sort === 'views') list.sort((a,b) => b.title.length - a.title.length);
+            if(sort === 'newest') list.sort((a,b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
 
-            // History List
             let history = JSON.parse(localStorage.getItem('read_history')) || [];
             let readIds = history.map(h => h.id);
 
@@ -288,27 +416,26 @@
                         <h3>${item.title}</h3>
                         <div class="card-meta">
                             <span>${item.cat}</span>
-                            <span><i class="fas fa-eye"></i> ${item.title.length * 123}</span>
+                            <span><i class="fas fa-book"></i> ${item.chapters[0].pages.length}</span>
                         </div>
                     </div>
                 </div>`;
             });
         }
 
-        // ================= TRANG CHI TIẾT =================
+        // ================= DETAIL =================
         function openDetail(id) {
             currentItem = database.find(i => i.id === id);
             
-            // 5. SEO UPDATE
-            document.title = `${currentItem.title} - Đọc Truyện Online`;
-
+            document.title = `${currentItem.title} - Kho Truyện`;
             document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
             document.getElementById('view-detail').style.display = 'block';
             window.scrollTo(0,0);
             
-            addToHistory(currentItem); // Lưu lịch sử đọc
+            addToHistory(currentItem);
 
-            // 2. GỢI Ý TRUYỆN LIÊN QUAN
+            const localData = JSON.parse(localStorage.getItem('data_' + id)) || { comments: [] };
+            
             let related = database.filter(i => i.cat === currentItem.cat && i.id !== currentItem.id).slice(0, 5);
             let relatedHTML = related.map(r => `
                 <div class="related-card" onclick="openDetail('${r.id}')">
@@ -317,10 +444,6 @@
                 </div>
             `).join('');
 
-            // Bình luận
-            const localData = JSON.parse(localStorage.getItem('data_' + id)) || { comments: [] };
-            
-            // Buttons
             let btnVideo = currentItem.youtube ? 
                 `<button class="btn-action btn-video" onclick="startVideo()"><i class="fas fa-play"></i> Xem Video</button>` : 
                 `<button class="btn-action btn-video btn-disable"><i class="fas fa-video-slash"></i> Không Video</button>`;
@@ -336,9 +459,8 @@
                         <img src="${currentItem.cover}" class="cover-small">
                         <div class="info-text">
                             <h1>${currentItem.title}</h1>
-                            <div class="meta-tag"><i class="fas fa-user-edit"></i> ${currentItem.author || 'Dân gian'}</div>
-                            <div class="meta-tag"><i class="far fa-clock"></i> ${currentItem.date || '01/01/2026'}</div>
-                            <div class="meta-tag"><i class="fas fa-book"></i> ${currentItem.chapters[0].pages.length} trang</div>
+                            <div class="meta-tag"><i class="fas fa-user-edit"></i> ${currentItem.author}</div>
+                            <div class="meta-tag"><i class="fas fa-clock"></i> ${currentItem.date}</div>
                         </div>
                     </div>
                 </div>
@@ -368,7 +490,7 @@
                         <div class="related-scroll">${relatedHTML || '<span style="color:#777">Chưa có truyện tương tự.</span>'}</div>
                     </div>
 
-                    <h4 style="border-left:3px solid var(--red); padding-left:10px; margin: 20px 0 10px 0;">Bình luận cộng đồng</h4>
+                    <h4 style="border-left:3px solid var(--red); padding-left:10px; margin: 20px 0 10px 0;">Bình luận</h4>
                     <div style="margin-bottom:15px;">
                         <input id="cmt-input" placeholder="Viết bình luận..." style="width:100%; padding:10px; border-radius:5px; border:1px solid #444; background:var(--card); color:var(--text); margin-bottom:5px;">
                         <button onclick="postComment()" style="background:var(--blue); color:white; border:none; padding:5px 15px; border-radius:4px; float:right; cursor:pointer;">Gửi</button>
@@ -381,88 +503,64 @@
             `;
         }
 
-        // --- CÁC HÀM UI ---
-        function toggleFontSettings() {
-            let el = document.getElementById('font-settings');
-            el.style.display = el.style.display === 'block' ? 'none' : 'block';
-        }
-        function changeFontSize(size) {
-            document.getElementById('story-text').style.fontSize = size + 'px';
-        }
-        function renderComments(arr) {
-            if(!arr || arr.length === 0) return '<p style="color:#777">Chưa có bình luận nào.</p>';
-            return arr.map((c, i) => `
-                <div class="comment-item">
-                    <span class="cmt-user">${c.user}</span>
-                    <span>${c.content}</span>
-                    <div class="cmt-actions">
-                        <span class="cmt-btn" onclick="likeComment(${i})"><i class="far fa-heart"></i> ${c.likes || 0}</span>
-                        <span class="cmt-btn"><i class="fas fa-reply"></i> Trả lời</span>
-                        <span class="cmt-btn" style="margin-left:auto; color:#888;" onclick="alert('Đã báo cáo vi phạm!')"><i class="fas fa-flag"></i></span>
-                    </div>
-                </div>
-            `).join('');
+        // ================= READER (ĐÃ SỬA LỖI TÊN HÀM) =================
+        function openReader(title) {
+            document.getElementById('reader-view').style.display = 'flex';
+            document.getElementById('reader-title').innerText = title;
+            document.getElementById('comic-controls').style.display = 'none';
+            document.querySelectorAll('.nav-arrow').forEach(a => a.style.display = 'none');
+            document.getElementById('reader-content').className = ''; 
         }
 
-        // ================= READER (ĐÃ NÂNG CẤP) =================
-        // 7. RESPONSIVE & SWIPE
-        let touchStartX = 0;
-        let touchEndX = 0;
+        // Logic tự động lưu trang
+        function saveProgress(pageIndex) {
+            if(currentItem) localStorage.setItem('progress_' + currentItem.id, pageIndex);
+        }
+
+        function saveScrollProgress() {
+            let container = document.getElementById('reader-content');
+            if(container.classList.contains('mode-scroll')) {
+                let images = container.querySelectorAll('img');
+                for(let i=0; i<images.length; i++) {
+                    let rect = images[i].getBoundingClientRect();
+                    if(rect.top >= 0 && rect.top < window.innerHeight) {
+                        saveProgress(i);
+                        break;
+                    }
+                }
+            }
+        }
 
         function startComic() {
-            openReaderMode(currentItem.title);
+            openReader(currentItem.title); // Đã sửa tên hàm đúng
             document.getElementById('comic-controls').style.display = 'flex';
-            
             const container = document.getElementById('reader-content');
             container.innerHTML = '';
             
-            // Preload & Render
             currentItem.chapters[0].pages.forEach((url, index) => {
                 let img = document.createElement('img');
                 img.src = url;
-                img.loading = "lazy"; // 6. LAZY LOAD
+                img.loading = "lazy";
                 img.dataset.index = index;
                 img.id = 'page-' + index;
                 if (index === 0) img.classList.add('active');
                 container.appendChild(img);
             });
 
-            // 3. AUTO RESUME
-            let savedPage = parseInt(localStorage.getItem('resume_' + currentItem.id));
-            if(savedPage && savedPage > 0) {
-                if(confirm(`Bạn đang đọc dở trang ${savedPage + 1}. Đọc tiếp?`)) {
-                    currentPage = savedPage;
+            // Tự động cuộn đến trang đọc dở
+            let lastPage = parseInt(localStorage.getItem('progress_' + currentItem.id));
+            if (!isNaN(lastPage) && lastPage > 0) {
+                if (confirm(`Bạn đang đọc dở trang ${lastPage + 1}. Đọc tiếp không?`)) {
+                    currentPage = lastPage;
+                    setMode('scroll');
                     setTimeout(() => {
-                        let target = document.getElementById('page-' + savedPage);
+                        let target = document.getElementById('page-' + lastPage);
                         if(target) target.scrollIntoView();
                     }, 500);
+                    return;
                 }
-            } else {
-                currentPage = 0;
             }
-
-            // Gán sự kiện Swipe
-            container.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-            container.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
-
-            setMode('scroll');
-        }
-
-        function handleSwipe() {
-            const container = document.getElementById('reader-content');
-            if (!container.classList.contains('mode-slide')) return; // Chỉ swipe khi ở chế độ lướt
-            if (touchEndX < touchStartX - 50) changePage(1); // Vuốt trái -> Next
-            if (touchEndX > touchStartX + 50) changePage(-1); // Vuốt phải -> Prev
-        }
-
-        function openReaderMode(title) {
-            document.getElementById('reader-view').style.display = 'flex';
-            document.getElementById('reader-title').innerText = title;
-            document.getElementById('comic-controls').style.display = 'none';
-            document.getElementById('reader-content').className = '';
+            setMode('scroll'); 
         }
 
         function setMode(mode) {
@@ -477,19 +575,11 @@
                 btnSlide.classList.remove('active');
                 arrows.forEach(a => a.style.display = 'none');
                 document.getElementById('page-indicator').innerText = "";
-                // Auto save scroll pos
-                container.onscroll = () => {
-                    let page = Math.round(container.scrollTop / window.innerHeight); // Ước lượng
-                    // Logic chính xác hơn cần IntersectionObserver nhưng ở đây làm đơn giản
-                }
             } else {
                 container.className = 'mode-slide';
                 btnSlide.classList.add('active');
                 btnScroll.classList.remove('active');
-                // Chỉ hiện nút trên Desktop
-                if(window.matchMedia("(min-width: 768px)").matches) {
-                    arrows.forEach(a => a.style.display = 'block');
-                }
+                if(window.matchMedia("(min-width: 768px)").matches) arrows.forEach(a => a.style.display = 'block');
                 updateSlide();
             }
         }
@@ -500,8 +590,7 @@
             if (next >= 0 && next < images.length) {
                 currentPage = next;
                 updateSlide();
-                // 3. SAVE LAST READ
-                localStorage.setItem('resume_' + currentItem.id, currentPage);
+                saveProgress(currentPage);
             }
         }
 
@@ -522,20 +611,21 @@
         // --- MEDIA ---
         function startVideo() {
             if (!currentItem.youtube) return;
-            openReaderMode("Đang xem video");
+            openReader("Đang xem video");
             document.getElementById('reader-content').innerHTML = `
                 <div class="video-container"><iframe src="${currentItem.youtube}" allowfullscreen></iframe></div>`;
         }
 
         function startAudio() {
             if (!currentItem.audio) return;
-            openReaderMode("Đang nghe kể chuyện");
+            openReader("Đang nghe kể chuyện");
             document.getElementById('reader-content').innerHTML = `
                 <div class="audio-player-ui">
                     <img src="${currentItem.cover}" class="audio-disk">
                     <div class="audio-title-display">${currentItem.title}</div>
                     <audio controls autoplay class="audio-controls-native">
-                        <source src="${currentItem.audio}" type="audio/wav"> <source src="${currentItem.audio}" type="audio/mpeg">
+                        <source src="${currentItem.audio}" type="audio/wav">
+                        <source src="${currentItem.audio}" type="audio/mpeg">
                     </audio>
                 </div>`;
         }
@@ -545,7 +635,28 @@
             document.getElementById('reader-content').innerHTML = '';
         }
 
-        // ================= USER & SYSTEM =================
+        // ================= HỖ TRỢ =================
+        function toggleFontSettings() {
+            let el = document.getElementById('font-settings');
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
+        function changeFontSize(size) {
+            document.getElementById('story-text').style.fontSize = size + 'px';
+        }
+        function renderComments(arr) {
+            if(!arr || arr.length === 0) return '<p style="color:#777">Chưa có bình luận nào.</p>';
+            return arr.map((c, i) => `
+                <div class="comment-item">
+                    <span class="cmt-user">${c.user}</span>
+                    <span>${c.content}</span>
+                    <div class="cmt-actions">
+                        <span class="cmt-btn" onclick="likeComment(${i})"><i class="far fa-heart"></i> ${c.likes || 0}</span>
+                        <span class="cmt-btn"><i class="fas fa-reply"></i> Trả lời</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         function checkUser() {
             if (currentUser === "Khách") {
                 let name = prompt("Tên bạn là gì?");
@@ -576,7 +687,7 @@
             let data = JSON.parse(localStorage.getItem(key));
             data.comments[index].likes++;
             localStorage.setItem(key, JSON.stringify(data));
-            openDetail(currentItem.id); // Re-render
+            openDetail(currentItem.id);
         }
 
         function addToHistory(item) {
@@ -584,6 +695,7 @@
             history = history.filter(h => h.id !== item.id);
             history.unshift({ id: item.id, title: item.title, cover: item.cover });
             localStorage.setItem('read_history', JSON.stringify(history));
+            renderHome();
         }
 
         function switchTab(tab) {
@@ -599,14 +711,26 @@
                 document.getElementById('history-list').innerHTML = history.length ? history.map(h => `
                     <div class="history-item" onclick="openDetail('${h.id}')">
                         <img src="${h.cover}">
-                        <div><div style="font-weight:bold; color:var(--text);">${h.title}</div><small style="color:var(--text-sec);">Đọc gần đây</small></div>
+                        <div><div style="font-weight:bold; color:var(--text);">${h.title}</div><small style="color:var(--text-sec);">Đã đọc</small></div>
                     </div>
                 `).join('') : '<p style="text-align:center; color:#666;">Chưa xem truyện nào.</p>';
             }
             closeReader();
         }
 
-        // Init
+        // 7. RESPONSIVE SWIPE
+        let touchStartX = 0, touchEndX = 0;
+        const readerContent = document.getElementById('reader-content');
+        readerContent.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+        readerContent.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (readerContent.classList.contains('mode-slide')) {
+                if (touchEndX < touchStartX - 50) changePage(1);
+                if (touchEndX > touchStartX + 50) changePage(-1);
+            }
+        });
+
+        // INIT
         renderHome();
     </script>
 </body>

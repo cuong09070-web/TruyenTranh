@@ -78,6 +78,10 @@
         .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; padding: 20px 15px; font-size: 1.5rem; cursor: pointer; z-index: 10; display: none; }
         .prev-arrow { left: 0; } .next-arrow { right: 0; }
 
+        /* BÌNH LUẬN */
+        .comment-item { background: var(--card); padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 0.9rem; }
+        .cmt-user { color: var(--blue); font-weight: bold; }
+
         /* MENU DƯỚI */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: var(--card); display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; z-index: 1000; }
         .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; color: var(--text-sec); cursor: pointer; }
@@ -118,7 +122,7 @@
 
     <div id="view-detail" class="view" style="display: none; padding-top: 0;">
         <div id="detail-content"></div>
-        <div id="giscus-container" style="padding: 0 15px 50px 15px;"></div>
+        <div id="giscus-container" style="padding: 0 15px 50px 15px; background: var(--card); margin-top: 20px; border-radius: 8px;"></div>
     </div>
 
     <div id="reader-view">
@@ -142,7 +146,7 @@
     </nav>
 
     <script>
-        // --- DỮ LIỆU GỐC (GIỮ NGUYÊN) ---
+        // --- DỮ LIỆU GỐC (GIỮ NGUYÊN HOÀN TOÀN) ---
         function layAnh(tuSo, denSo) {
             let arr = []; 
             for(let i=tuSo; i<=denSo; i++) arr.push(`images/${i}.jpg`); 
@@ -153,7 +157,7 @@
             { id: "cotham", title: "Sự Tích Đền Cô Thắm", cat: "Truyền thuyết", isNew: false, cover: "images/100.jpg", audio: "audio/cotham.wav", youtube: "https://www.youtube.com/embed/H_DKORNPAnY", chapters: [{ name: "Full", pages: layAnh(100, 113) }], desc: `Sự tích đền Cô Thắm là một truyện dân gian cảm động kể về cuộc đời của cô Thắm – người con gái nghèo nhưng giàu lòng nhân ái ở vùng Tràng Cổ (Chợ Mới). Sinh ra trong gia đình đánh cá nghèo khó, Thắm cùng cha sống qua những ngày cơ cực. Nhờ một hòn đá kỳ lạ hóa thành hũ vàng, hai cha con thoát khỏi cảnh đói nghèo nhưng vẫn giữ tấm lòng thiện lương, đem của cải giúp đỡ người nghèo trong vùng.\n\nSau khi cha mất, Thắm tiếp nối nghề chài lưới và nếp sống nghĩa tình của cha, được dân làng kính trọng. Cuộc đời cô rẽ sang bi kịch khi bị ép làm vợ một tên nhà giàu phản bội, làm tay sai cho giặc ngoại bang. Không cam chịu số phận, Thắm rời bỏ nhà chồng, đứng lên tập hợp nhân dân, trở thành nữ tướng anh dũng lãnh đạo cuộc kháng chiến chống giặc xâm lược.\n\nTrong trận chiến ác liệt tại ngã ba sông Tràng Cổ, cô Thắm chiến đấu kiên cường nhưng anh dũng hy sinh. Để tưởng nhớ công lao và đức hy sinh cao cả của cô, nhân dân đã lập đền thờ ngay trên nền nhà cũ. Đến nay, đền Cô Thắm vẫn là biểu tượng thiêng liêng của lòng nhân ái, tinh thần yêu nước và sự quả cảm của người phụ nữ Việt Nam.` },
             { id: "yembo", title: "Sự Tích Chiếc Yếm Bò", cat: "Cổ tích", isNew: false, cover: "images/63.jpg", audio: "audio/yembo.wav", youtube: "https://www.youtube.com/embed/DYQi8GYS5E4", chapters: [{ name: "Full", pages: layAnh(63, 73) }], desc: `Sự tích chiếc yếm ở ngực bò là một truyện dân gian hóm hỉnh của người Tày, giải thích nguồn gốc hình dáng và tập tính của trâu và bò. Thuở xưa, trâu và bò vốn cùng một loài, sống chan hòa bên nhau. Trâu có chiếc yếm đẹp trước ngực, còn bò thì không, vì ganh tị nên bò đã lén lấy trộm chiếc yếm của trâu khi trâu xuống đầm.\n\nTừ đó, trâu ngày ngày lặn xuống nước tìm lại chiếc yếm đã mất, còn bò thì mang yếm trên ngực, luôn sợ trâu phát hiện nên quay sừng về phía trước để phòng thân và tránh xa nơi có nước. Câu chuyện vừa dí dỏm, vừa mang màu sắc huyền thoại dân gian, thể hiện cách người xưa lý giải thế giới tự nhiên bằng trí tưởng tượng phong phú, đồng thời kín đáo nhắc nhở con người về thói ganh ghét và lòng tham.` },
             { id: "hatlua", title: "Sự Tích Hạt Lúa", cat: "Cổ tích", isNew: false, cover: "images/25.jpg", audio: "audio/hatlua.wav", youtube: "https://www.youtube.com/embed/SrRZDv5966o", chapters: [{ name: "Full", pages: layAnh(25, 35) }], desc: `Tại sao ngày nay hạt lúa lại nhỏ là một truyện dân gian giàu ý nghĩa giáo dục, kể về nguồn gốc của hạt thóc và bài học về lao động. Thuở xưa, hạt thóc to lớn, con người sống nhàn nhã vì lúa tự về nhà khi đến mùa. Nhưng do sự lười biếng và thô bạo của một người con dâu, lúa thóc giận dữ bỏ con người mà đi ra bên kia biển, khiến trần gian rơi vào cảnh đói khổ.\n\nNhờ loài chuột nhỏ bé nhưng chịu khó, con người mới mang được vài hạt thóc nhỏ nhất trở về làm giống, từ đó hạt lúa trở nên bé như ngày nay. Câu chuyện lý giải một cách dân gian về kích thước của hạt lúa, đồng thời ca ngợi sự cần cù, biết giữ gìn giống nòi và nhắc nhở con người phải trân trọng lao động, thiên nhiên và thành quả do chính mình làm ra.` },
-            { id: "vocam", title: "Người Vợ Câm", cat: "Truyện ngắn", isNew: false, cover: "images/36.jpg", audio: "audio/vocam.wav", youtube: "https://www.youtube.com/embed/uYz8OPu_T9A", chapters: [{ name: "Full", pages: layAnh(36, 41) }], desc: `Người vợ câm là một truyện dân gian mang màu sắc bi kịch, kể về số phận của một cô gái được nuông chiều quá mức nên trở nên đanh đá, ác tính. Khi đi lấy chồng, vì sợ con bị ghét bỏ, người mẹ đã bày mưu dặn con phải giữ im lặng cho đến khi những con chấy khâu trong vạt áo chết hết mới được nói, với hy vọng con sẽ có cuộc sống yên ổn nơi nhà chồng.\n\nSuốt ba năm làm dâu, cô gái không dám mở miệng, bị nhà chồng lầm tưởng là người câm. Cuối cùng, vì không chịu nổi, gia đình chồng đã đưa cô trở về nhà cha mẹ. Câu chuyện phản ánh quan niệm dân gian về cách ứng xử trong gia đình, đồng thời gửi gắm lời nhắc nhở sâu sắc: sự dạy dỗ sai lầm và thói nuông chiều mù quáng có thể đẩy con người vào những bi kịch không đáng có.` },
+            { id: "vocam", title: "Người Vợ Câm", cat: "Truyện ngắn", isNew: false, cover: "images/36.jpg", audio: "audio/vocam.wav", youtube: "https://www.youtube.com/embed/uYz8OPu_T9A", chapters: [{ name: "Full", pages: layAnh(36, 41) }], desc: `Người vợ câm là một truyện dân gian mang màu sắc bi kịch, kể về số phận của một cô gái được nuông chiều quá mức nên trở nên đanh đá, ác tính. Khi đi lấy chồng, vì sợ con bị ghét bỏ, người mẹ đã bày mưu dặn con phải giữ im lặng cho đến khi những con chấy khâu trong vạt áo chết hết mới được nói, với hy vọng con sẽ có cuộc sống yên ổn nơi nhà chồng.\n\nSuốt ba năm làm dâu, cô gái không dám mở miệng, bị nhà chồng lầm tưởng là người câm. Cuộc cuối cùng, vì không chịu nổi, gia đình chồng đã đưa cô trở về nhà cha mẹ. Câu chuyện phản ánh quan niệm dân gian về cách ứng xử trong gia đình, đồng thời gửi gắm lời nhắc nhở sâu sắc: sự dạy dỗ sai lầm và thói nuông chiều mù quáng có thể đẩy con người vào những bi kịch không đáng có.` },
             { id: "echchuot", title: "Ếch và Chuột", cat: "Ngụ ngôn", isNew: false, cover: "images/42.jpg", audio: "audio/echchuot.wav", youtube: "https://www.youtube.com/embed/sgpNHKZu8-U", chapters: [{ name: "Full", pages: layAnh(42, 51) }], desc: `Ếch và Chuột là một truyện dân gian giàu màu sắc hóm hỉnh, kể về tình bạn giữa hai con vật vốn thân thiết với nhau. Chuột sống trên cây cao, còn ếch ở bờ ruộng nên tuy chơi thân nhưng ếch chưa bao giờ đến được nhà bạn. Thương bạn, chuột bày cách cho ếch ngậm vào đuôi mình để kéo lên, đồng thời dặn dò ếch phải thật bình tĩnh, đừng vội lên tiếng khi sắp tới nơi.\n\nThế nhưng vì tính nhanh nhảu, ếch quên mất lời dặn, mở miệng đáp lại lời chào của vợ chuột và bị rơi từ trên cao xuống, khiến mồm bị bẹp mãi mãi. Từ đó, mỗi khi thời tiết thay đổi, ếch lại kêu “ộp, ộp” như lời than đau đớn và ân hận. Câu chuyện vừa lý giải đặc điểm hình dáng của loài ếch, vừa gửi gắm bài học về sự cẩn trọng, biết lắng nghe và ghi nhớ lời khuyên của người khác.` },
             { id: "bococ", title: "Bò và Cóc", cat: "Ngụ ngôn", isNew: false, cover: "images/52.jpg", audio: "audio/bococ.wav", youtube: "https://www.youtube.com/embed/swIc9EHdbNI", chapters: [{ name: "Full", pages: layAnh(52, 62) }], desc: `Bò và Cóc là một truyện dân gian ngắn gọn, giàu tính ngụ ngôn, lý giải đặc điểm hình dáng và tập tính của loài cóc. Vốn có thân hình nhỏ nhắn, thích đi chơi xa, cóc vì tò mò và ham muốn được to lớn như bò đã cả tin làm theo lời chỉ dẫn sai lầm của bò, cố sức hít hơi phồng bụng cho đến khi vỡ bụng mà chết.\n\nTừ đó, loài cóc mang cái bụng phồng to và chỉ sống quanh quẩn ở những nơi tối tăm, không còn đi xa như trước. Câu chuyện mượn hình ảnh loài vật để nhắc nhở con người: không nên mù quáng bắt chước người khác, phải biết rõ khả năng của mình, nếu không sẽ phải gánh chịu hậu quả đáng tiếc.` },
             { id: "ongbamuoi", title: "Vì Sao Gọi Hổ Là Ông Ba Mươi", cat: "Truyền thuyết", isNew: true, cover: "images/74.jpg", audio: "audio/ongbamuoi.wav", youtube: "https://www.youtube.com/embed/veQB2SNj-GY", chapters: [{ name: "Full", pages: layAnh(74, 84) }], desc: `Vì sao gọi loài hổ là Ông Ba Mươi là một truyện dân gian mang màu sắc huyền thoại, kể về số phận éo le của một ông lão nghèo khổ, cả đời gắn liền với con số ba mươi. Dù làm gì, vất vả đến đâu, ông cũng chỉ nhận lại đúng ba mươi, vì thế dân làng quen gọi ông là ông Ba Mươi. Cuộc sống cơ cực càng thêm cùng quẫn khi vùng ông ở bị một con hổ dữ hoành hành, gieo rắc nỗi kinh hoàng cho dân chúng.\n\nTrong lúc tuyệt vọng, ông Ba Mươi quyết liều mình làm mồi nhử hổ, mong tìm đến cái chết. Thế nhưng trớ trêu thay, chính sự liều lĩnh ấy lại khiến con hổ dữ sa vào bẫy và bị giết chết. Nhờ đó, ông vô tình trở thành người có công lớn cứu dân làng khỏi tai họa. Từ một kẻ nghèo khổ cùng cực, ông Ba Mươi được dân chúng tôn trọng, thưởng công và sống no ấm đến cuối đời. Câu chuyện lý giải nguồn gốc cách gọi loài hổ là “Ông Ba Mươi”, thể hiện niềm tin dân gian về số phận, lòng quả cảm và khát vọng chế ngự thiên nhiên của con người.` },
@@ -162,10 +166,20 @@
             { id: "nghienruou", title: "Hai Anh Chàng Nghiện Rượu", cat: "Truyện cười", isNew: true, cover: "images/211.jpg", audio: "audio/nghienruou.wav", youtube: "https://www.youtube.com/embed/_iuc7tL7B24", chapters: [{ name: "Full", pages: layAnh(211, 221) }], desc: `Hai anh chàng nghiện rượu là một truyện dân gian ngắn mang tính châm biếm, phê phán thói lười biếng và nghiện ngập. Hai người đàn ông suốt ngày rượu chè bê tha, đến mức không còn ai cho uống nhờ hay xin rượu nữa. Vì cơn thèm rượu, họ liều lĩnh bàn nhau đi trộm chum rượu của nhà hàng xóm.\n\nThế nhưng, vì mải mê uống đến say mèm, hai kẻ nghiện rượu đã gây ồn ào, để lộ hành vi trộm cắp và bị chủ nhà phát hiện, trừng phạt thích đáng. Câu chuyện vừa hài hước, vừa mang tính răn dạy, nhắc nhở con người phải tránh xa tật nghiện rượu, lối sống buông thả và coi thường lao động chân chính.` },
             { id: "noiphet", title: "Chuyện Anh Chàng Nói Phét", cat: "Truyện cười", isNew: true, cover: "images/222.jpg", audio: "audio/noiphet.wav", youtube: "https://www.youtube.com/embed/Qi85doiMofw", chapters: [{ name: "Full", pages: layAnh(222, 232) }], desc: `Chuyện anh chàng nói phét là một truyện dân gian hài hước, châm biếm thói ba hoa, khoác lác của những kẻ lười biếng nhưng lại thích khoe khoang. Anh chàng trong truyện đi săn cả ngày chẳng được gì, vì xấu hổ đã bịa ra chuyện mình bắn một phát súng chết liền ba con nai để che giấu sự thất bại.\n\nCâu chuyện càng trở nên buồn cười khi anh ta cố nghĩ ra một lời giải thích vô lý, khiến mọi người không những không tin mà còn đem ra chế giễu bằng những câu vè mỉa mai. Qua tiếng cười dân gian, truyện gửi gắm bài học nhẹ nhàng mà sâu sắc: thói nói phét, khoe khoang rỗng tuếch chỉ khiến con người trở nên lố bịch và mất uy tín trước mọi người.` },
             { id: "changre", title: "Chàng Rể Ngô Nghê", cat: "Truyện cười", isNew: true, cover: "images/233.jpg", audio: "audio/changre.wav", youtube: "https://www.youtube.com/embed/DlceP85Jyno", chapters: [{ name: "Full", pages: layAnh(233, 243) }], desc: `Chàng rể ngô nghê là một truyện dân gian hài hước của người Tày, kể về một anh chàng vừa ngốc nghếch lại lười tắm rửa nên mãi mới lấy được vợ. Sau khi cưới, anh phải đi ở rể nơi bản xa. Vì tính tình vụng về, bảo sao làm vậy mà lại thiếu hiểu biết, chàng rể khiến mẹ vợ luôn khó chịu.\n\nCâu chuyện trở nên buồn cười khi bà mẹ vợ khéo léo đưa tiền cho con rể đi mua mía để ăn cho sạch răng, nhưng anh ta lại mua bánh khoai, khiến răng càng bẩn hơn. Qua tình huống dở khóc dở cười ấy, truyện vừa mang tính giải trí, vừa là lời nhắc nhở nhẹ nhàng về sự sạch sẽ, khéo léo và ý tứ trong cách cư xử của những chàng rể khi về nhà vợ.` },
-            { id: "meotamthe", title: "Sự Tích Con Mèo Tam Thể", cat: "Truyện cổ tích", isNew: true, cover: "images/244.jpg", audio: "audio/meotamthe.wav", youtube: "https://www.youtube.com/embed/VIDEO_ID_HERE", chapters: [{ name: "Full", pages: layAnh(244, 254) }], desc: `Sự tích con mèo tam thể là một truyện dân gian cảm động, mang màu sắc huyền ảo, kể về tình nghĩa vợ chồng sâu nặng vượt qua cả ranh giới sinh tử. Sau khi người vợ qua đời vì bệnh nặng, người chồng sống trong nỗi đau khôn nguôi. Còn người vợ, vì quá luyến tiếc trần gian và chồng con, linh hồn vẫn thường hóa thân đi chợ, mua chịu thịt cá như khi còn sống.\n\nKhi sự thật được phát hiện, linh hồn người vợ không thể trở về dương thế, đành gửi lại cho chồng một con mèo tam thể xuất hiện từ ngôi mộ của mình. Con mèo trở thành người bạn trung thành, chăm chỉ bắt chuột, thay người vợ ở bên chăm lo cho cuộc sống của chồng. Câu chuyện vừa lý giải nguồn gốc loài mèo tam thể, vừa ca ngợi tình nghĩa vợ chồng thủy chung, bền chặt và niềm tin dân gian vào sự gắn bó giữa con người với thế giới linh hồn.` }
+            { 
+                id: "meotamthe", 
+                title: "Sự Tích Con Mèo Tam Thể", 
+                cat: "Truyện cổ tích", 
+                isNew: true,
+                desc: `Sự tích con mèo tam thể là một truyện dân gian cảm động, mang màu sắc huyền ảo, kể về tình nghĩa vợ chồng sâu nặng vượt qua cả ranh giới sinh tử. Sau khi người vợ qua đời vì bệnh nặng, người chồng sống trong nỗi đau khôn nguôi. Còn người vợ, vì quá luyến tiếc trần gian và chồng con, linh hồn vẫn thường hóa thân đi chợ, mua chịu thịt cá như khi còn sống.\n\nKhi sự thật được phát hiện, linh hồn người vợ không thể trở về dương thế, đành gửi lại cho chồng một con mèo tam thể xuất hiện từ ngôi mộ của mình. Con mèo trở thành người bạn trung thành, chăm chỉ bắt chuột, thay người vợ ở bên chăm lo cho cuộc sống của chồng. Câu chuyện vừa lý giải nguồn gốc loài mèo tam thể, vừa ca ngợi tình nghĩa vợ chồng thủy chung, bền chặt và niềm tin dân gian vào sự gắn bó giữa con người với thế giới linh hồn.`,
+                cover: "images/244.jpg", 
+                audio: "audio/meotamthe.wav", 
+                youtube: "https://www.youtube.com/embed/VIDEO_ID_HERE", 
+                chapters: [{ name: "Full", pages: layAnh(244, 254) }] 
+            }
         ];
 
-        // --- LOGIC CHÍNH GỐC (GIỮ NGUYÊN) ---
+        // --- LOGIC GỐC (GIỮ NGUYÊN) ---
         let currentUser = localStorage.getItem('username') || "Khách";
         let currentItem = null;
         let currentPage = 0;
@@ -204,7 +218,7 @@
             });
         }
 
-        // --- HÀM OPEN DETAIL ĐÃ THÊM CODE BÌNH LUẬN THẬT ---
+        // --- TÍCH HỢP GISCUS (BÌNH LUẬN THẬT) ---
         function openDetail(id) {
             currentItem = database.find(i => i.id === id);
             document.title = currentItem.title;
@@ -229,7 +243,7 @@
                         <img src="${currentItem.cover}" class="cover-small">
                         <div class="info-text">
                             <h1>${currentItem.title}</h1>
-                            <div style="background:var(--blue); display:inline-block; padding:2px 10px; border-radius:10px; font-size:0.8rem;">${currentItem.cat}</div>
+                            <div class="meta-tag" style="background:var(--blue); display:inline-block; padding:2px 10px; border-radius:10px; font-size:0.8rem;">${currentItem.cat}</div>
                         </div>
                     </div>
                 </div>
@@ -243,14 +257,13 @@
                 </div>
             `;
             
-            // TỰ ĐỘNG LOAD KHUNG BÌNH LUẬN THẬT GISCUS
+            // --- TẢI BÌNH LUẬN THẬT GISCUS ---
             loadGiscus(currentItem.title);
         }
 
-        // --- HÀM TẢI GISCUS ĐÃ ĐIỀN ĐỦ THÔNG SỐ CỦA BẠN ---
         function loadGiscus(title) {
             const container = document.getElementById('giscus-container');
-            container.innerHTML = '<h4 style="border-left:3px solid var(--red); padding-left:10px; margin-bottom:15px;">Cộng đồng & Like/Reaction</h4>';
+            container.innerHTML = '<h4 style="border-left:3px solid var(--red); padding-left:10px; margin-bottom:15px;">Cộng đồng & Phản hồi</h4>';
             
             const script = document.createElement('script');
             script.src = "https://giscus.app/client.js";
@@ -259,10 +272,7 @@
             script.setAttribute("data-category", "General");
             script.setAttribute("data-category-id", "DIC_kwDOREpp0M4CndM9");
             script.setAttribute("data-mapping", "title");
-            script.setAttribute("data-strict", "0");
             script.setAttribute("data-reactions-enabled", "1");
-            script.setAttribute("data-emit-metadata", "0");
-            script.setAttribute("data-input-position", "top");
             script.setAttribute("data-theme", "dark");
             script.setAttribute("data-lang", "vi");
             script.crossOrigin = "anonymous";
@@ -271,7 +281,7 @@
             container.appendChild(script);
         }
 
-        // --- CÁC HÀM XỬ LÝ GỐC KHÁC (GIỮ NGUYÊN) ---
+        // --- CÁC HÀM XỬ LÝ KHÁC (GIỮ NGUYÊN) ---
         function openReaderMode(title) {
             document.getElementById('reader-view').style.display = 'flex';
             document.getElementById('reader-title').innerText = title;
